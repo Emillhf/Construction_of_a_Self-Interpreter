@@ -1,11 +1,12 @@
 #load "read_file.fsx"
+open System
 open System.Text.RegularExpressions
 
 type Replace = char*char
 type Move = string
 
 type Operation = Replace of Replace | Move of Move
-type Rule = string*Operation*string
+type Rule = string*(Operation*Operation*Operation)*string
 
 
 let first (a,_,_) = a
@@ -48,20 +49,33 @@ let RMT(rules:List<Rule>, states:array<string>, input:array<char>) =
         search rules
     input
 
-let convert_to_rules(rules:array<string>) =
-    let pattern = @"^\((\d+),\(([^)]+)\),\s*(\d+)\)$"
-    Array.map(fun (rule:string) -> 
-        let matchResult = Regex.Match(rule, pattern)
+let convert_to_rules(rules:array<List<string>>) =
+    Array.map(fun (rule:List<string>) -> 
+        let s1 = Convert.ToInt32(rule[1],2) |> string
+        let s2 = Convert.ToInt32(rule[3] |> Seq.rev |> string,2) |> string
         let operation = 
-            let symbol = matchResult.Groups.[2].Value
-            match symbol with 
-                | "LEFT" | "RIGHT" -> Move(symbol)
-                | _ -> Replace(symbol[0],symbol[2])
-        Rule(matchResult.Groups.[1].Value, operation, matchResult.Groups.[3].Value)) rules
+            match rule[0] with 
+                | "M" -> (Move(rule[2][0..2]),Move(rule[2][2..4]),Move(rule[2][4..6]))
+                | "S" -> (Replace(rule[2][0..2]),Replace(rule[2][2..4]),Replace(rule[2][4..6]))
+                | _ -> failwith "Shits wrong - convert to rules"
+        Rule(s1, operation, s2)) rules
     |> Array.toList
 
-let rules, states, input = Read_file.read_file("1_Tape_example.txt")
-printfn "%A" (RMT(convert_to_rules(rules), states, input))
+let decode_rules(rules:string) = 
+    let pattern = @"S#\d+#.{6}#\d+#S|M#\d+#.{6}#\d+#M"
+    let matches = Regex.Matches(rules, pattern) |> Seq.map (fun elm -> elm.Value) |> Seq.toArray
+    let pattern_single = @"(S|M)#(\d+)#(.{6})#(\d+)#(S|M)$"
+    let matchResult = Regex.Match( matches[0], pattern_single)
+    
+    Array.map(fun (rule:string) -> 
+            let matchResult = Regex.Match(rule, pattern_single)
+            [matchResult.Groups[1].Value, 
+            matchResult.Groups[2].Value, 
+            matchResult.Groups[3].Value, 
+            matchResult.Groups[4].Value]) matches
 
-let rules_rev, states_rev, input_rev = Read_file.read_file("1_Tape_example_rev.txt")
-printfn "%A" (RMT(convert_to_rules(rules_rev), states_rev, input_rev))
+let rules, states, input = Read_file.read_file("1_Tape_example.txt")
+printfn "%A" (decode_rules(rules[0]))
+
+// let rules_rev, states_rev, input_rev = Read_file.read_file("1_Tape_example_rev.txt")
+// printfn "%A" (RMT(convert_to_rules(rules_rev), states_rev, input_rev))
