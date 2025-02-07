@@ -75,12 +75,24 @@ let RMT(rules:List<List<Rule>>,input:array<char>,states:array<string>) =
 
 // let convert_to_rules(rules:array<List<string>>) =
 
-let decode_rules(rules:string) = 
-    Array.filter(fun (elm:string) -> elm.Length > 0) (rules.Split('#')) 
+let decode_rules(rules:string) : array<Rule> = 
+    let rules_seperated = Array.filter(fun (elm:string) -> elm.Length > 0) (rules.Split('!'))
+    Array.map(fun (elm : string)-> 
+        let rule_split = elm.Split('#')
+        let operation =  (rule_split[1][0..1],  rule_split[1][2..3],  rule_split[1][4..5])
+        Rule (rule_split[0], operation, rule_split[2])) rules_seperated 
 
+let bin_to_dec(num:string) : int = 
+    Convert.ToInt32(num, 2)
+let seperate_rules_into_states(rules:array<Rule>, max_state : int) = 
+    let rulelist : array<array<Rule>> = Array.init max_state (fun _ -> Array.create max_state ("",("","",""),""))
+    for rule in rules do
+        printfn "%A" rulelist[bin_to_dec(first (rule))]
+        //Array.append(rulelist[bin_to_dec(first (rule))], [|rule|])
+    rulelist
 
 let rules, input,states = Read_file.read_file("1_Tape_example.txt")
-printfn "%A" (decode_rules(rules[0]))
+printfn "%A" (seperate_rules_into_states(decode_rules(rules[0]), 20))
 
 // let rules_rev, states_rev, input_rev = Read_file.read_file("1_Tape_example_rev.txt")
 // printfn "%A" (RMT(convert_to_rules(rules_rev), states_rev, input_rev))
