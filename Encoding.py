@@ -4,34 +4,23 @@ import re
 def Encode(program):
     translatedProgram = ""
     pattern = re.compile(r"\((\d+),\(\((.*?)\),\((.*?)\),\((.*?)\)\),(\d+)\)")
-    for idx,rule in enumerate(program):
+    for rule in program:
         match =  pattern.findall(rule)
         extracted = extract_groups(match[0])
-        if "LEFT" in extracted or "RIGHT" in extracted:
-            move = EncodeMove(extracted[1]) + EncodeMove(extracted[2]) + EncodeMove(extracted[3])
-            translatedProgram += "M#" + extracted[0] + "#" + move + '#' + extracted[4][::-1] + "#M"
-        elif len(extracted[1]) == 2 and len(extracted[2]) == 2 and len(extracted[3]) == 2:
-            symbol = EncodeSymbol(extracted[1]) + EncodeSymbol(extracted[2]) + EncodeSymbol(extracted[3])
-            translatedProgram += "S#" + extracted[0] + "#" + symbol + '#' + extracted[4][::-1] + "#S"
-        else:
-            raise Exception("The following rule is wrong: ", rule, idx)
+        operation = EncodeLanguage(extracted[1]) + EncodeLanguage(extracted[2]) + EncodeLanguage(extracted[3])
+        translatedProgram += "#" + extracted[0] + "#" + operation + '#' + extracted[4][::-1] + "#"
     return translatedProgram
    
 def ToBinary(num: int):
     return bin(num)[2:]
 
-def EncodeSymbol(s):
-    return s
-
-def EncodeMove(d):
+def EncodeLanguage(d):
     if (d == "LEFT"):
-        return "10"
+        return "$$"
     elif (d == "RIGHT"):
-        return "01"
-    elif (d == '__'):
-        return d
+        return "€€"
     else:
-        raise Exception("EncodeMove went wrong", d)
+        return d
     
 def extract_groups(groups):
     encoded = []

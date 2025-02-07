@@ -2,79 +2,84 @@
 open System
 open System.Text.RegularExpressions
 
-type Replace = char*char
-type Move = string
-
-type Operation = Replace of Replace | Move of Move
-type Rule = string*(Operation*Operation*Operation)*string
-
+type Rule = string*(string*string*string)*string
 
 let first (a,_,_) = a
 let second (_,b,_) = b
 let third (_,_,c) = c
 
-let RMT(rules:List<Rule>, states:array<string>, input:array<char>) =
-    let mutable start = states[1]
-    let mutable idx = 0
+let RMT(rules:List<List<Rule>>,input:array<char>,states:array<string>) =
+    let start = states[1]
+    let final = states[2]
+    let mutable idx1 = 0
+    let mutable idx2 = 0
+    let mutable idx3 = 0
 
-    let write (replace:Replace) = input[idx] <- (snd replace)
+    let write1(replace:string) = failwith "Something wrong"
+    let write2(replace:string) = input[idx2] <- replace[1] 
+    let write3(replace:string) = states[idx3] <- replace[1] |> string
 
-    let move (move:Move) =
-        match move with 
-            | "LEFT" -> idx <- idx - 1
-            | "RIGHT" -> idx <- idx + 1
-            | _ -> failwith "String wrong"
+    let move1 (move:string, num) = idx1 <- idx1 + num
+    let move2 (move:string, num) = idx2 <- idx2 + num
+    let move3 (move:string, num) = idx3 <- idx3 + num
     
-    let check (rule:Operation) =
-        match rule with 
-            | Move(r) -> true
-            | Replace(r) -> input[idx] = (fst r)
+    let check (rule:String*String*String) =
+        let result1= 
+            match first rule with
+                | "__" -> true
+                | "LL" | "RR" -> true
+                | _ -> false
+        let result2 = 
+            match second rule with
+                | "__" -> true
+                | "LL" | "RR" -> true
+                | _ -> (second rule)[0] = input[idx2]
+        let result3 =
+            match third rule with
+                | "__" -> true
+                | "LL" | "RR" -> true
+                | _ -> ((third rule)[0] |> string) = states[idx3]
+        result1 && result2 && result3
 
-    let act (rule:Rule) =
-        let R, S2 = second rule, third rule
-        match R with 
-            | Replace(r) -> write r         
-            | Move(r) -> move r
-        start <- S2
+    let act (rule:String*String*String) =
+        match first rule with 
+            | "__" -> ()
+            | "$$" -> move1(first rule,-1)
+            | "€€" -> move1(first rule,1)
+            | _ -> write1(first rule)
+        match second rule with 
+            | "__" -> ()
+            | "$$" -> move2(second rule,-1)
+            | "€€" -> move2(second rule,1)
+            | _ -> write2(second rule)
+        match third rule with 
+            | "__" -> ()
+            | "$$" -> move3(third rule,-1)
+            | "€€" -> move3(third rule,1)
+            | _ -> write3(third rule)
 
-    let rec search (rules:List<Rule>) =
-        match rules with
-            | [rule] -> if check(second rule) then act rule
-            | rule :: rest -> 
-                if (first rule) = start && check (second rule) then act rule
-                else search rest
-            | _ -> failwith "Shit wrong"
+    let search (rules:List<List<Rule>>) =
+        let rec search_rec(rules_state: List<Rule>) = 
+            match rules_state with
+                | [rule:Rule] -> if check(second rule) then act (second rule)
+                | rule :: rest -> 
+                    if check (second rule) then act (second rule)
+                    else search_rec rest
+                | _ -> failwith "Shit wrong"
 
-    while not(start = states[2]) do
+        search_rec(rules[int(states[0])])
+
+    while not(start = final) do
         search rules
     input
 
-let convert_to_rules(rules:array<List<string>>) =
-    Array.map(fun (rule:List<string>) -> 
-        let s1 = Convert.ToInt32(rule[1],2) |> string
-        let s2 = Convert.ToInt32(rule[3] |> Seq.rev |> string,2) |> string
-        let operation = 
-            match rule[0] with 
-                | "M" -> (Move(rule[2][0..2]),Move(rule[2][2..4]),Move(rule[2][4..6]))
-                | "S" -> (Replace(rule[2][0..2]),Replace(rule[2][2..4]),Replace(rule[2][4..6]))
-                | _ -> failwith "Shits wrong - convert to rules"
-        Rule(s1, operation, s2)) rules
-    |> Array.toList
+// let convert_to_rules(rules:array<List<string>>) =
 
 let decode_rules(rules:string) = 
-    let pattern = @"S#\d+#.{6}#\d+#S|M#\d+#.{6}#\d+#M"
-    let matches = Regex.Matches(rules, pattern) |> Seq.map (fun elm -> elm.Value) |> Seq.toArray
-    let pattern_single = @"(S|M)#(\d+)#(.{6})#(\d+)#(S|M)$"
-    let matchResult = Regex.Match( matches[0], pattern_single)
-    
-    Array.map(fun (rule:string) -> 
-            let matchResult = Regex.Match(rule, pattern_single)
-            [matchResult.Groups[1].Value, 
-            matchResult.Groups[2].Value, 
-            matchResult.Groups[3].Value, 
-            matchResult.Groups[4].Value]) matches
+    Array.filter(fun (elm:string) -> elm.Length > 0) (rules.Split('#')) 
 
-let rules, states, input = Read_file.read_file("1_Tape_example.txt")
+
+let rules, input,states = Read_file.read_file("1_Tape_example.txt")
 printfn "%A" (decode_rules(rules[0]))
 
 // let rules_rev, states_rev, input_rev = Read_file.read_file("1_Tape_example_rev.txt")
