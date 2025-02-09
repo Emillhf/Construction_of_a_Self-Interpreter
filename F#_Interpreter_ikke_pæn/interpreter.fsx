@@ -8,40 +8,38 @@ let first (a,_,_) = a
 let second (_,b,_) = b
 let third (_,_,c) = c
 
-let RMT(rules:List<List<Rule>>,input:array<char>,states:array<string>) =
-    let start = states[1]
-    let final = states[2]
+let BinToDec(s:string) = Convert.ToInt32(s)
+let RMT(rules:List<list<Rule>>,input:array<char>,states:array<string>) =
+    let start = int(states[1])
+    let final = int(states[2])
+    let mutable current_state = int(states[0])
     let mutable idx1 = 0
     let mutable idx2 = 0
-    let mutable idx3 = 0
 
     let write1(replace:string) = failwith "Something wrong"
     let write2(replace:string) = input[idx2] <- replace[1] 
-    let write3(replace:string) = states[idx3] <- replace[1] |> string
+    let write3(replace:int) = current_state <- replace
 
     let move1 (move:string, num) = idx1 <- idx1 + num
     let move2 (move:string, num) = idx2 <- idx2 + num
-    let move3 (move:string, num) = idx3 <- idx3 + num
+    let move3 (move:string, num) = current_state <- current_state + num
     
     let check (rule:String*String*String) =
         let result1= 
             match first rule with
                 | "__" -> true
-                | "LL" | "RR" -> true
+                | "$$" | "€€" -> true
                 | _ -> false
         let result2 = 
             match second rule with
                 | "__" -> true
-                | "LL" | "RR" -> true
+                | "$$" | "€€" -> true
                 | _ -> (second rule)[0] = input[idx2]
-        let result3 =
-            match third rule with
-                | "__" -> true
-                | "LL" | "RR" -> true
-                | _ -> ((third rule)[0] |> string) = states[idx3]
-        result1 && result2 && result3
 
-    let act (rule:String*String*String) =
+        result1 && result2
+
+    let act (rules:Rule) =
+        let rule = second(rules)
         match first rule with 
             | "__" -> ()
             | "$$" -> move1(first rule,-1)
@@ -52,47 +50,32 @@ let RMT(rules:List<List<Rule>>,input:array<char>,states:array<string>) =
             | "$$" -> move2(second rule,-1)
             | "€€" -> move2(second rule,1)
             | _ -> write2(second rule)
-        match third rule with 
-            | "__" -> ()
-            | "$$" -> move3(third rule,-1)
-            | "€€" -> move3(third rule,1)
-            | _ -> write3(third rule)
+        write3(BinToDec(third(rules)))
 
     let search (rules:List<List<Rule>>) =
         let rec search_rec(rules_state: List<Rule>) = 
             match rules_state with
-                | [rule:Rule] -> if check(second rule) then act (second rule)
+                | [rule:Rule] -> if check(second rule) then act rule
                 | rule :: rest -> 
-                    if check (second rule) then act (second rule)
+                    if check (second rule) then act rule
                     else search_rec rest
                 | _ -> failwith "Shit wrong"
+        search_rec(rules[current_state - 1])
 
-        search_rec(rules[int(states[0])])
-
-    while not(start = final) do
+    while not(current_state = final) do
         search rules
     input
 
-// let convert_to_rules(rules:array<List<string>>) =
+let decode_rules(rules:string) = 
+    let rules_seperated = Array.filter(fun (elm:string) -> elm.Length > 0) (rules.Split([|'M';'S'|])) |> Array.toList
+    List.map(fun (elm : string)-> 
+        elm.Split('#')) rules_seperated 
 
-let decode_rules(rules:string) : array<Rule> = 
-    let rules_seperated = Array.filter(fun (elm:string) -> elm.Length > 0) (rules.Split('!'))
-    Array.map(fun (elm : string)-> 
-        let rule_split = elm.Split('#')
-        let operation =  (rule_split[1][0..1],  rule_split[1][2..3],  rule_split[1][4..5])
-        Rule (rule_split[0], operation, rule_split[2])) rules_seperated 
 
-let bin_to_dec(num:string) : int = 
-    Convert.ToInt32(num, 2)
-let seperate_rules_into_states(rules:array<Rule>, max_state : int) = 
-    let rulelist : array<array<Rule>> = Array.init max_state (fun _ -> Array.create max_state ("",("","",""),""))
-    for rule in rules do
-        printfn "%A" rulelist[bin_to_dec(first (rule))]
-        //Array.append(rulelist[bin_to_dec(first (rule))], [|rule|])
-    rulelist
+let seperate_rules_into_states(rules:List<Rule>) = 
+    List.groupBy(fun (elm:Rule) -> first elm) rules 
+    |> List.map(fun elm -> snd elm)
 
 let rules, input,states = Read_file.read_file("1_Tape_example.txt")
-printfn "%A" (seperate_rules_into_states(decode_rules(rules[0]), 20))
+printfn "%A" (decode_rules(rules[0]))
 
-// let rules_rev, states_rev, input_rev = Read_file.read_file("1_Tape_example_rev.txt")
-// printfn "%A" (RMT(convert_to_rules(rules_rev), states_rev, input_rev))

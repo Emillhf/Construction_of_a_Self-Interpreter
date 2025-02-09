@@ -4,23 +4,37 @@ import re
 def Encode(program):
     translatedProgram = ""
     pattern = re.compile(r"\((\d+),\(\((.*?)\),\((.*?)\),\((.*?)\)\),(\d+)\)")
-    for rule in program:
+    for idx,rule in enumerate(program):
         match =  pattern.findall(rule)
         extracted = extract_groups(match[0])
-        operation = EncodeLanguage(extracted[1]) + EncodeLanguage(extracted[2]) + EncodeLanguage(extracted[3])
-        translatedProgram += "#" + extracted[0] + "#" + operation + '#' + extracted[4][::-1] + "#"
+        if "LEFT" in extracted or "RIGHT" in extracted:
+            move = EncodeMove(extracted[1]) + EncodeMove(extracted[2]) + EncodeMove(extracted[3])
+            translatedProgram += "M#" + extracted[0] + "#" + move + '#' + extracted[4][::-1] + "#M"
+        elif len(extracted[1]) == 2 and len(extracted[2]) == 2 and len(extracted[3]) == 2:
+            symbol = EncodeSymbol(extracted[1]) + EncodeSymbol(extracted[2]) + EncodeSymbol(extracted[3])
+            translatedProgram += "S#" + extracted[0] + "#" + symbol + '#' + extracted[4][::-1] + "#S"
+        else:
+            raise Exception("The following rule is wrong: ", rule, idx)
+        
     return translatedProgram
    
 def ToBinary(num: int):
     return bin(num)[2:]
 
-def EncodeLanguage(d):
+def EncodeSymbol(s):
+    if s == 'b':
+        return 'B'
+    return s
+
+def EncodeMove(d):
     if (d == "LEFT"):
-        return "$$"
+        return "10"
     elif (d == "RIGHT"):
-        return "€€"
-    else:
+        return "01"
+    elif (d == '__'):
         return d
+    else:
+        raise Exception("EncodeMove went wrong", d)
     
 def extract_groups(groups):
     encoded = []
@@ -46,5 +60,17 @@ BinINC = ["(1,((),(B,B),(B,2)),2)",
         "(4,((),(LEFT),()),5)",
         "(5,((),(0,0),()),4)",
         "(5,((),(B,B),()),6)"]
+
+BinDec = ["(2,((),(B,B),(B,2)),1)",
+        "(3,((),(LEFT),()),2)",
+        "(4,((),(1,0),()),3)",
+        "(2,((),(0,1),()),3)",
+        "(4,((),(B,B),()),3)",
+        "(5,((),(RIGHT),()),4)",
+        "(4,((),(0,0),()),5)",
+        "(6,((),(B,B),()),5)"
+        ]
+
 print(Encode(BinINC))
+print(Encode(BinDec))
     
