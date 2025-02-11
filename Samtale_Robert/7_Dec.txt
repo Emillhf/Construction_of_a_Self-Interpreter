@@ -1,0 +1,11 @@
+
+Snakke Opdateret rapport igennem
+Skal vi skrive at vi kører på F# fortolkeren? I goals
+Vise F# interpreter og tanker
+
+Bachelor Kontrakt + samarbejde
+
+Program inversion
+Tale self-interpreteren igennem
+
+Udveksling

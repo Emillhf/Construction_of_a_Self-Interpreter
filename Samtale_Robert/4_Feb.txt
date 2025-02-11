@@ -1,0 +1,9 @@
+
+StateTransition
+
+Performance - F# vs Python
+
+3 vs 1 tape? How would it look?
+
+Timeline - When do we expect each element to be done?
+

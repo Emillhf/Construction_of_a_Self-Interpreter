@@ -1,0 +1,11 @@
+
+We decided on using a 3 tape m symbol - easier implementation:
+        Move and write in same rule?
+            Do nothing (__) - Makes it possible?
+            State tape design
+
+
+Why are they reversed?
+
+State tape - Fixed size 
+    
