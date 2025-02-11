@@ -1,13 +1,15 @@
-
+#### HARD CODED ####
+start_state = 1 ### Always the start state
+final_state = 0 ### Always the final state
 
 def StateTransition(Rules):
     States = {}
-    count = 1
+    count = start_state
     for Rule in Rules:
         if not(Rule[0] in States): 
             States[Rule[0]] = count
             count += 1
-    States[Rules[-1][2]] = count
+    States[final_state] = final_state
     
     updated_Rules = []
     for Rule in Rules:
@@ -20,8 +22,8 @@ rules = [(1,"", 400),
         (3,"",400),
         (3,"",4),
         (4,"",100),
-        (100,"",4),
-        (100,"",6)]
+        (100,"",0),
+        (100,"",4)]
 
 print(StateTransition(rules))
     
