@@ -13,12 +13,13 @@ def StateTransition(Rules, start, final):
     States[final] = final_state
     
     updated_Rules = []
-    print
+    
     for Rule in Rules:
+        print(Rule)
         updated_Rules.append((States[Rule[0]], Rule[1], States[Rule[2]]))
     return updated_Rules
 
-rules = [(2,"", 400),
+rules = [(1,"", 400),
         (400,"",3),
         (3,"",4),
         (3,"",400),
@@ -27,6 +28,6 @@ rules = [(2,"", 400),
         (100,"",5),
         (100,"",4)]
 
-print(StateTransition(rules, 2, 5))
+print(StateTransition(rules, 1, 5))
     
         
