@@ -1,33 +1,42 @@
+import re
 #### HARD CODED ####
 start_state = 1 ### Always the start state
 final_state = 0 ### Always the final state
 
-def StateTransition(Rules, start, final):
+def StateTransition(Rules, start : str, final : str):
+    pattern = re.compile(r"\((\d+),\(\((.*?)\),\((.*?)\),\((.*?)\)\),(\d+)\)")
     States = {}
     count = start_state
-    for Rule in Rules:
-        if not(Rule[0] in States): 
-            States[Rule[0]] = count
+    for rule in Rules:
+        match =  pattern.findall(rule)
+        extracted = extract_groups(match[0])
+        if not(extracted[0] in States): 
+            States[extracted[0]] = count
             count += 1
     States[start] = start_state
     States[final] = final_state
     
     updated_Rules = []
     
-    for Rule in Rules:
-        print(Rule)
-        updated_Rules.append((States[Rule[0]], Rule[1], States[Rule[2]]))
+    print(States)
+    for rule in Rules:
+        match =  pattern.findall(rule)
+        extracted = extract_groups(match[0])
+        print("extracted: ", extracted)
+        print("apped: ", (States[extracted[0]], tuple(extracted[1:4]), States[extracted[4]]))
+        updated_Rules.append((States[extracted[0]], extracted[1], extracted[2], extracted[3], States[extracted[4]]))
     return updated_Rules
 
-rules = [(1,"", 400),
-        (400,"",3),
-        (3,"",4),
-        (3,"",400),
-        (3,"",4),
-        (4,"",100),
-        (100,"",5),
-        (100,"",4)]
 
-print(StateTransition(rules, 1, 5))
+def extract_groups(groups):
+    encoded = []
+    for idx,group in enumerate(groups):
+        if idx == 0 or idx == len(groups)-1:
+            encoded.append(group)
+        elif group == '':
+            encoded.append('__')
+        else:
+            encoded.append(group.replace(',',''))
+    return encoded
     
         

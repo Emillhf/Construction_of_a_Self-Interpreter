@@ -38,15 +38,17 @@ let seperate_rules_into_states(rules:List<Rule>) =
     List.groupBy(fun (elm:Rule) -> first elm) rules 
     |> List.map(fun elm -> snd elm)
 
-let RMT(rules:array<char>,input:array<char>,states:array<char>) =
+let RMT(input:array<char>, rules:array<char>, states:array<char>) =
     let rules_tuple = seperate_rules_into_states (decode_rules (String.Concat (rules)))
     let start = 1 //Starting state is always 1
     let final = 0 //Final state is always 0
     let mutable idx1 = 0
     let mutable idx2 = 0
     let mutable idx3 = 0
-    let mutable current_state = BinToDec(states |> String.Concat)
-    let write(replace:char, idx:int) = input[idx] <- replace
+    let mutable current_state =start
+    let write1(replace:char) = input[idx1] <- replace
+    let write2(replace:char) = rules[idx2] <- replace
+    let write3(replace:char) = states[idx3] <- replace
 
     let updateCurrentState (newState:int)= current_state <- newState
 
@@ -56,8 +58,21 @@ let RMT(rules:array<char>,input:array<char>,states:array<char>) =
     
     let check (operation:Operation) =
         match operation with
-                | Move(_,_,_) -> true
-                | Symbol(a,b,c) -> b[0] = input[idx2]
+            | Move(_,_,_) -> true
+            | Symbol(a,b,c) -> 
+            let res1 = 
+                match a with
+                    | "__" -> true
+                    | _-> (a[0] = input[idx1])
+            let res2 = 
+                match b with
+                    | "__" ->  true
+                    | _-> (b[0] = rules[idx2]) 
+            let res3 = 
+                match c with
+                    | "__" -> true
+                    | _-> (c[0] = states[idx3])
+            res1 & res2 & res3
 
     let act (rules:Rule) =
         let rule  = second(rules)
@@ -78,28 +93,17 @@ let RMT(rules:array<char>,input:array<char>,states:array<char>) =
             | Symbol(a,b,c) -> 
                 match a with
                     | "__" -> ()
-                    | _-> write(a[1], idx1)
+                    | _-> write1(a[1])
                 match b with
                     | "__" -> ()
-                    | _-> write(b[1], idx2)
+                    | _-> write2(b[1])
                 match c with
                     | "__" -> ()
-                    | _-> write(c[1], idx3) 
-            // | "__" -> () 
-            // | "$$" -> move1(first rule,-1)
-            // | "€€" -> move1(first rule,1)
-            // | _ -> write1(first rule)
-        // match second rule with 
-        //     | "__" -> ()
-        //     | "$$" -> move2(second rule,-1)
-        //     | "€€" -> move2(second rule,1)
-        //     | _ -> write2(second rule)
+                    | _-> write3(c[1]) 
         updateCurrentState (BinToDec (reverse (third (rules)))) //Update current_state
-        
 
     let search (rules:List<List<Rule>>) =
         let rec search_rec(rules_state: List<Rule>) = 
-            printfn "%A" rules[current_state - 1]
             match rules_state with
                 | [rule:Rule] -> 
                     if check(second rule) then act rule
@@ -107,14 +111,13 @@ let RMT(rules:array<char>,input:array<char>,states:array<char>) =
                     if check (second rule) then act rule
                     else search_rec rest
                 | _ -> failwith "Shit wrong"
-        printfn "%A" current_state
         search_rec(rules[current_state - 1]) // -1 due to 0 indexing
 
     while not(current_state = final) do
         search rules_tuple
+    
     input
 
-let rules, input,states = Read_file.read_file("1_Tape_example.txt")
-printfn "%A" (RMT (rules, input, states))
-
+let input, rules,states = Read_file.read_file("F#_Interpreter_ikke_pæn/test.txt")
+printfn "%A" (RMT (input, rules, states))
 

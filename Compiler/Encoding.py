@@ -3,16 +3,13 @@ import re
 
 def Encode(program):
     translatedProgram = ""
-    pattern = re.compile(r"\((\d+),\(\((.*?)\),\((.*?)\),\((.*?)\)\),(\d+)\)")
     for idx,rule in enumerate(program):
-        match =  pattern.findall(rule)
-        extracted = extract_groups(match[0])
-        if "LEFT" in extracted or "RIGHT" in extracted:
-            move = EncodeMove(extracted[1]) + EncodeMove(extracted[2]) + EncodeMove(extracted[3])
-            translatedProgram += "M#" + extracted[0] + "#" + move + '#' + extracted[4][::-1] + "#M"
-        elif len(extracted[1]) == 2 and len(extracted[2]) == 2 and len(extracted[3]) == 2:
-            symbol = EncodeSymbol(extracted[1]) + EncodeSymbol(extracted[2]) + EncodeSymbol(extracted[3])
-            translatedProgram += "S#" + extracted[0] + "#" + symbol + '#' + extracted[4][::-1] + "#S"
+        if "LEFT" in rule or "RIGHT" in rule:
+            move = EncodeMove(rule[1]) + EncodeMove(rule[2]) + EncodeMove(rule[3])
+            translatedProgram += "M#" + ToBinary(int(rule[0])) + "#" + move + '#' + ToBinary(int(rule[4]))[::-1] + "#M"
+        elif len(rule[1]) == 2 and len(rule[2]) == 2 and len(rule[3]) == 2:
+            symbol = EncodeSymbol(rule[1]) + EncodeSymbol(rule[2]) + EncodeSymbol(rule[3])
+            translatedProgram += "S#" + ToBinary(int(rule[0])) + "#" + symbol + '#' + ToBinary(int(rule[4]))[::-1] + "#S"
         else:
             raise Exception("The following rule is wrong: ", rule, idx)
         
@@ -46,31 +43,3 @@ def extract_groups(groups):
         else:
             encoded.append(group.replace(',',''))
     return encoded
-
-program = ["(0,((),(RIGHT),()),1)",
-            "(1,((),(0,1),(1,2)),2)",
-            "(1,((),(1,0),(1,2)),2)",
-            "(1,((),(LEFT),()),2)"]
-
-BinINC = ["(1,((),(B,B),(B,2)),2)",
-        "(2,((),(RIGHT),()),3)",
-        "(3,((),(0,1),()),4)",
-        "(3,((),(1,0),()),2)",
-        "(3,((),(B,B),()),4)",
-        "(4,((),(LEFT),()),5)",
-        "(5,((),(0,0),()),4)",
-        "(5,((),(B,B),()),6)"]
-
-BinDec = ["(2,((),(B,B),(B,2)),1)",
-        "(3,((),(LEFT),()),2)",
-        "(4,((),(1,0),()),3)",
-        "(2,((),(0,1),()),3)",
-        "(4,((),(B,B),()),3)",
-        "(5,((),(RIGHT),()),4)",
-        "(4,((),(0,0),()),5)",
-        "(6,((),(B,B),()),5)"
-        ]
-
-print(Encode(BinINC))
-print(Encode(BinDec))
-    
