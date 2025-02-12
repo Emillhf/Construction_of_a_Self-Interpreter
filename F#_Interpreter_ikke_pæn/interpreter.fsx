@@ -72,7 +72,7 @@ let RMT(input:array<char>, rules:array<char>, states:array<char>) =
                 match c with
                     | "__" -> true
                     | _-> (c[0] = states[idx3])
-            res1 & res2 & res3
+            res1 && res2 && res3
 
     let act (rules:Rule) =
         let rule  = second(rules)
@@ -82,14 +82,17 @@ let RMT(input:array<char>, rules:array<char>, states:array<char>) =
                     | "__" -> ()
                     | "01" -> move1(1)
                     | "10" -> move1(-1)
+                    |_-> failwith "Error when moving "
                 match t2 with
                     | "__" -> ()
                     | "01" -> move2(1)
                     | "10" -> move2(-1)
+                    |_-> failwith "Error when moving"
                 match t3 with               
                     | "__" -> ()
                     | "01" -> move3(1)
                     | "10" -> move3(-1)
+                    |_-> failwith "Error when moving"
             | Symbol(a,b,c) -> 
                 match a with
                     | "__" -> ()

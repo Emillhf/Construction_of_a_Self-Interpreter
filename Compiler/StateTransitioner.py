@@ -17,13 +17,9 @@ def StateTransition(Rules, start : str, final : str):
     States[final] = final_state
     
     updated_Rules = []
-    
-    print(States)
     for rule in Rules:
         match =  pattern.findall(rule)
         extracted = extract_groups(match[0])
-        print("extracted: ", extracted)
-        print("apped: ", (States[extracted[0]], tuple(extracted[1:4]), States[extracted[4]]))
         updated_Rules.append((States[extracted[0]], extracted[1], extracted[2], extracted[3], States[extracted[4]]))
     return updated_Rules
 
