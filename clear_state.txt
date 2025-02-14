@@ -1,8 +1,4 @@
-b
-!
-(1,((alfa,alfa),(#,#),(#,b)),2)
+(1,((alfa,alfa),(#,#),(#,B)),2)
 (2,((),(RIGHT),(RIGHT)),3)
-(3,((alfa,alfa),(#,#),(beta,b)),4)
-(3,((alfa,alfa),(beta!=#,beta!=#),(beta,b)),4)
-π
-##
+(3,((alfa,alfa),(#,#),(beta,B)),4)
+(3,((alfa,alfa),(beta!=(#),beta!=(#)),(beta,B)),2)
