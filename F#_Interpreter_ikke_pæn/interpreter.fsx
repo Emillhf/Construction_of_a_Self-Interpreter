@@ -14,7 +14,8 @@ let reverse (s:string) = s |> Seq.rev |> String.Concat
 
 let decode_rules(rules:string) = 
     let string_to_rule (rule:string) = 
-        let pattern = @"(S|M)#(\d+)#([^#]+)#(\d+)#(S|M)"
+        let pattern = @"(S|M)#(\d+)#(.+)#(\d+)#(S|M)"
+        printfn "%A" rule
         let matchResult = Regex.Match(rule, pattern)
         let symbolType = matchResult.Groups.[1].Value // "S" or "M"
         let num1 = matchResult.Groups.[2].Value
@@ -28,10 +29,12 @@ let decode_rules(rules:string) =
         (num1, operation, num2)
 
     let splitString (input: string) =
-        let pattern = @"[MS][^MS]+[MS]"
+        let pattern = @"[MS]#\d+#[^#]+#\d+#[MS]"
         let matches = Regex.Matches(input, pattern)
+        printfn "%A" matches
         matches |> Seq.cast<Match> |> Seq.map (fun m -> string_to_rule m.Value )  
         |> Seq.toList
+
     splitString rules
 
 let seperate_rules_into_states(rules:List<Rule>) = 
@@ -122,5 +125,7 @@ let RMT(input:array<char>, rules:array<char>, states:array<char>) =
     input
 
 let input, rules,states = Read_file.read_file("F#_Interpreter_ikke_pæn/test.txt")
+printfn "%A" (decode_rules(String.Concat(rules)))
+//let rules_tuple = seperate_rules_into_states (decode_rules (String.Concat (rules)))
 printfn "%A" (RMT (input, rules, states))
 

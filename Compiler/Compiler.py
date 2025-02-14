@@ -11,7 +11,7 @@ program = ["(0,((),(RIGHT),()),1)",
             "(1,((),(1,0),(1,2)),2)",
             "(1,((),(LEFT),()),2)"]
 
-BinINC = ["(1,((B,B),(),()),2)",
+BinINC = ["(1,((B,B),(beta,beta),()),2)", ## kan indsætte et beta på operation 2
         "(2,((RIGHT),(),()),3)",
         "(3,((0,1),(),()),4)",
         "(3,((1,0),(),()),2)",
@@ -33,7 +33,8 @@ BinDec = ["(2,((),(B,B),()),1)",
 
 
 input = "1101"
-rules_enc = Encoding.Encode(StateTransitioner.StateTransition(BinINC, "1", "6"))
+##rules_enc = Encoding.Encode(StateTransitioner.StateTransition(Expander.expand_rules(BinINC,Expander.alfa,Expander.beta), "1", "6"))
+rules_enc = Encoding.Encode(StateTransitioner.StateTransition(Expander.expand_rules(BinINC,Expander.alfa,Expander.beta), "1", "6"))
 
 
 
