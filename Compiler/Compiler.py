@@ -30,16 +30,23 @@ BinDec = ["(2,((),(B,B),()),1)",
         "(6,((),(B,B),()),5)"
         ]
 
+filename_user = input("Please give a path to a file where the program resides without .txt\n")
+file_user = open(os.getcwd() +"/" + filename_user + ".txt","r")
+lines_user = file_user.readlines()
+rules_user = [rule.removesuffix("\n") for rule in lines_user]
+start_state_user = input("Please give an start state\n")
+final_state_user = input("Please give an final state\n")
 
-
-input = "1101"
+inputt = "1101"
 ##rules_enc = Encoding.Encode(StateTransitioner.StateTransition(Expander.expand_rules(BinINC,Expander.alfa,Expander.beta), "1", "6"))
-rules_enc = Encoding.Encode(StateTransitioner.StateTransition(Expander.expand_rules(BinINC,Expander.alfa,Expander.beta), "1", "6"))
+rules_enc = Encoding.Encode(
+    StateTransitioner.StateTransition(
+        Expander.expand_rules(
+            rules_user,Expander.alfa,Expander.beta), start_state_user, final_state_user))
+print(len(rules_enc))
 
-
-
-f = open(os.getcwd() + "/F#_Interpreter_ikke_pæn/test.txt", "w")
-f.write("B" + input + "B\n!\n")
+f = open(os.getcwd() + "/" + filename_user + "_enc" + ".txt", "w+")
+f.write("B" + inputt + "B\n!\n")
 f.write("B" + rules_enc +"B\n$\n")
-f.write("B")
+f.write("B#11011#B")
 f.close()

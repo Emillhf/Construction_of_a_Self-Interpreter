@@ -30,10 +30,15 @@ let decode_rules(rules:string) =
     let splitString (input: string) =
         let pattern = @"[MS]#\d+#[^#]+#\d+#[MS]"
         let matches = Regex.Matches(input, pattern)
-        matches |> Seq.cast<Match> |> Seq.map (fun m -> string_to_rule m.Value )  
+        printfn "matches: %A" matches.Count
+        matches |> Seq.cast<Match> |> Seq.map (fun m -> 
+                        printfn "%A" m.Value
+                        string_to_rule m.Value )  
         |> Seq.toList
 
-    splitString rules
+    let res = splitString rules
+    printfn "%A" res.Length
+    res
 
 let seperate_rules_into_states(rules:List<Rule>) = 
     List.groupBy(fun (elm:Rule) -> first elm) rules 
@@ -41,6 +46,7 @@ let seperate_rules_into_states(rules:List<Rule>) =
 
 let RMT(input:array<char>, rules:array<char>, states:array<char>) =
     let rules_tuple = seperate_rules_into_states (decode_rules (String.Concat (rules)))
+    printfn "%A" rules_tuple
     let start = 1 //Starting state is always 1
     let final = 0 //Final state is always 0
     let mutable idx1 = 0
@@ -120,9 +126,9 @@ let RMT(input:array<char>, rules:array<char>, states:array<char>) =
     while not(current_state = final) do
         search rules_tuple
     
-    input
+    input, rules, states
 
-let input, rules,states = Read_file.read_file("F#_Interpreter_ikke_pæn/test.txt")
+let input, rules,states = Read_file.read_file("clear_state_enc.txt")
 //let rules_tuple = seperate_rules_into_states (decode_rules (String.Concat (rules)))
 printfn "%A" (RMT (input, rules, states))
 

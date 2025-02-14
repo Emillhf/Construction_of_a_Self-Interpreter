@@ -12,7 +12,7 @@ def Encode(program):
             translatedProgram += "S#" + ToBinary(int(rule[0])) + "#" + symbol + '#' + ToBinary(int(rule[4]))[::-1] + "#S"
         else:
             raise Exception("The following rule is wrong: ", rule, idx)
-        
+
     return translatedProgram
    
 def ToBinary(num: int):
