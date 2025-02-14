@@ -28,17 +28,13 @@ let decode_rules(rules:string) =
         (num1, operation, num2)
 
     let splitString (input: string) =
-        let pattern = @"[MS]#\d+#[^#]+#\d+#[MS]"
+        let pattern = @"[SM]#(\d+)#(.+?)#(\d+)#[SM]"
         let matches = Regex.Matches(input, pattern)
-        printfn "matches: %A" matches.Count
-        matches |> Seq.cast<Match> |> Seq.map (fun m -> 
-                        printfn "%A" m.Value
-                        string_to_rule m.Value )  
+        matches |> Seq.cast<Match> |> Seq.map (fun m -> string_to_rule m.Value )  
         |> Seq.toList
 
-    let res = splitString rules
-    printfn "%A" res.Length
-    res
+    splitString rules
+
 
 let seperate_rules_into_states(rules:List<Rule>) = 
     List.groupBy(fun (elm:Rule) -> first elm) rules 
@@ -46,7 +42,6 @@ let seperate_rules_into_states(rules:List<Rule>) =
 
 let RMT(input:array<char>, rules:array<char>, states:array<char>) =
     let rules_tuple = seperate_rules_into_states (decode_rules (String.Concat (rules)))
-    printfn "%A" rules_tuple
     let start = 1 //Starting state is always 1
     let final = 0 //Final state is always 0
     let mutable idx1 = 0
@@ -65,25 +60,26 @@ let RMT(input:array<char>, rules:array<char>, states:array<char>) =
     
     let check (operation:Operation) =
         match operation with
-            | Move(_,_,_) -> true
+            | Move(_,_,_) -> 
+                true
             | Symbol(a,b,c) -> 
-            let res1 = 
-                match a with
-                    | "__" -> true
-                    | _-> (a[0] = input[idx1])
-            let res2 = 
-                match b with
-                    | "__" ->  true
-                    | _-> (b[0] = rules[idx2]) 
-            let res3 = 
-                match c with
-                    | "__" -> true
-                    | _-> (c[0] = states[idx3])
-            res1 && res2 && res3
+                let res1 = 
+                    match a with
+                        | "__" -> true
+                        | _-> (a[0] = input[idx1])
+                let res2 = 
+                    match b with
+                        | "__" ->  true
+                        | _-> (b[0] = rules[idx2]) 
+                let res3 = 
+                    match c with
+                        | "__" -> true
+                        | _-> (c[0] = states[idx3])
+                res1 && res2 && res3
 
-    let act (rules:Rule) =
-        let rule  = second(rules)
-        match rule with 
+    let act (rule:Rule) =
+        let operation  = second(rule)
+        match operation with 
             | Move(t1,t2,t3) -> 
                 match t1 with
                     | "__" -> ()
@@ -110,9 +106,9 @@ let RMT(input:array<char>, rules:array<char>, states:array<char>) =
                 match c with
                     | "__" -> ()
                     | _-> write3(c[1]) 
-        updateCurrentState (BinToDec (reverse (third (rules)))) //Update current_state
+        updateCurrentState (BinToDec (reverse (third (rule)))) //Update current_state
 
-    let search (rules:List<List<Rule>>) =
+    let search (rules_list:List<List<Rule>>) =
         let rec search_rec(rules_state: List<Rule>) = 
             match rules_state with
                 | [rule:Rule] -> 
@@ -121,14 +117,14 @@ let RMT(input:array<char>, rules:array<char>, states:array<char>) =
                     if check (second rule) then act rule
                     else search_rec rest
                 | _ -> failwith "Shit wrong"
-        search_rec(rules[current_state - 1]) // -1 due to 0 indexing
+        search_rec(rules_list[current_state - 1]) // -1 due to 0 indexing
 
     while not(current_state = final) do
         search rules_tuple
     
-    input, rules, states
+    (input, rules, states)
 
-let input, rules,states = Read_file.read_file("clear_state_enc.txt")
+let input, rules,states = Read_file.read_file("write_state_enc.txt")
 //let rules_tuple = seperate_rules_into_states (decode_rules (String.Concat (rules)))
 printfn "%A" (RMT (input, rules, states))
 

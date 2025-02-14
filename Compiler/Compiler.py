@@ -43,10 +43,9 @@ rules_enc = Encoding.Encode(
     StateTransitioner.StateTransition(
         Expander.expand_rules(
             rules_user,Expander.alfa,Expander.beta), start_state_user, final_state_user))
-print(len(rules_enc))
 
 f = open(os.getcwd() + "/" + filename_user + "_enc" + ".txt", "w+")
 f.write("B" + inputt + "B\n!\n")
 f.write("B" + rules_enc +"B\n$\n")
-f.write("B#11011#B")
+f.write("B#1#B")
 f.close()
