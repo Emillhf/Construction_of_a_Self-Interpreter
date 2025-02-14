@@ -37,8 +37,11 @@ let decode_rules(rules:string) =
 
 
 let seperate_rules_into_states(rules:List<Rule>) = 
-    List.groupBy(fun (elm:Rule) -> first elm) rules 
-    |> List.map(fun elm -> snd elm)
+    let res = List.sortBy(fun (elm:Rule) -> BinToDec(first elm)) rules
+            |> List.groupBy(fun (elm:Rule) -> first elm)
+            |> List.map(fun elm -> snd elm)
+    printfn "%A" 
+    res
 
 let RMT(input:array<char>, rules:array<char>, states:array<char>) =
     let rules_tuple = seperate_rules_into_states (decode_rules (String.Concat (rules)))
@@ -124,7 +127,7 @@ let RMT(input:array<char>, rules:array<char>, states:array<char>) =
     
     (input, rules, states)
 
-let input, rules,states = Read_file.read_file("write_state_enc.txt")
+let input, rules,states = Read_file.read_file("compare_states_enc.txt")
 //let rules_tuple = seperate_rules_into_states (decode_rules (String.Concat (rules)))
 printfn "%A" (RMT (input, rules, states))
 
