@@ -34,6 +34,7 @@ let RMT(rules:List<List<Rule>>, (start1,final1):int*int, (input:tape,program:tap
             | Symbol(t1,t2,t3) -> ((fst t1) = input[idx1]) && ((fst t2) = program[idx2]) && ((fst t3) = states[idx3])
 
     let act (rule:Rule) =
+        printfn "%A" rule
         match second rule with 
             | Move(t1,t2,t3) -> 
                 match t1 with
@@ -70,11 +71,13 @@ let RMT(rules:List<List<Rule>>, (start1,final1):int*int, (input:tape,program:tap
         search_rec(rules_list[current_state - 1]) // -1 due to 0 indexing
 
     while not(current_state = final) do
+        printfn "%A" (current_state, idx1, idx2, idx3)
+        printfn "%A" (input, program, states)
         search rules
-    input
+    input, states
 
 
-let rules:List<List<Rule>> = [[(1,Symbol(('B','B'),('B','B'),('B','B')),2)];
+let BinInc:List<List<Rule>> = [[(1,Symbol(('B','B'),('B','B'),('B','B')),2)];
             [(2,Move(("RIGHT"),("STAY"),("STAY")),3)];
             [(3,Symbol(('0','1'),('B','B'),('B','B')),4);
             (3,Symbol(('1','0'),('B','B'),('B','B')),2);
@@ -83,4 +86,26 @@ let rules:List<List<Rule>> = [[(1,Symbol(('B','B'),('B','B'),('B','B')),2)];
             [(5,Symbol(('0','0'),('B','B'),('B','B')),4);
             (5,Symbol(('B','B'),('B','B'),('B','B')),0)]]
 
-printfn "%A" (RMT (rules,(1,6),([|'B';'1';'1';'0';'1';'B'|],[|'B'|], [|'B'|])))
+let clear_state: List<List<Rule>> = [
+                [(1,Symbol(('0','0'),('#','#'),('#','B')),2); 
+                (1,Symbol(('1','1'),('#','#'),('#','B')),2); 
+                (1,Symbol(('B','B'),('#','#'),('#','B')),2)]; 
+                [(2,Move(("STAY"),("RIGHT"),("RIGHT")),3)];  // Program tape is stay for now
+                [(3,Symbol(('0','0'),('#','#'),('#','B')),0); 
+                (3,Symbol(('1','1'),('#','#'),('#','B')),0); 
+                (3,Symbol(('B','B'),('#','#'),('#','B')),0); 
+                (3,Symbol(('0','0'),('0','0'),('0','B')),2); 
+                (3,Symbol(('0','0'),('1','1'),('1','B')),2); 
+                (3,Symbol(('0','0'),('B','B'),('B','B')),2); 
+                (3,Symbol(('1','1'),('0','0'),('0','B')),2); 
+                (3,Symbol(('1','1'),('1','1'),('1','B')),2); 
+                (3,Symbol(('1','1'),('B','B'),('B','B')),2); 
+                (3,Symbol(('B','B'),('0','0'),('0','B')),2); 
+                (3,Symbol(('B','B'),('1','1'),('1','B')),2); 
+                (3,Symbol(('B','B'),('B','B'),('B','B')),2);
+                (3,Symbol(('B','B'),('B','B'),('0','B')),2);
+                (3,Symbol(('B','B'),('B','B'),('1','B')),2)]]
+
+//printfn "%A" clear_state
+// printfn "%A" (RMT (BinInc,(1,6),([|'B';'1';'1';'0';'1';'B'|],[|'B'|], [|'B'|])))
+printfn "%A" (RMT (clear_state,(1,0),([|'B';'B'|],[|'#';'B';'B';'#';'B';'B'|], [|'#';'1';'0';'#'|])))
