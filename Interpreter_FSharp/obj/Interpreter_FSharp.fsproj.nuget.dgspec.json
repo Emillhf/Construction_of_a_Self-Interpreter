@@ -1,26 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "/Users/claes/Bachelor/BachelorProject/Interpreter_FSharp/Interpreter_FSharp.fsproj": {}
+    "C:\\Users\\Emill\\bachelorProject\\BachelorProject\\Interpreter_FSharp\\Interpreter_FSharp.fsproj": {}
   },
   "projects": {
-    "/Users/claes/Bachelor/BachelorProject/Interpreter_FSharp/Interpreter_FSharp.fsproj": {
+    "C:\\Users\\Emill\\bachelorProject\\BachelorProject\\Interpreter_FSharp\\Interpreter_FSharp.fsproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/claes/Bachelor/BachelorProject/Interpreter_FSharp/Interpreter_FSharp.fsproj",
+        "projectUniqueName": "C:\\Users\\Emill\\bachelorProject\\BachelorProject\\Interpreter_FSharp\\Interpreter_FSharp.fsproj",
         "projectName": "Interpreter_FSharp",
-        "projectPath": "/Users/claes/Bachelor/BachelorProject/Interpreter_FSharp/Interpreter_FSharp.fsproj",
-        "packagesPath": "/Users/claes/.nuget/packages/",
-        "outputPath": "/Users/claes/Bachelor/BachelorProject/Interpreter_FSharp/obj/",
+        "projectPath": "C:\\Users\\Emill\\bachelorProject\\BachelorProject\\Interpreter_FSharp\\Interpreter_FSharp.fsproj",
+        "packagesPath": "C:\\Users\\Emill\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Emill\\bachelorProject\\BachelorProject\\Interpreter_FSharp\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/claes/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Emill\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "/usr/local/share/dotnet/sdk/8.0.204/FSharp/library-packs": {},
+          "C:\\Program Files\\dotnet\\sdk\\8.0.300\\FSharp\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -42,7 +46,7 @@
             "FSharp.Core": {
               "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
               "target": "Package",
-              "version": "[8.0.200, )",
+              "version": "[8.0.300, )",
               "generatePathProperty": true
             }
           },
@@ -62,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

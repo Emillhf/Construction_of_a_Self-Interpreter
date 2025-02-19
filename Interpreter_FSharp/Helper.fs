@@ -9,7 +9,7 @@ let second (_,b,_) = b
 let third (_,_,c) = c
 
 let String_to_rule(rules:List<string>) =
-    let pattern = @"\((\d),\(\((.+)\),\((.+)\),\((.+)\)\),(\d)\)"
+    let pattern = @"\((\d+),\(\((.+)\),\((.+)\),\((.+)\)\),(\d+)\)"
     List.map(fun rule -> 
         let matches = Regex.Match(rule, pattern)
         let s1 = int(matches.Groups[1].Value)
