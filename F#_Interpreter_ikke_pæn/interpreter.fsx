@@ -1,3 +1,4 @@
+#load "read_expanded_file.fsx"
 type Symbol = (char*char)*(char*char)*(char*char)
 type Move = string*string*string
 
@@ -34,7 +35,6 @@ let RMT(rules:List<List<Rule>>, (start1,final1):int*int, (input:tape,program:tap
             | Symbol(t1,t2,t3) -> ((fst t1) = input[idx1]) && ((fst t2) = program[idx2]) && ((fst t3) = states[idx3])
 
     let act (rule:Rule) =
-        printfn "%A" rule
         match second rule with 
             | Move(t1,t2,t3) -> 
                 match t1 with
@@ -102,10 +102,8 @@ let clear_state: List<List<Rule>> = [
                 (3,Symbol(('1','1'),('B','B'),('B','B')),2); 
                 (3,Symbol(('B','B'),('0','0'),('0','B')),2); 
                 (3,Symbol(('B','B'),('1','1'),('1','B')),2); 
-                (3,Symbol(('B','B'),('B','B'),('B','B')),2);
-                (3,Symbol(('B','B'),('B','B'),('0','B')),2);
-                (3,Symbol(('B','B'),('B','B'),('1','B')),2)]]
+                (3,Symbol(('B','B'),('B','B'),('B','B')),2)]]
 
-//printfn "%A" clear_state
+
 // printfn "%A" (RMT (BinInc,(1,6),([|'B';'1';'1';'0';'1';'B'|],[|'B'|], [|'B'|])))
-printfn "%A" (RMT (clear_state,(1,0),([|'B';'B'|],[|'#';'B';'B';'#';'B';'B'|], [|'#';'1';'0';'#'|])))
+printfn "%A" (RMT (clear_state,(1,0),([|'B';'B'|],[|'#';'1';'1';'#';'B';'B'|], [|'#';'1';'1';'#'|])))

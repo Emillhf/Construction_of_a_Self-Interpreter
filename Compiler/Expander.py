@@ -63,14 +63,3 @@ example_rule_alfa = "(1,((alfa,alfa),(0,1),(0,0)),2)"
 example_rule_beta = "(1,((0,0),(beta,beta),(0,0)),2)"
 example_rule_alfaAndBeta = ["(1,((alfa,alfa),(beta,beta),(0,0)),2)"]
 example_rule_alfaAndBeta = ["(1,((alfa!=(b,1),alfa!=(b,1)),(beta!=(M),beta!=(M)),(0,0)),2)"]
-
-# print(expand_rules(example_rule_alfaAndBeta))
-# print(len(expand_rules(example_rule_alfaAndBeta)))
-# print(remove_equals("(1,((alfa!=(b,1),alfa!=(b,1)),(beta!=(M),beta!=(M)),(0,0)),2)"))
-
-# print(expand_rules(["(1,((alfa!=(b,1),alfa!=(b,1)),(beta!=(M),beta!=(M)),(0,0)),2)",
-#                     "(1,((alfa,alfa),(0,1),(0,0)),2)"],alfa,beta))
-# print(len(expand_rules(["(1,((alfa!=(b,1),alfa!=(b,1)),(beta!=(M),beta!=(M)),(0,0)),2)",
-#                         "(1,((alfa,alfa),(0,1),(0,0)),2)"],alfa,beta)))
-
-
