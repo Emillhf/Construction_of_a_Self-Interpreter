@@ -28,8 +28,8 @@ def EncodeMove(d):
         return "10"
     elif (d == "RIGHT"):
         return "01"
-    elif (d == '__'):
-        return d
+    elif (d == 'STAY'):
+        return "BB"
     else:
         raise Exception("EncodeMove went wrong", d)
     
@@ -38,8 +38,6 @@ def extract_groups(groups):
     for idx,group in enumerate(groups):
         if idx == 0 or idx == len(groups)-1:
             encoded.append(ToBinary(int(group)))
-        elif group == '':
-            encoded.append('__')
         else:
             encoded.append(group.replace(',',''))
     return encoded

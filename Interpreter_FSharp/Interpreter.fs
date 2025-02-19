@@ -10,6 +10,7 @@ let RMT(rules:List<List<Rule>>, (start1,final1):int*int, (input:tape,program:tap
     let mutable idx2 = 0
     let mutable idx3 = 0
     let mutable current_state = start
+    let mutable previous_state = -1
 
     let write1(symbol:char) = input[idx1] <- symbol
     let write2(symbol:char) = program[idx2] <- symbol
@@ -63,7 +64,11 @@ let RMT(rules:List<List<Rule>>, (start1,final1):int*int, (input:tape,program:tap
         search_rec(rules_list[current_state - 1]) // -1 due to 0 indexing
 
     while not(current_state = final) do
-        printfn "%A" (current_state, idx1, idx2, idx3)
-        printfn "%A" (input, program, states)
-        search rules
-    input, states
+        if not(previous_state = current_state) then
+            previous_state <- current_state
+            search rules
+        else 
+            printfn "%A" rules[current_state - 1]
+            printfn "Current state: %A\nInput tape: %A, idx: %A\nProgram tape: %A, idx: %A\nState tape %A, idx: %A" current_state input idx1 program idx2 states idx3
+            failwith "Rules are wrong in the above state"
+    input, program, states
