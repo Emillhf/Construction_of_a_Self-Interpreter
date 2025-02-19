@@ -6,9 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Types.fs" />
+    <Compile Include="Readers.fs" />
     <Compile Include="Helper.fs" />
     <Compile Include="Interpreter.fs" />
-    <Compile Include="Program.fsx" />
+    <Compile Include="Program.fs" />
   </ItemGroup>
 
 </Project>
