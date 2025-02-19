@@ -1,4 +1,10 @@
 
+def flatten(S):
+    if S == []:
+        return S
+    if isinstance(S[0], list):
+        return flatten(S[0]) + flatten(S[1:])
+    return S[:1] + flatten(S[1:])
 
 def Expand_macros(rules: str):
     
@@ -11,23 +17,22 @@ def Expand_macros(rules: str):
             file = open("Compiler/macros/" + filename + ".txt")
             lines = file.readlines()
             for line in lines:
-                line = line.strip()     
-                linesplit = line.split(",")  
-                first_state_rule = linesplit[0].strip("(") 
-                last_state_rule = linesplit[-1].strip(")") 
-                linesplit[0] = str(int(first_state_rule) + int(first_state)-1)
-                if (last_state_rule != "0"):
-                    linesplit[-1] = str(int(last_state_rule) + int(first_state)-1)
+                if "#load" in line:
+                    res.append(Expand_macros([line]))
                 else:
-                    linesplit[-1] = str(int(last_state_rule) + int(last_state))
-                res.append("(" + ",".join(linesplit) + ")")
+                    line = line.strip()     
+                    linesplit = line.split(",")  
+                    first_state_rule = linesplit[0].strip("(") 
+                    last_state_rule = linesplit[-1].strip(")") 
+                    linesplit[0] = str(int(first_state_rule) + int(first_state)-1)
+                    if (last_state_rule != "0"):
+                        linesplit[-1] = str(int(last_state_rule) + int(first_state)-1)
+                    else:
+                        linesplit[-1] = str(int(last_state_rule) + int(last_state))
+                    res.append("(" + ",".join(linesplit) + ")")
                 # print(first_state,last_state,linesplit) 
             rules[idx] = res
-    return rules
+    return flatten(rules)
 
 test = ["#load clear_state(1,4)",
         "#load write_state(4,11)"]
-
-for line in (Expand_macros(test)):
-    for innerline in line:
-        print(innerline)

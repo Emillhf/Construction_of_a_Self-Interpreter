@@ -1,6 +1,6 @@
-1
-4
-(1,((alfa,alfa),(#,#),(#,b)),2)
-(2,((STAY),(RIGHT),(RIGHT)),3)
-(3,((alfa,alfa),(#,#),(#,b)),4)
-(3,((alfa,alfa),(beta!=(#),beta!=(#)),(beta,b)),2)
+X
+Y
+(X,((alfa,alfa),(#,#),(#,b)),X+1)
+(X+1,((STAY),(RIGHT),(RIGHT)),X+2)
+(X+2,((alfa,alfa),(#,#),(#,b)),Y)
+(X+2,((alfa,alfa),(beta!=(#),beta!=(#)),(beta,b)),X+1)

@@ -2,6 +2,7 @@ import sys
 import os
 import Expander
 import StateTransitioner
+import Macros
 
 if len(sys.argv) < 2:
     print("Please give a filename as an argument")
@@ -19,7 +20,11 @@ file = open(input_filename, 'r')
 lines = file.readlines()
 start = lines[0].strip()
 final = lines[1].strip()
-lines_expanded = Expander.expand_rules(lines[2:], Expander.alfa, Expander.beta)
+lines = [line.strip() for line in lines]
+print(lines)
+lines_macroed = Macros.Expand_macros(lines[2:])
+print(lines_macroed)
+lines_expanded = Expander.expand_rules(lines_macroed, Expander.alfa, Expander.beta)
 lines_stateTransitioned = StateTransitioner.StateTransition(lines_expanded, start, final)
 outfile = open(output_filename, 'w+')
 outfile.writelines(lines_stateTransitioned)
