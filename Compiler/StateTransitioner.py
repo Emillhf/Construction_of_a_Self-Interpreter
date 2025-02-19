@@ -6,15 +6,14 @@ final_state = 0 ### Always the final state
 def StateTransition(Rules, start : str, final : str):
     pattern = re.compile(r"\((\d+),\(\((.*?)\),\((.*?)\),\((.*?)\)\),(\d+)\)")
     States = {}
-    count = 1
+    count = 2
+    States[start] = start_state
     for rule in Rules:
-        print(rule)
         match =  pattern.findall(rule)
         extracted = extract_groups(match[0])
         if not(extracted[0] in States): 
             States[extracted[0]] = count
             count += 1
-    States[start] = start_state
     States[final] = final_state
 
     
@@ -23,7 +22,9 @@ def StateTransition(Rules, start : str, final : str):
         match =  pattern.findall(rule)
         extracted = extract_groups(match[0])
         updated_Rules.append((States[extracted[0]], extracted[1], extracted[2], extracted[3], States[extracted[4]]))
-    return updated_Rules
+    sorted_rules= sorted(updated_Rules, key=lambda x: x[0])
+
+    return sorted_rules
 
 
 def extract_groups(groups):
