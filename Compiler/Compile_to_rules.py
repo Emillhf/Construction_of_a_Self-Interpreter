@@ -22,7 +22,6 @@ start = lines[0].strip()
 final = lines[1].strip()
 lines = [line.strip() for line in lines]
 lines_macroed = Macros.Expand_macros(lines[2:])
-print(lines_macroed)
 lines_expanded = Expander.expand_rules(lines_macroed, Expander.alfa, Expander.beta)
 lines_stateTransitioned = StateTransitioner.StateTransition(lines_expanded, start, final)
 outfile = open(output_filename, 'w+')
