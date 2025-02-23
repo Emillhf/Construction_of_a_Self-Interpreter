@@ -12,6 +12,5 @@
 (22,((alfa,alfa),(B,B),(b,b)),24)
 (23,((alfa,alfa),(1,1),(b,b)),24)
 (24,((STAY),(RIGHT),(STAY)),25)
-#load write_state(25,29)
-(29,((B,1),(alfa,alfa),(beta,beta)),0)
-(30,((STAY),(STAY),(STAY)),29)
+#load write_state(25,30)
+(30,((STAY),(STAY),(STAY)),0)

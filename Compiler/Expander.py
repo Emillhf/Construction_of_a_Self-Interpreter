@@ -1,6 +1,6 @@
 import re
 
-alfa = ['0','1','B', '#']
+alfa = ['0', '1', 'B', '#']
 beta = ['0', '1', 'B', '#']
 
 def expand_alfa(rule, alfa_current = alfa):
