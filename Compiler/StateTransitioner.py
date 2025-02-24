@@ -13,10 +13,8 @@ def StateTransition(rules, start : str, final : str):
         match =  (pattern.findall(rule))[0]
         if not(match[0] in States): 
             States[match[0]] = count
-            count += 1
-    
+            count += 1    
 
-    
     updated_Rules = []
     for rule in rules:
         match =  (pattern.findall(rule))[0]
