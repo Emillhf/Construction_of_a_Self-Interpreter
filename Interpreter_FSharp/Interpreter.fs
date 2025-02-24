@@ -62,7 +62,6 @@ let RMT(rules:List<List<Rule>>, (start1,final1):int*int, (input:tape,program:tap
                     else search_rec rest
                 | _ -> failwith "Shit wrong"
         search_rec(rules_list[current_state - 1]) // -1 due to 0 indexing
-
     while not(current_state = final) do
         if not(previous_state = current_state) then
             previous_state <- current_state

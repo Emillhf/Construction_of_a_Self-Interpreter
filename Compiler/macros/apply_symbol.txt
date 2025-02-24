@@ -1,0 +1,7 @@
+#load clear_state(1,4)
+(4,((STAY),(RIGHT),(STAY)),5)
+(5,((alfa,b),(alfa,alfa),(b,b)),6)
+(6,((STAY),(RIGHT),(STAY)),7)
+(7,((b,alfa),(alfa,alfa),(b,b)),8)
+(8,((STAY),(RIGHT),(STAY)),9)
+#load write_state(9,13)

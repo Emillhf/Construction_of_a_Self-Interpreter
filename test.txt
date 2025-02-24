@@ -1,0 +1,8 @@
+1
+0
+#load clear_state_test(1,15,16,0)
+#load clear_state_test(15,30,31,2)
+#load clear_state(16,45,16)
+(30,((STAY),(STAY),(STAY)),0)
+(31,((STAY),(STAY),(STAY)),0)
+(45,((STAY),(STAY),(STAY)),0)
