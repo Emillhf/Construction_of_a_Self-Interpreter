@@ -1,6 +1,0 @@
-X
-Y
-(X,((alfa,alfa),(#,#),(#,b)),X+1)
-(X+1,((STAY),(RIGHT),(RIGHT)),X+2)
-(X+2,((alfa,alfa),(#,#),(#,b)),Y)
-(X+2,((alfa,alfa),(beta!=(#),beta!=(#)),(beta,b)),X+1)

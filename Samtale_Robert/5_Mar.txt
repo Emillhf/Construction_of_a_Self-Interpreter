@@ -1,0 +1,5 @@
+
+
+Program tape - 3 tape encoded rules? fx. S#00#01$10$01#10#S
+Why have small b and big B? -- Encoding in apply symbol
+Symbol rule -- how to reverse? Logical inverses?
