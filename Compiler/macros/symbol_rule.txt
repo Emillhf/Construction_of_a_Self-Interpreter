@@ -1,1 +1,4 @@
 #load compare_states(1,9,100)
+#load compare_symbol(9,18,100)
+#load apply_symbol(18,31)
+#load next rule(100,101)
