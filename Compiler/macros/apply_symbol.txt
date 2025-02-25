@@ -6,4 +6,4 @@
 (7,((b,alfa!=(b)),(alfa!=(b),alfa!=(b)),(b,b)),8)
 (7,((b,b),(B,B),(b,b)),8)
 (8,((STAY),(RIGHT),(STAY)),9)
-#load write_state(9,13)
+#load write_state(9,0)

@@ -70,4 +70,5 @@ let RMT(rules:List<List<Rule>>, (start1,final1):int*int, (input:tape,program:tap
             printfn "%A" rules[current_state - 1]
             printfn "Current state: %A\nInput tape: %A, idx: %A\nProgram tape: %A, idx: %A\nState tape %A, idx: %A" current_state input idx1 program idx2 states idx3
             failwith "Rules are wrong in the above state"
+    printfn "%A" (idx1, idx2, idx3) 
     input, program, states
