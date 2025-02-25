@@ -1,20 +1,26 @@
 ﻿open Interpreter
 open Helper
+open Readers
 
 // let clear_state = read_rules("../Expanded_clear_state.txt")
 // let write_state = read_rules("../Expanded_write_state.txt")
-let clear_state= read_rules("Expanded_test.txt")
+//let clear_state= read_rules("Expanded_test.txt")
 //let compare_state = read_rules("Expanded_compare_states.txt")
 //let move_rule = read_rules("Expanded_test.txt")
-
 // clear_state - Afprøvning
-let result_clear = (RMT (clear_state,(1,0),([|'0';'B';'B';'B';'B';'B'|],[|'#';'0';'0';'#';'0';'1';'#';'1';'0';'#'|], [|'#';'0';'0';'#';'b'|])))
+//let result_clear = (RMT (clear_state,(1,0),([|'0';'B';'B';'B';'B';'B'|],[|'#';'0';'0';'#';'0';'1';'#';'1';'0';'#'|], [|'#';'0';'0';'#';'b'|])))
 
-printfn "%A" result_clear
+let apply_symbol = read_rules("Expanded_RTM_Programs/apply_symbol.txt")
+let apply_symbol_tapes = read_tape_file("Tapes_RTM/apply_symbol.txt")
+printfn "%A" (RMT (apply_symbol,(1,0),apply_symbol_tapes))
+
+//printfn "%A" result_clear
 //write_state - Afprøvning
 //printfn "%A" (RMT (write_state,(1,0),(result_clear)))
 
-//printfn "%A" (RMT (clear_and_write,(1,0),([|'B';'B'|],[|'#';'0';'1';'#';'0';'1';'#';'B'|], [|'#';'0';'1';'#';'B'|])))
+let clear_and_write = read_rules("Expanded_RTM_Programs/clear_and_write.txt")
+let clear_and_write_tape = read_tape_file("Tapes_RTM/clear_and_write.txt")
+printfn "%A" (RMT (clear_and_write,(1,0),([|'b';'b'|],[|'#';'0';'0';'#';'1';'0';'#';'B'|], [|'#';'0';'0';'#';'B'|])))
 
 //Compare states - Afprøvning
 // printfn "%A" (RMT (compare_state,(1,0),([|'B';'B'|],[|'#';'1';'0';'1';'#';'B';'B';'B'|], [|'#';'1';'0';'0';'#'|])))

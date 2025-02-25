@@ -1,0 +1,11 @@
+1
+0
+#load compare_states(1,9,101)
+(9,((STAY),(RIGHT),(STAY)),10)
+#load compare_symbol(10,11,100)
+(11,((STAY),(LEFT),(STAY)),12)
+(100,((STAY),(LEFT),(STAY)),101)
+#load move_to_next_hashtag_left(12,16)
+#load apply_symbol(16,27)
+(27,((STAY),(STAY),(STAY)),0)
+(101,((STAY),(STAY),(STAY)),0)
