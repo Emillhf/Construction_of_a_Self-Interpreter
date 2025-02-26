@@ -22,10 +22,6 @@ def Expand_macros(rules: str, default_state = 0):
                 
     return flatten(rules)
 
-test = ["#load clear_state(1,4)",
-        "#load write_state(4,11)"]
-
-
 def generel_expand(filename : str, states : list[int], default_state):
     res = []
     first_state, last_state = states

@@ -4,6 +4,6 @@
 (11,((STAY),(LEFT),(STAY)),12)
 (100,((STAY),(LEFT),(STAY)),101)
 #load move_to_next_hashtag_left(12,16)
-#load apply_symbol(16,27)
-(27,((STAY),(STAY),(STAY)),0)
+#load apply_symbol(16,29)
+(29,((STAY),(STAY),(STAY)),0)
 (101,((STAY),(STAY),(STAY)),0)

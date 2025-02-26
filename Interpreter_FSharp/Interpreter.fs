@@ -21,7 +21,7 @@ let RMT(rules:List<List<Rule>>, (start1,final1):int*int, (input:tape,program:tap
     let move1 (num:int) = idx1 <- idx1 + num
     let move2 (num:int) = idx2 <- idx2 + num
     let move3 (num:int) = idx3  <- idx3 + num
-    
+        
     let check (rule:Operation) =
         match rule with 
             | Move(_,_,_) -> true
@@ -62,6 +62,7 @@ let RMT(rules:List<List<Rule>>, (start1,final1):int*int, (input:tape,program:tap
                     else search_rec rest
                 | _ -> failwith "Shit wrong"
         search_rec(rules_list[current_state - 1]) // -1 due to 0 indexing
+
     while not(current_state = final) do
         if not(previous_state = current_state) then
             previous_state <- current_state
