@@ -1,5 +1,5 @@
 1
 0
-#load compare_state_q'(1,15,100)
+#load compare_state_q(1,15,100)
 (15,((STAY),(STAY),(STAY)),0)
 (100,((STAY),(STAY),(STAY)),0)
