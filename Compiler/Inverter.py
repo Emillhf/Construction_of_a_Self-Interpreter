@@ -29,7 +29,7 @@ def Invert(rules):
             rules[idx] = f"({rule[0]},(({rule[1]},{rule[2]}),({rule[3]},{rule[4]}),({rule[5]},{rule[6]})),{rule[-1]})".replace("'", '')
     return rules
 
-file = open("Compiler/macros/compare_symbol.txt", 'r')
+file = open("Compiler/macros/compare_state_q.txt", 'r')
 lines = file.readlines()
 lines = [line.strip() for line in lines]
 for elm in Invert(lines):
