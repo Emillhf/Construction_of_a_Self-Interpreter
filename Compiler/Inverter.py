@@ -13,7 +13,6 @@ def Invert_Move(rule):
 def Invert(rules):
     for idx, rule in enumerate(rules):
         rule = rule.split(",")
-        print(rule)
         rule = [(elm.replace('(', '')).replace(')','') for elm in rule]
         if rule[0] == '1':
             rule[0] = '0'
@@ -30,7 +29,7 @@ def Invert(rules):
             rules[idx] = f"({rule[0]},(({rule[1]},{rule[2]}),({rule[3]},{rule[4]}),({rule[5]},{rule[6]})),{rule[-1]})".replace("'", '')
     return rules
 
-file = open("Expanded_RTM_Programs/apply_symbol.txt", 'r')
+file = open("Compiler/macros/compare_symbol.txt", 'r')
 lines = file.readlines()
 lines = [line.strip() for line in lines]
 for elm in Invert(lines):

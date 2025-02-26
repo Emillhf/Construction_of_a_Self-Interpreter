@@ -28,6 +28,7 @@ let RMT(rules:List<List<Rule>>, (start1,final1):int*int, (input:tape,program:tap
             | Symbol(t1,t2,t3) -> ((fst t1) = input[idx1]) && ((fst t2) = program[idx2]) && ((fst t3) = states[idx3])
 
     let act (rule:Rule) =
+        printfn "%A"(idx1, idx2, idx3) 
         match second rule with 
             | Move(t1,t2,t3) -> 
                 match t1 with
