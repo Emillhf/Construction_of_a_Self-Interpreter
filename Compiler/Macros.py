@@ -14,8 +14,11 @@ def Expand_macros(rules: str, default_state = 0):
             states = macro.split("(")[1].replace(")","").strip().split(",")
             if (len(states) == 2): #(start_state, final_state)
                 rules[idx] = generel_expand(filename, states, default_state)
-            elif (len(states) == 3): #(start_state, true_state, false_state)
-                rules[idx] = condititional_expand(filename, states, default_state)
+            elif (len(states) == 3):
+                if (filename[0:3] == "rev"): #(true_state, false_state, end_state)
+                    rules[idx] = condititional_expand_reverse(filename, states, default_state)
+                else: #(start_state, true_state, false_state)
+                    rules[idx] = condititional_expand(filename, states, default_state)
             else:
                 print(f"Error, wrong macro input {states}, in rule {rule}")
                 exit(1)
@@ -55,13 +58,38 @@ def condititional_expand(filename : str, states : list[int], default_state):
             linesplit = line.strip().split(",")  
             first_state_rule = linesplit[0].replace("(","")
             last_state_rule = linesplit[-1].replace(")","")
-            linesplit[0] = str(int(first_state_rule) + int(first_state)-1 + default_state) 
+            linesplit[0] = str(int(first_state_rule) + int(first_state)-1 + default_state)
             if (last_state_rule == "0"):
                 linesplit[-1] = str(int(true_state) + default_state)
             elif (last_state_rule == "-1"):
                 linesplit[-1] = str(int(false_state) + default_state)
             else:
                 linesplit[-1] = str(int(last_state_rule) + int(first_state)-1 + default_state)
+            res.append("(" + ",".join(linesplit) + ")")
+    return res
+
+def condititional_expand_reverse(filename : str, states : list[int], default_state):
+    res = []
+    true_state, false_state, end_state = states
+    file = open("Compiler/macros/" + filename + ".txt")
+    lines = file.readlines()
+    for line in lines:
+        if "#load" in line:
+            res.append(Expand_macros([line], default_state + int(true_state)-1))
+        else:
+            linesplit = line.strip().split(",")  
+            first_state_rule = linesplit[0].replace("(","")
+            last_state_rule = linesplit[-1].replace(")","")
+            if (first_state_rule == "1"):
+                linesplit[0] = str(int(true_state) + default_state)
+            elif (first_state_rule == "-1"):
+                linesplit[0] = str(int(false_state) + default_state)
+            else:
+                linesplit[0] = str(int(first_state_rule) + int(true_state)-1 + default_state)
+            if (last_state_rule == "0"):
+                linesplit[-1] = str(int(end_state) + default_state)
+            else:
+                linesplit[-1] = str(int(last_state_rule) + int(true_state)-1 + default_state)
             res.append("(" + ",".join(linesplit) + ")")
     return res
 
