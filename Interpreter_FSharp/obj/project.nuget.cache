@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "g+HFb9zF+4Y=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Emill\\bachelorProject\\BachelorProject\\Interpreter_FSharp\\Interpreter_FSharp.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Emill\\.nuget\\packages\\fsharp.core\\8.0.300\\fsharp.core.8.0.300.nupkg.sha512"
+  ],
+  "logs": []
+}
