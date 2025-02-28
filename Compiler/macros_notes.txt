@@ -9,6 +9,7 @@ Symbol rule:
 #load move_program_to_hashtag_left(60,65)
 #load move_state_to_hashtag_right(65,70)
 (70,((STAY),(LEFT),(STAY)),71)
+(1499,((STAY),(LEFT),(STAY)),1500)
 #load rev_compare_symbol(71,1500,2000)
 (2000,((STAY),(RIGHT),(STAY)),2001)
 (500,((STAY),(LEFT),(STAY)),501)
@@ -17,7 +18,7 @@ Symbol rule:
 #load move_program_to_hashtag_right(1600,1620)
 #load move_program_to_hashtag_right(1620,1625)
 #load move_program_to_hashtag_right(1625,1630)
-#load compare_state_q'(1630,1500,3000)
+#load compare_state_q'(1630,1499,3000)
 (5000,((STAY),(STAY),(STAY)),0)
 
 

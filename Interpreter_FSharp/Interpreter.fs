@@ -8,7 +8,7 @@ let RMT(rules:List<List<Rule>>, (start1,final1):int*int, (input:tape,program:tap
     let final = 0 //Final state is always 0
     let mutable idx1 = 0
     let mutable idx2 = 0
-    let mutable idx3 = 3
+    let mutable idx3 = 4
     let mutable current_state = start
     let mutable previous_state = -1
 

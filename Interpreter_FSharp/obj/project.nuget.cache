@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "g+HFb9zF+4Y=",
+  "dgSpecHash": "448As6kAm/0D1m8zwlTmPyuQhBR0cd4MD8dGv1G37TRLot2e9nL2EYNzLe5rZ3iCG/Xq1nva8bGrJRNzGs69tA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Emill\\bachelorProject\\BachelorProject\\Interpreter_FSharp\\Interpreter_FSharp.fsproj",
+  "projectFilePath": "/Users/claes/Bachelor/BachelorProject/Interpreter_FSharp/Interpreter_FSharp.fsproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Emill\\.nuget\\packages\\fsharp.core\\8.0.300\\fsharp.core.8.0.300.nupkg.sha512"
+    "/Users/claes/.nuget/packages/fsharp.core/8.0.200/fsharp.core.8.0.200.nupkg.sha512"
   ],
   "logs": []
 }
