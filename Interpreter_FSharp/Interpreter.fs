@@ -8,7 +8,7 @@ let RMT(rules:List<List<Rule>>, (start1,final1):int*int, (input:tape,program:tap
     let final = 0 //Final state is always 0
     let mutable idx1 = 0
     let mutable idx2 = 0
-    let mutable idx3 = 0
+    let mutable idx3 = 3
     let mutable current_state = start
     let mutable previous_state = -1
 
@@ -18,7 +18,9 @@ let RMT(rules:List<List<Rule>>, (start1,final1):int*int, (input:tape,program:tap
 
     let updateCurrentState (newState:int) = current_state <- newState
 
-    let move1 (num:int) = idx1 <- idx1 + num
+    let move1 (num:int) = idx1 <- 
+                            printfn "move1"
+                            idx1 + num
     let move2 (num:int) = idx2 <- idx2 + num
     let move3 (num:int) = idx3  <- idx3 + num
         
@@ -28,7 +30,8 @@ let RMT(rules:List<List<Rule>>, (start1,final1):int*int, (input:tape,program:tap
             | Symbol(t1,t2,t3) -> ((fst t1) = input[idx1]) && ((fst t2) = program[idx2]) && ((fst t3) = states[idx3])
 
     let act (rule:Rule) =
-        printfn "%A"(idx1, idx2, idx3) 
+        printfn "%A" (idx1, idx2, idx3)
+        printfn "%A" (rule)
         match second rule with 
             | Move(t1,t2,t3) -> 
                 match t1 with
