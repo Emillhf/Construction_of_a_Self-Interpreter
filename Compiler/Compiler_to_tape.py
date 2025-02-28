@@ -39,10 +39,7 @@ final_state_user = input("Please give an final state\n")
 
 inputt = "1101"
 ##rules_enc = Encoding.Encode(StateTransitioner.StateTransition(Expander.expand_rules(BinINC,Expander.alfa,Expander.beta), "1", "6"))
-rules_enc = Encoding.Encode(
-    StateTransitioner.StateTransition(
-        Expander.expand_rules(
-            rules_user,Expander.alfa,Expander.beta), start_state_user, final_state_user))
+rules_enc = Encoding.Encode(rules_user)
 
 f = open(os.getcwd() + "/" + filename_user + "_enc" + ".txt", "w+")
 f.write("B" + inputt + "B\n!\n")

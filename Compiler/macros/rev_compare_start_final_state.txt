@@ -5,7 +5,7 @@
 (6,((STAY),(STAY),(RIGHT)),5)
 (7,((STAY),(STAY),(RIGHT)),6)
 (1,((alfa,alfa),(b,b),(#,#)),7)
-(8,((alfa,alfa),(b,b),(beta!=#,beta!=#)),4)
+(8,((alfa,alfa),(b,b),(beta!=(#),beta!=(#))),4)
 (9,((STAY),(STAY),(RIGHT)),8)
 (10,((STAY),(STAY),(RIGHT)),9)
 (-1,((alfa,alfa),(b,b),(#,#)),10)

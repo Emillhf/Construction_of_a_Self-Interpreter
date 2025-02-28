@@ -2,6 +2,7 @@ import re
 
 
 def Encode(program):
+    print(program)
     translatedProgram = ""
     for idx,rule in enumerate(program):
         if "LEFT" in rule or "RIGHT" in rule:
@@ -15,6 +16,17 @@ def Encode(program):
 
     return translatedProgram
    
+def Encode_1_Tape(program):
+    translatedProgram = ""
+    for rule in program:
+        rule = rule.replace('(','').replace(')','')
+        rule = rule.split(',')
+        if len(rule) == 3:
+            translatedProgram += "M#" + ToBinary(int(rule[0])) + "#" + EncodeMove(rule[1]) + '#' + ToBinary(int(rule[-1]))[::-1] + "#M"
+        else:
+            translatedProgram += "S#" + ToBinary(int(rule[0])) + "#" + EncodeSymbol(rule[1])+ EncodeSymbol(rule[2]) + '#' + ToBinary(int(rule[-1]))[::-1] + "#S"
+    return translatedProgram
+    
 def ToBinary(num: int):
     return bin(num)[2:]
 
@@ -41,3 +53,14 @@ def extract_groups(groups):
         else:
             encoded.append(group.replace(',',''))
     return encoded
+
+test = ["(1,(b,b),2)",
+    "(2,(RIGHT),3)",
+    "(3,(0,1),4)",
+    "(3,(1,0),2)",
+    "(3,(b,b),4)",
+    "(4,(LEFT),5)",
+    "(5,(0,0),4)",
+    "(5,(b,b),6)"]
+
+print(Encode_1_Tape(test))

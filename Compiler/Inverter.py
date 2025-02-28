@@ -29,8 +29,11 @@ def Invert(rules):
             rules[idx] = f"({rule[0]},(({rule[1]},{rule[2]}),({rule[3]},{rule[4]}),({rule[5]},{rule[6]})),{rule[-1]})".replace("'", '')
     return rules
 
-file = open("Compiler/macros/compare_start_final_state.txt", 'r')
+name = input()
+file = open("Compiler/macros/" + name, 'r')
 lines = file.readlines()
 lines = [line.strip() for line in lines]
+inverted = Invert(lines)
+outfile = open("Compiler/macros/rev_" + name,'w+')
 for elm in Invert(lines):
-    print(elm)
+    outfile.write(elm + "\n")
