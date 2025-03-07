@@ -1,6 +1,8 @@
-﻿open Interpreter
+﻿open System.IO
+open Interpreter
 open Helper
 open Readers
+open writer
 
 // let clear_state = read_rules("../Expanded_clear_state.txt")
 // let write_state = read_rules("../Expanded_write_state.txt")
@@ -43,9 +45,21 @@ let BinInc_2_tape = read_tape_file("Tapes_RTM/BinInc_2.txt")
 // printfn "%A" (RMT (move_rule,(1,0),([|'b';'b';'b'|],[|'#';'1';'#';'0';'1';'#';'0';'#';'M';'b'|], [|'#';'1';'#';'b';'b';'b';'b'|])))
 //printfn "%A" URTM
 //printfn "%A" (RMT (URTM,(1,0),(BinINC_tape)))
-printfn "%A" (RMT (URTM,(1,0),(flip_tape)))
+//printfn "%A" (RMT (URTM,(1,0),(flip_tape)))
 //printfn "%A" (RMT (rev_URTM,(0,1),(BinInc_2_tape)))
 
 //Move Rule - Afprøvning
 //printfn "%A" (RMT (move_rule,(1,0),([|'B';'B';'B';'B';'B';'B'|],[|'#';'1';'0';'1';'#';'1';'0';'#';'0';'1';'1';'#'|], [|'#';'1';'0';'1';'#';'b'|])))
 
+
+[<EntryPoint>]
+let main args =
+    if args.Length = 2 then
+        let rules = read_rules(args[0])
+        let tapes = read_tape_file(args[1])
+        let result = RMT (rules,(1,0),(tapes))
+        let result_filename = args[0].Replace("Expanded_", "").Replace(".txt", "_result.txt")
+        writer.writeCharArrayToFile result_filename result
+    else
+        printfn "Expected 2 arugments - Recieved %A" args.Length
+    0
