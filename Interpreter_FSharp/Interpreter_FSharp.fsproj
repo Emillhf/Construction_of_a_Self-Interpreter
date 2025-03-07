@@ -8,6 +8,7 @@
   <ItemGroup>
     <Compile Include="Types.fs" />
     <Compile Include="Readers.fs" />
+    <Compile Include="Writer.fs" />
     <Compile Include="Helper.fs" />
     <Compile Include="Interpreter.fs" />
     <Compile Include="Program.fs" />
