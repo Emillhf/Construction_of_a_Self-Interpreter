@@ -26,7 +26,7 @@ let String_to_rule(rules:List<string>) =
 let seperate_rules_into_states(rules:List<Rule>) = 
     List.sortBy(fun (elm:Rule) -> first elm) rules
     |> List.groupBy(fun (elm:Rule) -> first elm)
-    |> List.map(fun elm -> snd elm)
+    |> Map.ofList
 
 let read_rules(filename:string) =
     read_rule_file(filename)

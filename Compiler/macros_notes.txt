@@ -21,7 +21,6 @@ Symbol rule:
 #load compare_state_q'(1630,1499,3000)
 (5000,((STAY),(STAY),(STAY)),0)
 
-
 Move_rule:
 #load compare_state_q(1,15,70)
 #load move_program_to_hashtag_left(15,20)

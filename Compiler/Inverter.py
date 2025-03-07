@@ -14,10 +14,6 @@ def Invert(rules):
     for idx, rule in enumerate(rules):
         rule = rule.split(",")
         rule = [(elm.replace('(', '')).replace(')','') for elm in rule]
-        if rule[0] == '1':
-            rule[0] = '0'
-        if rule[-1] == '0':
-            rule[-1] = '1'
         rule[0], rule[-1] = rule[-1], rule[0]
         if len(rule) == 5:
             move_inverted = Invert_Move(rule[1:-1])
@@ -30,10 +26,10 @@ def Invert(rules):
     return rules
 
 name = input()
-file = open("Compiler/macros/" + name, 'r')
+file = open(name, 'r')
 lines = file.readlines()
 lines = [line.strip() for line in lines]
 inverted = Invert(lines)
-outfile = open("Compiler/macros/rev_" + name,'w+')
-for elm in Invert(lines):
+outfile = open("rev_" + name,'w+')
+for elm in inverted:
     outfile.write(elm + "\n")

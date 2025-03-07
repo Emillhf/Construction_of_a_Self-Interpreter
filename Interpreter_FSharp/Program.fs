@@ -22,8 +22,11 @@ let symbol_rule = read_rules("Expanded_RTM_Programs/symbol_rule.txt")
 let apply_symbol = read_rules("Expanded_RTM_Programs/apply_symbol.txt")
 let apply_symbol_tapes = read_tape_file("Tapes_RTM/apply_symbol.txt")
 let URTM = read_rules("Expanded_RTM_programs/URTM.txt")
+let rev_URTM = read_rules("Expanded_RTM_programs/rev_URTM.txt")
 let move_rule = read_rules("Expanded_RTM_Programs/move_rule.txt")
 let BinINC_tape = read_tape_file("Tapes_RTM/BinInc.txt")
+let flip_tape = read_tape_file("Tapes_RTM/Flip.txt")
+let BinInc_2_tape = read_tape_file("Tapes_RTM/BinInc_2.txt")
 // printfn "%A" (RMT (apply_symbol,(1,0),apply_symbol_tapes))
 
 // let symbol = read_rules("Expanded_RTM_Programs/symbol_rule.txt")
@@ -38,7 +41,10 @@ let BinINC_tape = read_tape_file("Tapes_RTM/BinInc.txt")
 //     [|'b';'M';'#';'1';'#';'0';'1';'#';'0';'1';'#';'M';'S';'#';'1';'0';'#';'0';'1';'#';'0';'#';'S';'b'|]
 //     , [|'b';'b';'b';'b';'b';'b';'b'|])))
 // printfn "%A" (RMT (move_rule,(1,0),([|'b';'b';'b'|],[|'#';'1';'#';'0';'1';'#';'0';'#';'M';'b'|], [|'#';'1';'#';'b';'b';'b';'b'|])))
-printfn "%A" (RMT (URTM,(1,0),(BinINC_tape)))
+//printfn "%A" URTM
+//printfn "%A" (RMT (URTM,(1,0),(BinINC_tape)))
+printfn "%A" (RMT (URTM,(1,0),(flip_tape)))
+//printfn "%A" (RMT (rev_URTM,(0,1),(BinInc_2_tape)))
 
 //Move Rule - Afprøvning
 //printfn "%A" (RMT (move_rule,(1,0),([|'B';'B';'B';'B';'B';'B'|],[|'#';'1';'0';'1';'#';'1';'0';'#';'0';'1';'1';'#'|], [|'#';'1';'0';'1';'#';'b'|])))
