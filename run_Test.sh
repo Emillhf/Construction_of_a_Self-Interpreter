@@ -17,17 +17,16 @@ process_inner_folder() {
     local inner_folder="$1"
     
     # Find the required files in the inner folder
-    expanded_file=$(find "$inner_folder" -maxdepth 1 -type f -name "Expanded_*.txt" | head -n 1)
-    tape_file=$(find "$inner_folder" -maxdepth 1 -type f -name "*_tape.txt" | head -n 1)
+    expanded_file=$(find "$inner_folder" -maxdepth 1 -type f -name "Expanded_*.txt")
+    tape_file=$(find "$inner_folder" -maxdepth 1 -type f -name "tape.txt")
     
     if [[ -n "$expanded_file" && -n "$tape_file" ]]; then
-        dotnet run --project Interpreter_FSharp "$expanded_file" "$tape_file"
+        dotnet run --project Interpreter_FSharp "$expanded_file" "$tape_file" "test"
     fi
     
     # Find result and expected files in the same folder
-    result_file=$(find "$inner_folder" -maxdepth 1 -type f -name "*result*.txt" | head -n 1)
-    expected_file=$(find "$inner_folder" -maxdepth 1 -type f -name "*expected*.txt" | head -n 1)
-    
+    result_file=$(find "$inner_folder" -maxdepth 1 -type f -name "result.txt")
+    expected_file=$(find "$inner_folder" -maxdepth 1 -type f -name "expected.txt")
     if [[ -n "$result_file" && -n "$expected_file" ]]; then
         if cmp -s "$result_file" "$expected_file"; then
             echo "Successful test: $inner_folder"

@@ -54,12 +54,16 @@ let BinInc_2_tape = read_tape_file("Tapes_RTM/BinInc_2.txt")
 
 [<EntryPoint>]
 let main args =
-    if args.Length = 2 then
+    if args.Length = 3 && args[2] = "test" then
         let rules = read_rules(args[0])
         let tapes = read_tape_file(args[1])
         let result = RMT (rules,(1,0),(tapes))
-        let result_filename = args[0].Replace("Expanded_", "").Replace(".txt", "_result.txt")
+        let result_filename = Path.Combine(Path.GetDirectoryName(args[0]), "result.txt")
         writer.writeCharArrayToFile result_filename result
+    else if args.Length = 2 then
+        let rules = read_rules(args[0])
+        let tapes = read_tape_file(args[1])
+        printfn "%A" (RMT (rules,(1,0),(tapes)))
     else
         printfn "Expected 2 arugments - Recieved %A" args.Length
     0
