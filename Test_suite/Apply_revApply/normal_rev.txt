@@ -1,7 +1,0 @@
-1
-0
-#load apply_symbol(1,20)
-(20,((RIGHT),(STAY),(STAY)),21)
-(21,((b,1),(beta,beta),(beta,beta)),22)
-(22,((LEFT),(STAY),(STAY)),23)
-#load rev_apply_symbol(23,0)
