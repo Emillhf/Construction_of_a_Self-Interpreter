@@ -30,8 +30,6 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int,tape:tape) =
             | Symbol(t1) -> fst t1 = tape[idx]
 
     let act (rule:Rule) =
-        // printfn "%A" (idx1, idx2, idx3)
-        // printfn "%A" (rule)
         match second rule with 
             | Move(t1) -> 
                 match t1 with
@@ -53,7 +51,6 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int,tape:tape) =
                     if check (second rule) then act rule
                     else search_rec rest
                 | _ -> failwith "Shit wrong"
-        printfn "%A" current_state
         search_rec(rules_list[current_state])
 
     while not(current_state = final) do
@@ -99,5 +96,7 @@ let read_rules(filename:string) =
 let program = read_rules("1_Tape_programs/Write_0_or_1.txt")
 
 let input = [|'p';'0';'!';'p';'b';'$';'p';'b'|]
+let input2 = [|'p';'1';'!';'p';'b';'$';'p';'b'|]
 
-printfn "%A" (RMT (program,(1,0),input))
+printfn "%A" (RMT (program,(1,144),input))
+printfn "%A" (RMT (program,(1,144),input2))

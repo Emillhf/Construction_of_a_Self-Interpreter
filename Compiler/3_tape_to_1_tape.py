@@ -107,14 +107,13 @@ def Expand_symbol(states,count,states_dict):
     count += 1
     tmp.append((count,"(LEFT)",count+1))
     tmp.append((count+1,("alfa!=(gamma)","alfa!=(gamma)"),count))
-    count += 2
     final_state = states[0][0][0][0][-1]
     if not(final_state in states_dict.keys()):
         states_dict[final_state] = count
-        tmp.append((count+1,("gamma","gamma"),count))
+        tmp.append((count+1,("gamma","gamma"),count+2))
     else:
         tmp.append((count+1,("gamma","gamma"),states_dict[final_state]))
-    count += 1
+    count += 2
     return Replace_final_state(tmp,tmp_final), count, states_dict
 
 def Expand_move(states,count,states_dict):
@@ -138,7 +137,7 @@ def Expand_move(states,count,states_dict):
     tmp.append((count+10,tape3_elm,count+11))
     tmp.append((count+11,("alfa","gamma"),count+12))
     tmp.append((count+12,"(LEFT)",count+14))
-    tmp.append((count+14,("alfa!=(gamma)","alfa!=(gamma)"),count+13))
+    tmp.append((count+14,("alfa!=(gamma)","alfa!=(gamma)"),count+12))
     tmp.append((count+14,("gamma","gamma"),count+15))
     tmp.append((count+15,"(LEFT)",count+16))
     tmp.append((count+16,("alfa!=(gamma)","alfa!=(gamma)"),count+15))
@@ -148,7 +147,7 @@ def Expand_move(states,count,states_dict):
     final_state = states[0][0][0][0][-1]
     if not(final_state in states_dict.keys()):
         states_dict[states[0][0][0][0][-1]] = count
-    
+    count += 1
     return Replace_final_state(tmp,count), count, states_dict
 
 
@@ -166,6 +165,7 @@ def Expand(instructions):
             result, count, states_dict = Expand_symbol(states,count,states_dict)
             final.append(result)
             
+    print(states_dict)
     return final
     
 def group(rules):
