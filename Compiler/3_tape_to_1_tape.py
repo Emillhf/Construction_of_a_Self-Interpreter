@@ -147,8 +147,7 @@ def Expand_move(states,count,states_dict):
     final_state = states[0][0][0][0][-1]
     if not(final_state in states_dict.keys()):
         states_dict[states[0][0][0][0][-1]] = count
-    count += 1
-    return Replace_final_state(tmp,count), count, states_dict
+    return Replace_final_state(tmp,count), count+1, states_dict
 
 
 def Expand(instructions):
