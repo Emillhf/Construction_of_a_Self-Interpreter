@@ -31,6 +31,8 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int,tape:tape) =
 
     let act (rule:Rule) =
         printfn "%A" rule
+        printfn "%A" tape
+        printfn "%A" idx
         match second rule with 
             | Move(t1) -> 
                 match t1 with
@@ -52,7 +54,7 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int,tape:tape) =
                     if check (second rule) then act rule
                     else search_rec rest
                 | _ -> failwith "Shit wrong"
-        //printfn "%A" current_state
+        printfn "%A" current_state
         search_rec(rules_list[current_state])
 
     while not(current_state = final) do
@@ -95,10 +97,23 @@ let read_rules(filename:string) =
     |> String_to_rule
     |> seperate_rules_into_states
 
-let program = read_rules("1_Tape_programs/Write_0_or_1.txt")
+let Write_0_or_1 = read_rules("1_Tape_programs/Write_0_or_1.txt")
+let Move = read_rules("1_Tape_programs/Move_test.txt")
+let clear = read_rules("1_Tape_programs/clear_state.txt")
+let write = read_rules("1_Tape_programs/write_state.txt")
+let apply_symbol = read_rules("1_Tape_programs/apply_symbol.txt")
+let URTM = read_rules("1_Tape_programs/URTM.txt")
 
 let input = [|'p';'0';'!';'p';'b';'$';'O';'b'|]
 let input2 = [|'p';'1';'!';'p';'b';'$';'I';'b'|]
+let input3 = [|'p';'1';'!';'H';'0';'1';'#';'0';'1';'#';'$';'H';'0';'1';'#';|]
+let input_apply = [|'O';'b';'!';'H';'0';'1';'#';'0';'1';'#';'0';'1';'#';'$';'H';'0';'1';'#';|]
 
-printfn "%A" (RMT (program,(1,87),input))
-printfn "%A" (RMT (program,(1,87),input2))
+let input_URTM = [|'p';'1';'!';'p';'M';'#';'1';'#';'0';'1';'#';'0';'#';'M';'b';'$';'b';'b';'p';'b';'b';'b';'b';'b'|]
+
+//printfn "%A" (RMT (Move,(1,35),input))
+//printfn "%A" (RMT (Write_0_or_1,(1,185),input2))
+printfn "%A" (RMT (clear,(1,70),input3))
+//printfn "%A" (RMT (write,(1,70),RMT (clear,(1,70),input3)))
+//printfn "%A" (RMT (apply_symbol,(1,376),input_apply))
+//printfn "%A" (RMT (URTM,(1,10540),input_URTM))

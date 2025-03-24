@@ -6,14 +6,12 @@ encoded_symbols = {
     '0': 'O',
     '1': 'I',
     'S': 'Z',
-    'M': 'W',
-    '!': '!',
-    '$': '$'
+    'M': 'W'
 }
 
-alfa = ['0', '1', 'B', '#', 'S', 'M','b','P','p','H','O','I','Z','W']
+alfa = ['0', '1', 'B', '#', 'S', 'M','b','P','p','H','O','I','Z','W','!','$']
 gamma = ['P','p','H','O','I','Z','W']
-
+alfa_gamma_removed = [symbol for symbol in alfa if symbol not in gamma]
 
 example = (1,('b','b'),2)
 
@@ -32,7 +30,7 @@ def expand(rules):
             for gamma_elm in gamma:
                 expanded_rules.append((start,(gamma_elm,gamma_elm),final))
         elif rule[1] == ('alfa!=(gamma)','alfa!=(gamma)'):
-            for alfa_elm in encoded_symbols:
+            for alfa_elm in alfa_gamma_removed:
                 expanded_rules.append((start,(alfa_elm,alfa_elm),final))
         else:
             expanded_rules.append(rule)
