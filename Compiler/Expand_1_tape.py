@@ -12,7 +12,6 @@ encoded_symbols = {
 alfa = ['0', '1', 'B', '#', 'S', 'M','b','P','p','H','O','I','Z','W','!','$']
 gamma = ['P','p','H','O','I','Z','W']
 alfa_gamma_removed = [symbol for symbol in alfa if symbol not in gamma]
-
 example = (1,('b','b'),2)
 
 def expand(rules):

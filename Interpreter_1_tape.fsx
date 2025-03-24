@@ -54,7 +54,7 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int,tape:tape) =
                     if check (second rule) then act rule
                     else search_rec rest
                 | _ -> failwith "Shit wrong"
-        printfn "%A" current_state
+        printfn "current state: %A" current_state
         search_rec(rules_list[current_state])
 
     while not(current_state = final) do
@@ -113,7 +113,7 @@ let input_URTM = [|'p';'1';'!';'p';'M';'#';'1';'#';'0';'1';'#';'0';'#';'M';'b';'
 
 //printfn "%A" (RMT (Move,(1,35),input))
 //printfn "%A" (RMT (Write_0_or_1,(1,185),input2))
-printfn "%A" (RMT (clear,(1,70),input3))
+printfn "%A" (RMT (clear,(1,66),input3))
 //printfn "%A" (RMT (write,(1,70),RMT (clear,(1,70),input3)))
 //printfn "%A" (RMT (apply_symbol,(1,376),input_apply))
 //printfn "%A" (RMT (URTM,(1,10540),input_URTM))
