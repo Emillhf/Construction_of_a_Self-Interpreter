@@ -107,56 +107,41 @@ def Expand_symbol(states,count,states_dict):
     if not(start_state in states_dict.keys()):
         states_dict[start_state] = count
     
-    for tape1 in states:
-        tape1_elm = tape1[0][0][0][2]
-        tmp.append((states_dict[start_state],((encoded_symbols[tape1_elm[1]],encoded_symbols[tape1_elm[3]])),count))  
-        count_tape1 = count
+    for tape2 in states:
+        tape2_elm = tape2[0][0][0][2]
+        tmp.append((states_dict[start_state],((encoded_symbols[tape2_elm[1]],encoded_symbols[tape2_elm[3]])),count))  
+        count_tape2 = count
         count += 1
-        tmp.append((count_tape1,"(LEFT)",count_tape1+1)) 
-        tmp.append((count_tape1+1,("alfa!=(gamma)","alfa!=(gamma)"),count_tape1))      
-        for tape2 in tape1:
+        tmp.append((count_tape2,"(LEFT)",count_tape2+1)) 
+        tmp.append((count_tape2+1,("alfa!=(gamma)","alfa!=(gamma)"),count_tape2))      
+        for tape1 in tape2:
     
-            tape2_elm = tape2[0][0][1]
-            tmp.append((count_tape1+1,((encoded_symbols[tape2_elm[1]]),encoded_symbols[tape2_elm[3]]),count+1))    
+            tape1_elm = tape1[0][0][1]
+
+            tmp.append((count_tape2+1,((encoded_symbols[tape1_elm[1]]),encoded_symbols[tape1_elm[3]]),count+1))    
             count += 1
-            count_tape2 = count
-            tmp.append((count_tape2,"(RIGHT)",count_tape2+1)) 
-            tmp.append((count_tape2+1,("alfa!=(gamma)","alfa!=(gamma)"),count_tape2))  
-            tmp.append((count_tape2+1,("gamma","gamma"),count_tape2+2))  
-            
-            tmp.append((count_tape2+2,"(RIGHT)",count_tape2+3)) 
-            tmp.append((count_tape2+3,("alfa!=(gamma)","alfa!=(gamma)"),count_tape2+2))    
-            for tape3 in tape2:
+            count_tape1 = count
+            tmp.append((count_tape1,"(RIGHT)",count_tape1+1)) 
+            tmp.append((count_tape1+1,("alfa!=(gamma)","alfa!=(gamma)"),count_tape1))  
+
+            tmp.append((count_tape1+1,((encoded_symbols[tape2_elm[1]],encoded_symbols[tape2_elm[3]])),count_tape1+2))  
+
+            tmp.append((count_tape1+2,"(RIGHT)",count_tape1+3)) 
+            tmp.append((count_tape1+3,("alfa!=(gamma)","alfa!=(gamma)"),count_tape1+2))    
+            for tape3 in tape1:
                 count += 4
                 tape3_elm = tape3[0][3]
-                tmp.append((count_tape2+3,((encoded_symbols[tape3_elm[1]],encoded_symbols[tape3_elm[3]])),count+2))  
+                tmp.append((count_tape1+3,((encoded_symbols[tape3_elm[1]],encoded_symbols[tape3_elm[3]])),count+2))  
                 tmp.append((count+2,"(LEFT)",count+3))
                 tmp.append((count+3,("alfa!=(gamma)","alfa!=(gamma)"),count+2))
-                tmp.append((count+3,("gamma","gamma"),count+4))
-                # tmp.append((count+4,"(RIGHT)",count+5))
-                # tmp.append((count+5,("alfa!=(gamma)","alfa!=(gamma)"),count+4))
                 final_state = tape3[0][-1]
                 if not(final_state in states_dict.keys()):
-                    tmp.append((count+4,("gamma","gamma"),count+5))
+                    tmp.append((count+3,((encoded_symbols[tape2_elm[1]],encoded_symbols[tape2_elm[3]])),count+4))  
                     states_dict[final_state] = count+5
                 else:
-                    tmp.append((count+4,("gamma","gamma"),states_dict[final_state]))
-                count += 6
+                    tmp.append((count+3,((encoded_symbols[tape2_elm[1]],encoded_symbols[tape2_elm[3]])),states_dict[final_state]))  
+                count += 5
         count += 1
-    
-    # count += 1
-    # tmp.append((0,"(LEFT)",count))
-    # tmp.append((count,("alfa!=(gamma)","alfa!=(gamma)"),0))
-    # tmp.append((count,("gamma","gamma"),count+1))
-    # count += 1
-    # tmp.append((count,"(LEFT)",count+1))
-    # tmp.append((count+1,("alfa!=(gamma)","alfa!=(gamma)"),count))
-    # final_state = states[0][0][0][0][-1]
-    # if not(final_state in states_dict.keys()):
-    #     tmp.append((count+1,("gamma","gamma"),count+2))
-    #     states_dict[final_state] = count+2
-    # else:
-    #     tmp.append((count+1,("gamma","gamma"),states_dict[final_state]))
     return tmp, count, states_dict
 
 def Expand_move(states,count,states_dict):
@@ -190,29 +175,10 @@ def Expand_move(states,count,states_dict):
     tmp.append((count+10,("gamma","alfa"),count+11))
     tmp.append((count+11,tape3_elm,count+12))
     tmp.append((count+12,("alfa","gamma"),count+13))
+    
     tmp.append((count+13,"(LEFT)",count+14))
     tmp.append((count+14,("alfa!=(gamma)","alfa!=(gamma)"),count+13))
     tmp.append((count+14,("gamma","gamma"),0))
-    
-    # tmp.append((states_dict[start_state],("gamma","alfa"),count))
-    # tmp.append((count,tape3_elm,count+1))
-    # tmp.append((count+1,("alfa","gamma"),count+2))
-    # tmp.append((count+2,"(LEFT)",count+3))
-    # tmp.append((count+3,("alfa!=(gamma)","alfa!=(gamma)"),count+2))
-    # tmp.append((count+3,("gamma","alfa"),count+5))
-    # tmp.append((count+5,tape2_elm,count+6))
-    # tmp.append((count+6,("alfa","gamma"),count+7))
-    # tmp.append((count+7,"(LEFT)",count+8))
-    # tmp.append((count+8,("alfa!=(gamma)","alfa!=(gamma)"),count+7))
-    # tmp.append((count+8,("gamma","alfa"),count+10))
-    # tmp.append((count+10,tape1_elm,count+11))
-    # tmp.append((count+11,("alfa","gamma"),count+12))
-    # tmp.append((count+12,"(RIGHT)",count+14))
-    # tmp.append((count+14,("alfa!=(gamma)","alfa!=(gamma)"),count+12))
-    # tmp.append((count+14,("gamma","gamma"),count+15))
-    # tmp.append((count+15,"(RIGHT)",count+16))
-    # tmp.append((count+16,("alfa!=(gamma)","alfa!=(gamma)"),count+15))
-    # tmp.append((count+16,("gamma","gamma"),0))
     
     count += 15
     final_state = states[0][0][0][0][-1]
@@ -241,7 +207,11 @@ def Expand(instructions):
         else:
             result, count, states_dict = Expand_symbol(states,count,states_dict)
             final.append(result)
-    print(states_dict)
+    final.append([(states_dict['0'],"(LEFT)",count+1)])
+    final.append([(count+1,("alfa!=(gamma)","alfa!=(gamma)"),states_dict['0'])])
+    final.append([(count+1,("gamma","gamma"),count+2)])
+
+    print(states_dict, "finalstate :", count+2)
     return final
     
 # def group(rules):
@@ -287,7 +257,6 @@ name = "clear_state.txt"
 file = open("Expanded_RTM_programs/"+name, 'r')
 lines = file.readlines()
 lines = [line.strip() for line in lines]
-print(group(lines))
 tape1 = (Expand(group(lines)))
 expanded = []
 for elm in tape1:
