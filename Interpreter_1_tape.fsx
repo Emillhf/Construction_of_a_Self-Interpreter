@@ -102,6 +102,7 @@ let clear = read_rules("1_Tape_programs/clear_state.txt")
 let write = read_rules("1_Tape_programs/write_state.txt")
 let apply_symbol = read_rules("1_Tape_programs/apply_symbol.txt")
 let URTM = read_rules("1_Tape_programs/URTM.txt")
+let URTM_ends_on_one = read_rules("1_Tape_programs/URTM_worktape_ends_on_one.txt")
 
 let input = [|'p';'0';'!';'p';'b';'$';'O';'b'|]
 let input2 = [|'p';'0';'!';'p';'b';'$';'O';'b'|]
@@ -116,4 +117,5 @@ let input_URTM = [|'p';'1';'!';'p';'M';'#';'1';'#';'0';'1';'#';'0';'#';'M';'b';'
 // printfn "%A" (RMT (clear,(1,271),input3))
 // printfn "%A" (RMT (write,(1,271), res))
 // printfn "%A" (RMT (apply_symbol,(1,467),input_apply))
-printfn "%A" (RMT (URTM,(1,7764),input_URTM))
+
+printfn "%A" (RMT (URTM_ends_on_one,(1,7764),input_URTM))

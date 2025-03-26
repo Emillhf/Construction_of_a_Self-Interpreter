@@ -255,7 +255,7 @@ def tuple_to_string(tuple):
 # name = "clear_state.txt"
 # name = "write_state.txt"
 # name = "apply_symbol.txt"
-name = "URTM.txt"
+name = "URTM_worktape_ends_on_one.txt"
 file = open("Expanded_RTM_programs/"+name, 'r')
 lines = file.readlines()
 lines = [line.strip() for line in lines]
