@@ -21,6 +21,15 @@ def expand_beta(rule, beta_current = beta):
         return [rule]
     return expanded
 
+def expand_gamma(rule, beta_current = beta):
+    expanded = []
+    if 'beta' in rule:
+        for symbol in beta_current:
+            expanded.append(rule.replace('beta', symbol))
+    else:
+        return [rule]
+    return expanded
+
 def remove_duplicates(list1,list2):
     return [elm for elm in list1 if elm not in list2]
 

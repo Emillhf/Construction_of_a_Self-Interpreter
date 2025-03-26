@@ -73,5 +73,12 @@ test2 = ["(1,(b,b),2)",
     "(5,(1,1),4)",
     "(5,(b,b),0)"]
 
-# print(Encode_1_Tape(test))
-print(Encode_1_Tape(test2))
+input_filename = "Write_0_or_1.txt"
+file = open("1_Tape_programs/" + input_filename, 'r')
+lines = file.readlines()
+start = lines[0].strip()
+final = lines[1].strip()
+lines = [line.strip() for line in lines]
+encoded = Encode_1_Tape(lines)
+outfile = open("Tapes_RTM/" + input_filename, 'w+')
+outfile.writelines(encoded)

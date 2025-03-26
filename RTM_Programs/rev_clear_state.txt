@@ -1,0 +1,5 @@
+1
+10
+#load clear_state(1,4)
+(4,((b,1),(beta,beta),(alfa,alfa)),5)
+#load rev_clear_state(5,10)
