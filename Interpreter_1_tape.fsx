@@ -66,7 +66,6 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int,tape:tape) =
             printfn "%A" rules[current_state]
             printfn "%A" (tape,idx)
             failwith "Rules are wrong in the above state"
-    // printfn "%A" (idx1, idx2, idx3) 
     tape
 
 open System.IO
@@ -105,16 +104,16 @@ let apply_symbol = read_rules("1_Tape_programs/apply_symbol.txt")
 let URTM = read_rules("1_Tape_programs/URTM.txt")
 
 let input = [|'p';'0';'!';'p';'b';'$';'O';'b'|]
-let input2 = [|'p';'1';'!';'p';'b';'$';'I';'b'|]
+let input2 = [|'p';'0';'!';'p';'b';'$';'O';'b'|]
 let input3 = [|'p';'1';'!';'H';'0';'1';'#';'0';'1';'#';'$';'H';'0';'1';'#';|]
-let input_apply = [|'O';'b';'!';'H';'0';'1';'#';'0';'1';'#';'0';'1';'#';'$';'H';'0';'1';'#';|]
+let input_apply = [|'I';'b';'!';'H';'0';'1';'#';'1';'0';'#';'0';'1';'#';'$';'H';'0';'1';'#';|]
 
 let input_URTM = [|'p';'1';'!';'p';'M';'#';'1';'#';'0';'1';'#';'0';'#';'M';'b';'$';'b';'b';'p';'b';'b';'b';'b';'b'|]
 
-//printfn "%A" (RMT (Move,(1,35),input))
-//printfn "%A" (RMT (Write_0_or_1,(1,185),input2))
-//let res = RMT (clear,(1,302),input3)
-printfn "%A" (RMT (clear,(1,278),input3))
-//printfn "%A" (RMT (write,(1,302), res))
-//printfn "%A" (RMT (apply_symbol,(1,376),input_apply))
-//printfn "%A" (RMT (URTM,(1,10540),input_URTM))
+// printfn "%A" (RMT (Move,(1,34),input))
+// printfn "%A" (RMT (Write_0_or_1,(1,187),input2))
+// let res = RMT (clear,(1,271),input3)
+// printfn "%A" (RMT (clear,(1,271),input3))
+// printfn "%A" (RMT (write,(1,271), res))
+// printfn "%A" (RMT (apply_symbol,(1,467),input_apply))
+printfn "%A" (RMT (URTM,(1,7764),input_URTM))

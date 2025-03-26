@@ -22,7 +22,6 @@ def groupByStates(rules:list[str]):
             states[state].append(match[0])
         else:
             states[state] = match
-            
     return list(states.values())
 
 def inner_list(rules,tape):
@@ -109,39 +108,43 @@ def Expand_symbol(states,count,states_dict):
     
     for tape2 in states:
         tape2_elm = tape2[0][0][0][2]
+        count+=1
         tmp.append((states_dict[start_state],((encoded_symbols[tape2_elm[1]],encoded_symbols[tape2_elm[3]])),count))  
         count_tape2 = count
         count += 1
         tmp.append((count_tape2,"(LEFT)",count_tape2+1)) 
         tmp.append((count_tape2+1,("alfa!=(gamma)","alfa!=(gamma)"),count_tape2))      
         for tape1 in tape2:
-    
+            count +=1
             tape1_elm = tape1[0][0][1]
 
-            tmp.append((count_tape2+1,((encoded_symbols[tape1_elm[1]]),encoded_symbols[tape1_elm[3]]),count+1))    
-            count += 1
+            tmp.append((count_tape2+1,((encoded_symbols[tape1_elm[1]]),encoded_symbols[tape1_elm[3]]),count))    
             count_tape1 = count
+            
             tmp.append((count_tape1,"(RIGHT)",count_tape1+1)) 
             tmp.append((count_tape1+1,("alfa!=(gamma)","alfa!=(gamma)"),count_tape1))  
 
-            tmp.append((count_tape1+1,((encoded_symbols[tape2_elm[1]],encoded_symbols[tape2_elm[3]])),count_tape1+2))  
+            tmp.append((count_tape1+1,((encoded_symbols[tape2_elm[3]],encoded_symbols[tape2_elm[3]])),count_tape1+2))  
 
             tmp.append((count_tape1+2,"(RIGHT)",count_tape1+3)) 
             tmp.append((count_tape1+3,("alfa!=(gamma)","alfa!=(gamma)"),count_tape1+2))    
+            
+            count += 4
             for tape3 in tape1:
-                count += 4
                 tape3_elm = tape3[0][3]
-                tmp.append((count_tape1+3,((encoded_symbols[tape3_elm[1]],encoded_symbols[tape3_elm[3]])),count+2))  
-                tmp.append((count+2,"(LEFT)",count+3))
-                tmp.append((count+3,("alfa!=(gamma)","alfa!=(gamma)"),count+2))
+                tmp.append((count_tape1+3,((encoded_symbols[tape3_elm[1]],encoded_symbols[tape3_elm[3]])),count))  
+            
+                tmp.append((count,"(LEFT)",count+1))
+                tmp.append((count+1,("alfa!=(gamma)","alfa!=(gamma)"),count))
                 final_state = tape3[0][-1]
                 if not(final_state in states_dict.keys()):
-                    tmp.append((count+3,((encoded_symbols[tape2_elm[1]],encoded_symbols[tape2_elm[3]])),count+4))  
-                    states_dict[final_state] = count+5
+                    tmp.append((count+1,((encoded_symbols[tape2_elm[3]],encoded_symbols[tape2_elm[3]])),count+2))  
+                    states_dict[final_state] = count+2
                 else:
-                    tmp.append((count+3,((encoded_symbols[tape2_elm[1]],encoded_symbols[tape2_elm[3]])),states_dict[final_state]))  
-                count += 5
-        count += 1
+                    tmp.append((count+1,((encoded_symbols[tape2_elm[3]],encoded_symbols[tape2_elm[3]])),states_dict[final_state]))  
+                count += 3
+            # count += 1
+        count+=1
     return tmp, count, states_dict
 
 def Expand_move(states,count,states_dict):
@@ -153,7 +156,7 @@ def Expand_move(states,count,states_dict):
     tape1_elm = states[0][0][0][0][1]
     tape2_elm = states[0][0][0][0][2]
     tape3_elm = states[0][0][0][0][3]
-    
+    count+=1
     tmp.append((states_dict[start_state],("gamma","gamma"),count))
     # tmp.append((count,"(RIGHT)",count+1))
     # tmp.append((count+1,("alfa!=(gamma)","alfa!=(gamma)"),count))
@@ -178,13 +181,13 @@ def Expand_move(states,count,states_dict):
     
     tmp.append((count+13,"(LEFT)",count+14))
     tmp.append((count+14,("alfa!=(gamma)","alfa!=(gamma)"),count+13))
-    tmp.append((count+14,("gamma","gamma"),0))
     
-    count += 15
     final_state = states[0][0][0][0][-1]
     if not(final_state in states_dict.keys()):
-        states_dict[states[0][0][0][0][-1]] = count
-    return Replace_final_state(tmp,count), count+1, states_dict
+        states_dict[final_state] = count+15
+    tmp.append((count+14,("gamma","gamma"),states_dict[final_state] ))
+    count +=15
+    return Replace_final_state(tmp,count), count, states_dict
 
 
 def Expand(instructions):
@@ -203,10 +206,9 @@ def Expand(instructions):
             states[0][0][0][0][1] == "(RIGHT)" or
             states[0][0][0][0][1] == "(STAY)"):
             result, count, states_dict = Expand_move(states,count,states_dict)
-            final.append(result)
         else:
             result, count, states_dict = Expand_symbol(states,count,states_dict)
-            final.append(result)
+        final.append(result)
     final.append([(states_dict['0'],"(LEFT)",count+1)])
     final.append([(count+1,("alfa!=(gamma)","alfa!=(gamma)"),states_dict['0'])])
     final.append([(count+1,("gamma","gamma"),count+2)])
@@ -227,14 +229,14 @@ def tuple_to_string(tuple):
     else:
         symbol = tuple[1]
         return "(" + str(tuple[0]) + ",(" + symbol[0] + "," + (symbol[1]) + ")," + str(tuple[2]) + ")"
-test = ["(1,((0,0),(#,#),(#,b)),2)",
-        "(1,((b,b),(b,b),(1,1)),2)",
-        "(1,((b,b),(b,b),(#,b)),2)",
-        "(2,((STAY),(RIGHT),(RIGHT)),3)",
-       "(3,((0,0),(0,0),(0,0)),2)"]
+# test = ["(1,((0,0),(#,#),(#,b)),2)",
+#         "(1,((b,b),(b,b),(1,1)),2)",
+#         "(1,((b,b),(b,b),(#,b)),2)",
+#         "(2,((STAY),(RIGHT),(RIGHT)),3)",
+#        "(3,((0,0),(0,0),(0,0)),2)"]
 
-test_single = [[[[[(('1','(0,0)','(#,#)','(#,b)','2'))]]]]]
-state_rules = groupByStates(test)
+# test_single = [[[[[(('1','(0,0)','(#,#)','(#,b)','2'))]]]]]
+# state_rules = groupByStates(test)
 
 # grouped_by_tape_1 = groupByTape1(state_rules)
 #print(grouped_by_tape_1, len(grouped_by_tape_1))
@@ -248,12 +250,12 @@ state_rules = groupByStates(test)
 #             for elm4 in elm3:
 #                 print(elm4)
 
-#name = "Move_test.txt"
-#name = "Write_0_or_1.txt"
-name = "clear_state.txt"
-#name = "write_state.txt"
-#name = "apply_symbol.txt"
-# name = "URTM.txt"
+# name = "Move_test.txt"
+# name = "Write_0_or_1.txt"
+# name = "clear_state.txt"
+# name = "write_state.txt"
+# name = "apply_symbol.txt"
+name = "URTM.txt"
 file = open("Expanded_RTM_programs/"+name, 'r')
 lines = file.readlines()
 lines = [line.strip() for line in lines]
