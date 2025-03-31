@@ -1,4 +1,6 @@
 open System.Text.RegularExpressions
+open System.IO
+
 let first (a,_,_) = a
 let second (_,b,_) = b
 let third (_,_,c) = c
@@ -12,6 +14,8 @@ type Rule = int*Operation*int
 type tape = array<char>
 
 let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int,tape:tape) =
+    File.AppendAllText("log.txt", "\n")
+
     let start = start1 //Starting state is always 1
     let final = final1 //Final state is always 0
     let mutable idx = 0
@@ -33,6 +37,11 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int,tape:tape) =
         printfn "%A" rule
         printfn "%A" tape
         printfn "%A" idx
+        File.AppendAllText("log.txt", System.String(tape))
+        File.AppendAllText("log.txt", "\n")
+        File.AppendAllText("log.txt", idx.ToString())
+        File.AppendAllText("log.txt", "\n\n")
+        
         match second rule with 
             | Move(t1) -> 
                 match t1 with
@@ -66,6 +75,7 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int,tape:tape) =
             printfn "%A" rules[current_state]
             printfn "%A" (tape,idx)
             failwith "Rules are wrong in the above state"
+
     tape
 
 open System.IO
@@ -103,19 +113,22 @@ let write = read_rules("1_Tape_programs/write_state.txt")
 let apply_symbol = read_rules("1_Tape_programs/apply_symbol.txt")
 let URTM = read_rules("1_Tape_programs/URTM.txt")
 let URTM_ends_on_one = read_rules("1_Tape_programs/URTM_worktape_ends_on_one.txt")
+let rev_URTM_ends_on_one = read_rules("1_Tape_programs/rev_URTM_worktape_ends_on_one.txt")
 
 let input = [|'p';'0';'!';'p';'b';'$';'O';'b'|]
 let input2 = [|'p';'0';'!';'p';'b';'$';'O';'b'|]
 let input3 = [|'p';'1';'!';'H';'0';'1';'#';'0';'1';'#';'$';'H';'0';'1';'#';|]
-let input_apply = [|'I';'b';'!';'H';'0';'1';'#';'1';'0';'#';'0';'1';'#';'$';'H';'0';'1';'#';|]
+let input_apply = [|'O';'b';'!';'H';'0';'1';'#';'0';'1';'#';'0';'1';'#';'$';'H';'0';'1';'#';|]
 
-let input_URTM = [|'p';'1';'!';'p';'M';'#';'1';'#';'0';'1';'#';'0';'#';'M';'b';'$';'b';'b';'p';'b';'b';'b';'b';'b'|]
+let input_URTM = [|'p';'1';'!';'p';'M';'#';'1';'#';'0';'1';'#';'0';'1';'#';'M';'S';'#';'1';'0';'#';'1';'B';'#';'0';'#';'S';'b';'$';'b';'b';'p';'b';'b';'b';'b';'b'|]
+let input_rev_URTM = [|'p';'b';'!';'p';'M';'#';'1';'#';'1';'0';'#';'0';'1';'#';'M';'S';'#';'1';'0';'#';'B';'B';'#';'0';'#';'S';'b';'$';'b';'b';'p';'b';'b';'b';'b';'b'|]
 
 // printfn "%A" (RMT (Move,(1,34),input))
 // printfn "%A" (RMT (Write_0_or_1,(1,187),input2))
-// let res = RMT (clear,(1,271),input3)
-// printfn "%A" (RMT (clear,(1,271),input3))
-// printfn "%A" (RMT (write,(1,271), res))
-// printfn "%A" (RMT (apply_symbol,(1,467),input_apply))
+// let res = RMT (clear,(1,430),input3)
+printfn "%A" (RMT (clear,(1,430),input3))
+// printfn "%A" (RMT (write,(1,430), res))
+// printfn "%A" (RMT (apply_symbol,(1,710),input_apply))
 
-printfn "%A" (RMT (URTM_ends_on_one,(1,7764),input_URTM))
+// printfn "%A" (RMT (URTM,(1,14460),input_URTM))
+// printfn "%A" (RMT (rev_URTM_ends_on_one,(14460,1),input_rev_URTM))

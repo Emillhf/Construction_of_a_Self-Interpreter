@@ -9,6 +9,15 @@ def Invert_Move(rule):
         else:
             result.append("(STAY)")
     return result
+
+def Invert_1Tape_move(move):
+    if move == "RIGHT":
+        return ("(LEFT)")
+    elif move == "LEFT":
+        return ("(RIGHT)")
+    else:
+        return ("(STAY)")
+
             
 def Invert(rules):
     for idx, rule in enumerate(rules):
@@ -25,11 +34,24 @@ def Invert(rules):
             rules[idx] = f"({rule[0]},(({rule[1]},{rule[2]}),({rule[3]},{rule[4]}),({rule[5]},{rule[6]})),{rule[-1]})".replace("'", '')
     return rules
 
+def Invert1Tape(rules):
+    for idx, rule in enumerate(rules):
+        rule = rule.split(",")
+        rule = [(elm.replace('(', '')).replace(')','') for elm in rule]
+        rule[0], rule[-1] = rule[-1], rule[0]
+        if len(rule) == 3:
+            move_inverted = Invert_1Tape_move(rule[1])
+            rules[idx] = f"({rule[0]},{move_inverted},{rule[-1]})"
+        else:
+            rule[1], rule[2] = rule[2], rule[1]
+            rules[idx] = f"({rule[0]},({rule[1]},{rule[2]}),{rule[-1]})".replace("'", '')
+    return rules
+
 name = input()
-file = open(name, 'r')
+file = open("1_Tape_programs/" + name, 'r')
 lines = file.readlines()
 lines = [line.strip() for line in lines]
-inverted = Invert(lines)
-outfile = open("rev_" + name,'w+')
+inverted = Invert1Tape(lines)
+outfile = open("1_Tape_programs/" + "rev_" + name,'w+')
 for elm in inverted:
     outfile.write(elm + "\n")
