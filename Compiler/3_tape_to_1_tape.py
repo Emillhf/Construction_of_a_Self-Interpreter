@@ -136,13 +136,34 @@ def Expand_symbol(states,count,states_dict):
             
                 tmp.append((count,"(LEFT)",count+1))
                 tmp.append((count+1,("alfa!=(gamma)","alfa!=(gamma)"),count))
+                
+                tmp.append((count+1,((encoded_symbols[tape2_elm[3]],encoded_symbols[tape2_elm[3]])),count+2))  
+                
+                tmp.append((count+2,"(RIGHT)",count+3))
+                tmp.append((count+3,("alfa!=(gamma)","alfa!=(gamma)"),count+2))
+                
+                tmp.append((count+3,((encoded_symbols[tape3_elm[3]],encoded_symbols[tape3_elm[3]])),count+4))  
+                
+                tmp.append((count+4,"(LEFT)",count+5)) 
+                tmp.append((count+5,("alfa!=(gamma)","alfa!=(gamma)"),count+4))  
+
+                tmp.append((count+5,((encoded_symbols[tape2_elm[3]],encoded_symbols[tape2_elm[3]])),count+6))  
+
+                tmp.append((count+6,"(LEFT)",count+7)) 
+                tmp.append((count+7,("alfa!=(gamma)","alfa!=(gamma)"),count+6))    
+                
+                tmp.append((count+7,((encoded_symbols[tape1_elm[3]],encoded_symbols[tape1_elm[3]])),count+8))  
+
+                tmp.append((count+8,"(RIGHT)",count+9))
+                tmp.append((count+9,("alfa!=(gamma)","alfa!=(gamma)"),count+8))
+                                
                 final_state = tape3[0][-1]
                 if not(final_state in states_dict.keys()):
-                    tmp.append((count+1,((encoded_symbols[tape2_elm[3]],encoded_symbols[tape2_elm[3]])),count+2))  
-                    states_dict[final_state] = count+2
+                    tmp.append((count+9,((encoded_symbols[tape2_elm[3]],encoded_symbols[tape2_elm[3]])),count+10))  
+                    states_dict[final_state] = count+10
                 else:
-                    tmp.append((count+1,((encoded_symbols[tape2_elm[3]],encoded_symbols[tape2_elm[3]])),states_dict[final_state]))  
-                count += 3
+                    tmp.append((count+9,((encoded_symbols[tape2_elm[3]],encoded_symbols[tape2_elm[3]])),states_dict[final_state]))  
+                count += 11
             # count += 1
         count+=1
     return tmp, count, states_dict
@@ -166,6 +187,32 @@ def Expand_move(states,count,states_dict):
     
     tmp.append((count+3,"(LEFT)",count+4))
     tmp.append((count+4,("alfa!=(gamma)","alfa!=(gamma)"),count+3))
+    
+    # Et udkast til hvordan man kan lave tapes uendelig
+    # tmp.append((1,("gamma","gamma"),1))
+    # if (tape1_elm == "LEFT"):
+    #     tmp.append((1,("RIGHT"),1))
+    #     tmp.append((1,("$","$"),1))
+    # #if $ $ true  -->
+    #     tmp.append((1,("LEFT"),1))
+    #     tmp.append((1,("p","p"),1)) 
+    #     #if true
+    #         #SHIFT THE ENTIRE TAPE ONE RIGHT AND REMOVE THE B  10b$ -> 10$
+    # #if $ $ false  -->
+    #     #normal flow  
+    # if (tape1_elm == "RIGHT"):
+    #     tmp.append((1,("RIGHT"),1))
+    #     tmp.append((1,("$","$"),1))
+    # #if $ $ true  -->
+    #     tmp.append((1,("LEFT"),1))
+    #     tmp.append((1,("p","p"),1)) 
+    #     #if true
+    #         #SHIFT THE ENTIRE TAPE ONE RIGHT AND REMOVE THE B  10b$ -> 10$
+    # #if $ $ false  -->
+    #     #normal flow  
+        
+    
+    
     tmp.append((count+4,("gamma","alfa"),count+5))
     tmp.append((count+5,tape1_elm,count+6))
     tmp.append((count+6,("alfa","gamma"),count+7))
@@ -186,7 +233,7 @@ def Expand_move(states,count,states_dict):
     if not(final_state in states_dict.keys()):
         states_dict[final_state] = count+15
     tmp.append((count+14,("gamma","gamma"),states_dict[final_state] ))
-    count +=15
+    count +=16
     return Replace_final_state(tmp,count), count, states_dict
 
 
@@ -255,7 +302,7 @@ def tuple_to_string(tuple):
 # name = "clear_state.txt"
 # name = "write_state.txt"
 # name = "apply_symbol.txt"
-name = "URTM_worktape_ends_on_one.txt"
+name = "URTM.txt"
 file = open("Expanded_RTM_programs/"+name, 'r')
 lines = file.readlines()
 lines = [line.strip() for line in lines]
