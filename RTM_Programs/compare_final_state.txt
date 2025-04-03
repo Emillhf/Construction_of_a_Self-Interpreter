@@ -1,0 +1,5 @@
+1
+0
+#load compare_start_final_state(1,15,100)
+(15,((STAY),(STAY),(STAY)),0)
+(100,((STAY),(STAY),(STAY)),0)

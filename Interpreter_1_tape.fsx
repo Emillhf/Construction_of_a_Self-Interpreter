@@ -114,6 +114,13 @@ let URTM = read_rules("1_Tape_programs/URTM.txt")
 let URTM_ends_on_one = read_rules("1_Tape_programs/URTM_worktape_ends_on_one.txt")
 let rev_URTM_ends_on_one = read_rules("1_Tape_programs/rev_URTM_worktape_ends_on_one.txt")
 
+let rewind = read_rules("1_Tape_programs/rewind_program_tape.txt")
+let rewind_final = read_rules("1_Tape_programs/rewind_program_tape_final.txt")
+let compare_start_final = read_rules("1_Tape_programs/compare_final_state.txt")
+
+let input_compare_final = [|'O';'b';'!';'p';'#';'0';'1';'#';'0';'1';'#';'0';'1';'#';'$';'H';'1';'1';'#'|]
+let input_rewind = [|'p'; 'b'; 'b'; 'b'; 'b';'!';'p'; 'S'; '#'; '1'; '#'; 'B'; 'B'; '#'; '0'; '1'; '#'; 'S'; 'b';'$';'b'; 'b'; 'b'; 'b'; 'H'; 'b'|]
+let input_rewind_final = [|'p'; 'b'; 'b'; 'b'; 'b';'!';'p'; 'S'; '#'; '1'; '#'; 'B'; 'B'; '#'; '0'; '1'; '#'; 'S'; 'b';'$';'p'; 'b'; 'b'; 'b'; 'b'; 'b'|]
 let input = [|'p';'0';'!';'p';'b';'$';'O';'b'|]
 let input2 = [|'p';'0';'!';'p';'b';'$';'O';'b'|]
 let input3 = [|'p';'1';'!';'H';'0';'1';'#';'0';'1';'#';'$';'H';'0';'1';'#';|]
@@ -131,3 +138,11 @@ let input_rev_URTM = [|'I';'b';'!';'p';'M';'#';'1';'#';'1';'0';'#';'0';'#';'M';'
 
 printfn "%A" (RMT (URTM,(1,14544),input_URTM))
 // printfn "%A" (RMT (rev_URTM_ends_on_one,(14460,1),input_rev_URTM))
+
+// printfn "%A" (RMT (Move,(1,34),input))
+// printfn "%A" (RMT (Write_0_or_1,(1,187),input2))
+
+//printfn "%A" (RMT (rewind,(1,579),input_rewind))
+//printfn "%A" (RMT (rewind_final,(1,579),input_rewind_final))
+
+//printfn "%A" (RMT (compare_start_final,(1,536),input_compare_final))
