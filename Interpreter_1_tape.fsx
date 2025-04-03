@@ -14,7 +14,7 @@ type Rule = int*Operation*int
 type tape = array<char>
 
 let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int,tape:tape) =
-    File.AppendAllText("log.txt", "\n")
+    File.WriteAllText("log.txt", "\n")
 
     let start = start1 //Starting state is always 1
     let final = final1 //Final state is always 0
@@ -34,13 +34,12 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int,tape:tape) =
             | Symbol(t1) -> fst t1 = tape[idx]
 
     let act (rule:Rule) =
-        printfn "%A" rule
-        printfn "%A" tape
-        printfn "%A" idx
-        File.AppendAllText("log.txt", System.String(tape))
-        File.AppendAllText("log.txt", "\n")
-        File.AppendAllText("log.txt", idx.ToString())
-        File.AppendAllText("log.txt", "\n\n")
+        // printfn "%A" rule
+        // printfn "%A" tape
+        // printfn "%A" idx
+        File.AppendAllText("log.txt", rule.ToString() + "\n")
+        File.AppendAllText("log.txt", System.String(tape) + "\n")
+        File.AppendAllText("log.txt", "idx: " + idx.ToString() + "\n\n")
         
         match second rule with 
             | Move(t1) -> 
@@ -121,14 +120,14 @@ let input3 = [|'p';'1';'!';'H';'0';'1';'#';'0';'1';'#';'$';'H';'0';'1';'#';|]
 let input_apply = [|'O';'b';'!';'H';'0';'1';'#';'0';'1';'#';'0';'1';'#';'$';'H';'0';'1';'#';|]
 
 let input_URTM = [|'p';'1';'!';'p';'M';'#';'1';'#';'0';'1';'#';'0';'1';'#';'M';'S';'#';'1';'0';'#';'1';'B';'#';'0';'#';'S';'b';'$';'b';'b';'p';'b';'b';'b';'b';'b'|]
-let input_rev_URTM = [|'p';'b';'!';'p';'M';'#';'1';'#';'1';'0';'#';'0';'1';'#';'M';'S';'#';'1';'0';'#';'B';'B';'#';'0';'#';'S';'b';'$';'b';'b';'p';'b';'b';'b';'b';'b'|]
+let input_rev_URTM = [|'I';'b';'!';'p';'M';'#';'1';'#';'1';'0';'#';'0';'#';'M';'b';'$';'b';'b';'p';'b';'b';'b';'b';'b'|]
 
 // printfn "%A" (RMT (Move,(1,34),input))
 // printfn "%A" (RMT (Write_0_or_1,(1,187),input2))
 // let res = RMT (clear,(1,430),input3)
-printfn "%A" (RMT (clear,(1,430),input3))
+// printfn "%A" (RMT (clear,(1,430),input3))
 // printfn "%A" (RMT (write,(1,430), res))
 // printfn "%A" (RMT (apply_symbol,(1,710),input_apply))
 
-// printfn "%A" (RMT (URTM,(1,14460),input_URTM))
+printfn "%A" (RMT (URTM,(1,14544),input_URTM))
 // printfn "%A" (RMT (rev_URTM_ends_on_one,(14460,1),input_rev_URTM))

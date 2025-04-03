@@ -187,6 +187,32 @@ def Expand_move(states,count,states_dict):
     
     tmp.append((count+3,"(LEFT)",count+4))
     tmp.append((count+4,("alfa!=(gamma)","alfa!=(gamma)"),count+3))
+    
+    # Et udkast til hvordan man kan lave tapes uendelig
+    # tmp.append((1,("gamma","gamma"),1))
+    # if (tape1_elm == "LEFT"):
+    #     tmp.append((1,("RIGHT"),1))
+    #     tmp.append((1,("$","$"),1))
+    # #if $ $ true  -->
+    #     tmp.append((1,("LEFT"),1))
+    #     tmp.append((1,("p","p"),1)) 
+    #     #if true
+    #         #SHIFT THE ENTIRE TAPE ONE RIGHT AND REMOVE THE B  10b$ -> 10$
+    # #if $ $ false  -->
+    #     #normal flow  
+    # if (tape1_elm == "RIGHT"):
+    #     tmp.append((1,("RIGHT"),1))
+    #     tmp.append((1,("$","$"),1))
+    # #if $ $ true  -->
+    #     tmp.append((1,("LEFT"),1))
+    #     tmp.append((1,("p","p"),1)) 
+    #     #if true
+    #         #SHIFT THE ENTIRE TAPE ONE RIGHT AND REMOVE THE B  10b$ -> 10$
+    # #if $ $ false  -->
+    #     #normal flow  
+        
+    
+    
     tmp.append((count+4,("gamma","alfa"),count+5))
     tmp.append((count+5,tape1_elm,count+6))
     tmp.append((count+6,("alfa","gamma"),count+7))
@@ -207,7 +233,7 @@ def Expand_move(states,count,states_dict):
     if not(final_state in states_dict.keys()):
         states_dict[final_state] = count+15
     tmp.append((count+14,("gamma","gamma"),states_dict[final_state] ))
-    count +=15
+    count +=16
     return Replace_final_state(tmp,count), count, states_dict
 
 
@@ -273,10 +299,10 @@ def tuple_to_string(tuple):
 
 # name = "Move_test.txt"
 # name = "Write_0_or_1.txt"
-name = "clear_state.txt"
+# name = "clear_state.txt"
 # name = "write_state.txt"
 # name = "apply_symbol.txt"
-# name = "URTM.txt"
+name = "URTM.txt"
 file = open("Expanded_RTM_programs/"+name, 'r')
 lines = file.readlines()
 lines = [line.strip() for line in lines]
