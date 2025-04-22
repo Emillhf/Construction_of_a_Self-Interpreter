@@ -19,7 +19,6 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int,tape:tape, startingId
     let start = start1 //Starting state is always 1
     let final = final1 //Final state is always 0
     let mutable idx = defaultArg startingIdx 0
-    printfn "%A" idx
     let mutable current_state = start
     let mutable previous_state = -1
 
@@ -132,36 +131,40 @@ let input_URTM = [|'p';'1';'!';'p';'M';'#';'1';'#';'0';'1';'#';'0';'1';'#';'M';'
 let input_rev_URTM = [|'I';'b';'!';'p';'M';'#';'1';'#';'1';'0';'#';'0';'#';'M';'b';'$';'b';'b';'p';'b';'b';'b';'b';'b'|]
 
 
-let input_test_infinate_case1 = [|'b';'$';'1';'1';'O';'$';'p'|] //STARTING IDX CHANGED TO 4
-let rev_input_test_infinate_case1 = [|'$';'1';'1';'0';'p';'$';'p'|]
-let input_test_infinate_case2 = [|'b';'$';'1';'I';'0';'$';'p'|] //STARTING IDX CHANGED TO 3
-let rev_input_test_infinate_case2 =[|'b'; '$'; '1'; '1'; 'O'; '$'; 'p'|]
-let input_test_infinate_case3 = [|'b';'$';'p';'0';'1';'$';'p'|] //STARTING IDX CHANGED TO 2
-let rev_input_test_infinate_case3 =[|'b';'b'; '$'; 'O'; '1'; '$'; 'p'|]
-let input_test_infinate_case4 = [|'b';'$';'I';'0';'1';'$';'p'|]  //STARTING IDX CHANGED TO 2
-let rev_input_test_infinate_case4 = [|'b'; '$'; '1'; 'O'; '1'; '$'; 'p'|] 
-let input_test_infinate_case5 = [|'b';'$';'1';'1';'O';'1';'1';'1';'$';'p'|] //STARTING IDX CHANGED TO 3
-let rev_input_test_infinate_case5 = [|'b'; '$';'1'; '1'; '0'; 'I'; '1';'1'; '$'; 'p'|]
-let test_infinate_case_right = read_rules("1_Tape_programs/move_right.txt")
+let input_test_infinate_case1 = [|'b';'$';'1';'1';'O';'$';'p';'$';'I';'1';'0';'0';'$';'b'|] //STARTING IDX CHANGED TO 4
+let rev_input_test_infinate_case1 = [|'$';'1';'1';'0';'p';'$';'p';'$';'p';'1';'0';'1';'$'|]
+let input_test_infinate_case2 = [|'b';'$';'1';'I';'0';'$';'p';'$';'1';'I';'0';'$';'b'|] //STARTING IDX CHANGED TO 3
+let rev_input_test_infinate_case2 =[|'b'; '$'; '1'; '1'; 'O'; '$'; 'p';'$'; 'I'; '1'; '0'; '$';'b'|]
+let input_test_infinate_case3 = [|'b';'$';'p';'0';'1';'$';'p';'$';'1';'0';'p';'$';'b'|] //STARTING IDX CHANGED TO 2
+let rev_input_test_infinate_case3 =[|'b';'b'; '$'; 'O'; '1'; '$'; 'p';'$';'1';'O';'$';'b';'b'|]
+let input_test_infinate_case4 = [|'b';'$';'I';'0';'1';'$';'p';'$';'1';'0';'I';'$';'b'|]  //STARTING IDX CHANGED TO 2
+let rev_input_test_infinate_case4 = [|'b'; '$'; '1'; 'O'; '1'; '$'; 'p'; '$'; '1'; 'O'; '1'; '$';'b'|] 
+let input_test_infinate_case5 = [|'b';'$';'1';'1';'O';'1';'1';'1';'$';'p';'$';'1';'1';'O';'1';'1';'1';'$';'b'|] //STARTING IDX CHANGED TO 3
+let rev_input_test_infinate_case5 = [|'b'; '$';'1'; '1'; '0'; 'I'; '1';'1'; '$'; 'p'; '$';'1'; 'I'; '0'; '1'; '1';'1'; '$';'b'|]
+let test_infinate_case_right = read_rules("1_Tape_programs/move_right_t1_left_t3.txt")
 let rev_test_infinate_case_right = read_rules("1_Tape_programs/rev_move_right.txt")
-let test_infinate_case_left = read_rules("1_Tape_programs/move_left.txt")
+let test_infinate_case_left = read_rules("1_Tape_programs/move_left_t1_right_t3.txt")
 
-// printfn "%A" (RMT (test_infinate_case_right, (1,77), input_test_infinate_case1, Some 4)) 
-// printfn "%A" (RMT (rev_test_infinate_case_right, (77,1), rev_input_test_infinate_case1, Some 4) = input_test_infinate_case1) 
-printfn "%A" (RMT (test_infinate_case_left, (1,77), rev_input_test_infinate_case1, Some 4)= input_test_infinate_case1) 
+printfn "%A" (RMT (test_infinate_case_right, (1,148), input_test_infinate_case1, Some 4)) 
+// printfn "%A" (RMT (rev_test_infinate_case_right, (148,1), rev_input_test_infinate_case1, Some 4) = input_test_infinate_case1) 
+printfn "%A\n" (RMT (test_infinate_case_left, (1,148), rev_input_test_infinate_case1, Some 4)) 
 
-// printfn "%A" (RMT (test_infinate_case_right, (1,77), input_test_infinate_case2, Some 3)) 
-// printfn "%A" (RMT (rev_test_infinate_case_right, (77,1), rev_input_test_infinate_case2, Some 4) = input_test_infinate_case2) 
-printfn "%A" (RMT (test_infinate_case_left, (1,77), rev_input_test_infinate_case2, Some 4)= input_test_infinate_case2) 
-// printfn "%A" (RMT (test_infinate_case_right, (1,77), input_test_infinate_case3, Some 2))
-// printfn "%A" (RMT (rev_test_infinate_case_right, (77,1), rev_input_test_infinate_case3, Some 3)  = input_test_infinate_case3) 
-printfn "%A" (RMT (test_infinate_case_left, (1,77), rev_input_test_infinate_case3, Some 3)= input_test_infinate_case3) 
-// printfn "%A" (RMT (test_infinate_case_right, (1,77), input_test_infinate_case4, Some 2)) 
-// printfn "%A" (RMT (rev_test_infinate_case_right, (77,1), rev_input_test_infinate_case4, Some 3) = input_test_infinate_case4) 
-printfn "%A" (RMT (test_infinate_case_left, (1,77), rev_input_test_infinate_case4, Some 3)= input_test_infinate_case4) 
-// printfn "%A" (RMT (test_infinate_case_right, (1,77), input_test_infinate_case5, Some 3))
-// printfn "%A" (RMT (rev_test_infinate_case_right, (77,1), rev_input_test_infinate_case5, Some 5) = input_test_infinate_case5) 
-printfn "%A" (RMT (test_infinate_case_left, (1,77), rev_input_test_infinate_case5, Some 5)= input_test_infinate_case5) 
+
+printfn "%A" (RMT (test_infinate_case_right, (1,148), input_test_infinate_case2, Some 4)) 
+// printfn "%A" (RMT (rev_test_infinate_case_right, (148,1), rev_input_test_infinate_case2, Some 4) = input_test_infinate_case2) 
+printfn "%A\n" (RMT (test_infinate_case_left, (1,148), rev_input_test_infinate_case2, Some 4)) 
+
+printfn "%A" (RMT (test_infinate_case_right, (1,148), input_test_infinate_case3, Some 3))
+// printfn "%A" (RMT (rev_test_infinate_case_right, (148,1), rev_input_test_infinate_case3, Some 3)  = input_test_infinate_case3) 
+printfn "%A\n" (RMT (test_infinate_case_left, (1,148), rev_input_test_infinate_case3, Some 3)) 
+
+printfn "%A" (RMT (test_infinate_case_right, (1,148), input_test_infinate_case4, Some 3)) 
+// printfn "%A" (RMT (rev_test_infinate_case_right, (148,1), rev_input_test_infinate_case4, Some 3) = input_test_infinate_case4) 
+printfn "%A\n" (RMT (test_infinate_case_left, (1,148), rev_input_test_infinate_case4, Some 3)) 
+
+printfn "%A" (RMT (test_infinate_case_right, (1,148), input_test_infinate_case5, Some 5))
+// printfn "%A" (RMT (rev_test_infinate_case_right, (148,1), rev_input_test_infinate_case5, Some 5) = input_test_infinate_case5) 
+printfn "%A" (RMT (test_infinate_case_left, (1,148), rev_input_test_infinate_case5, Some 5)) 
 
 // printfn "%A" (RMT (Move,(1,34),input))
 // printfn "%A" (RMT (Write_0_or_1,(1,187),input2))

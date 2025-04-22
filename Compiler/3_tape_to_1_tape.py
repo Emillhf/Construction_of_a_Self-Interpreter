@@ -345,100 +345,164 @@ def Expand_move(states,count,states_dict):
 
         
         
-        
-        
-        
-        
-        # tmp.append((count+22,("(LEFT)"),count+23))
-        # tmp.append((count+23,("(LEFT)"),count+24))
-        # tmp.append((count+24,("$","$"),count+45)) #VI BEFINDER OS HELE VEJEN PÅ VENSTRE SIDE AF TAPE 1
-        # tmp.append((count+24,("alfa!=($)","alfa!=($)"),count+25))
-        # # #case 5 / 2
-        # tmp.append((count+25,("(RIGHT)"),count+26))
-        # tmp.append((count+26,("(RIGHT)"),count+27))
-        # tmp.append((count+27,("(RIGHT)"),count+28))
-        # tmp.append((count+28,("$","$"),count+29)) #goto case 2
-        # tmp.append((count+28,("alfa!=($)","alfa!=($)"),count+32)) # goto case 5
-        
-        # tmp.append((count+29,("(LEFT)"),count+30)) # case 2 begin
-        # tmp.append((count+30,("alfa","gamma"),count+31)) #case 2 FINSIH
-        # tmp.append((count+31,("(RIGHT)"),count+35))
-        
-        
-        # tmp.append((count+32,("(LEFT)"),count+33)) #case 5 begin
-        # tmp.append((count+33,("alfa","gamma"),count+34)) #case 5 FINSIH
-        # tmp.append((count+34,("(RIGHT)"),count+36))
-        
-        # tmp.append((count+35,("$","$"),count+37)) #from case 2
-        # tmp.append((count+36,("alfa!=($)","alfa!=($)"),count+37)) #from case 5
-        # tmp.append((count+37,("(LEFT)"),count+38))
-        # tmp.append((count+38,("(LEFT)"),count+39))
-        # tmp.append((count+39,("(LEFT)"),count+40))
-        
-        # tmp.append((count+40,("alfa!=($)","alfa!=($)"),count+41)) #from case 2+5
-        # tmp.append((count+59,("$","$"),count+41)) #from case 3+4
-        # tmp.append((count+41,("(RIGHT)"),count+43))
-        # tmp.append((count+43,("(RIGHT)"),count+44)) 
-        # tmp.append((count+44,("(RIGHT)"),count+70)) 
-        
-        
-        # tmp.append((count+45,("(RIGHT)"),count+46))
-        # tmp.append((count+46,("b","b"),count+51)) #goto case 3
-        # tmp.append((count+46,("alfa!=(b)","alfa!=(b)"),count+47)) #case 4
-        # tmp.append((count+47,("(RIGHT)"),count+48)) # case 4 finish
-        # tmp.append((count+48,("alfa","gamma"),count+50)) #FINSIH
-        # tmp.append((count+50,("(LEFT)"),count+58)) # case 4 finish
-        
-        
-
-        # #case 3
-        # tmp.append((count+51,("(LEFT)"),count+52))
-        # tmp.append((count+52,("$","b"),count+53))
-        # tmp.append((count+53,("(RIGHT)"),count+54))
-        # tmp.append((count+54,("b","$"),count+55))
-        # tmp.append((count+55,("(RIGHT)"),count+56))
-        # tmp.append((count+56,("alfa","gamma"),count+57)) #FINSIH
-        # # tmp.append((count+56,("(LEFT)"),count+57))
-        
-        # # UNITED CASE 3 AND 4 below here
-        # tmp.append((count+57,("$","$"),count+59))
-        # tmp.append((count+58,("alfa!=($)","alfa!=($)"),count+60)) #from case 4   
-
-        
-        # #START SHIFT LEFT #case 1
-        # tmp.append((count+8,("(LEFT)"),count+9))
-        # tmp.append((count+9,("alfa!=($)","alfa!=($)"),count+8)) #Goto the (left) $ on tape 1
-        # tmp.append((count+9,("$","b"),count+10))
-        # tmp.append((count+10,("(LEFT)"),count+11))
-        # tmp.append((count+11,("b","$"),count+12))
-        # tmp.append((count+12,("(RIGHT)"),count+13))
-        # tmp.append((count+13,("(RIGHT)"),count+14))
-        # tmp.append((count+14,("$","$"),count+19)) #all the way to the (right) $ on tape 1
-        # tmp.append((count+14,("0","b"),count+15))
-        # tmp.append((count+14,("1","b"),count+16))
-        # tmp.append((count+15,("(LEFT)"),count+17))
-        # tmp.append((count+16,("(LEFT)"),count+18))
-        # tmp.append((count+17,("b","0"),count+12))
-        # tmp.append((count+18,("b","1"),count+12))
-        # tmp.append((count+19,("(LEFT)"),count+20)) 
-        # tmp.append((count+20,("b","p"),count+21)) #FINISHED #Står på p #CASE 1 er færdig
-        # tmp.append((count+21,("(RIGHT)"),count+61)) 
-               
-        
-        
-        # #Unite case 1 with 2,3,4,5
-        # tmp.append((count+61,("$","$"),count+62)) 
-        # tmp.append((count+70,("alfa!=($)","alfa!=($)"),count+62))
-        # tmp.append((count+62,("(LEFT)"),count+63))
-        # tmp.append((count+63,("gamma","gamma"),count+64))
-
-        #reversi
-        # tmp.append((count+100,("$","$"),count+101))
-        # # tmp.append((count+7,("alfa!=($)","alfa!=($)"),count+22)) - skal for-egnes med resten
-        # tmp.append((count+102,("(LEFT)"),count+103))
-        # tmp.append((count+104,("alfa","gamma"),count+105))
     
-    # tmp.append((count+4,("gamma","alfa"),count+5))
+    tmp.append((count+28,"(RIGHT)",count+72))
+    tmp.append((count+72,("alfa!=(gamma)","alfa!=(gamma)"),count+28))
+    tmp.append((count+72,("gamma","gamma"),count+73))
+
+    tmp.append((count+73,"(RIGHT)",count+74))
+    tmp.append((count+74,("alfa!=(gamma)","alfa!=(gamma)"),count+73))
+    tmp.append((count+74,("gamma","gamma"),count+75))
+    
+    if (tape3_elm == "(LEFT)"):
+        tmp.append((count+75,(("gamma","alfa")),count+76))
+        tmp.append((count+76,"(LEFT)",count+77))
+        tmp.append((count+77,(("$","$")),count+78))
+        tmp.append((count+77,(("alfa!=($)","alfa!=($)")),count+99))
+        tmp.append((count+78,"(RIGHT)",count+79))
+        tmp.append((count+79,(("alfa!=($)","alfa!=($)")),count+78))
+        tmp.append((count+79,(("$","b")),count+80))
+        tmp.append((count+80,"(RIGHT)",count+81))
+        tmp.append((count+81,(("b","$")),count+82))
+        tmp.append((count+82,"(LEFT)",count+83))
+        tmp.append((count+83,"(LEFT)",count+84))
+        tmp.append((count+84,(("$","$")),count+89))
+        tmp.append((count+84,(("0","b")),count+85))
+        tmp.append((count+84,(("1","b")),count+86))
+        tmp.append((count+85,"(RIGHT)",count+87))
+        tmp.append((count+86,"(RIGHT)",count+88))
+        tmp.append((count+87,(("b","0")),count+82))
+        tmp.append((count+88,(("b","1")),count+82))
+        tmp.append((count+89,"(RIGHT)",count+90))
+        tmp.append((count+90,(("b","p")),count+91))
+        tmp.append((count+91,(("p","p")),count+92))
+        tmp.append((count+92,"(LEFT)",count+93))
+        tmp.append((count+93,(("$","$")),count+94))
+        tmp.append((count+94,"(RIGHT)",count+95))
+        tmp.append((count+95,"(RIGHT)",count+96))
+        tmp.append((count+96,(("alfa!=($)","alfa!=($)")),count+97))
+        tmp.append((count+97,"(LEFT)",count+98))
+        tmp.append((count+99,"(RIGHT)",count+100))
+        tmp.append((count+100,"(RIGHT)",count+101))
+        tmp.append((count+101,(("alfa!=($)","alfa!=($)")),count+127))
+        tmp.append((count+101,(("$","$")),count+102))
+        tmp.append((count+102,"(LEFT)",count+103))
+        tmp.append((count+103,(("alfa!=(b)","alfa!=(b)")),count+118))
+        tmp.append((count+103,(("b","b")),count+104))
+        tmp.append((count+104,"(RIGHT)",count+105))
+        tmp.append((count+105,(("$","b")),count+106))
+        tmp.append((count+106,"(LEFT)",count+107))
+        tmp.append((count+107,(("b","$")),count+108))
+        tmp.append((count+108,"(LEFT)",count+109))
+        tmp.append((count+109,(("alfa","gamma")),count+110))
+        tmp.append((count+110,"(RIGHT)",count+111))
+        tmp.append((count+111,(("$","$")),count+112))
+        tmp.append((count+112,"(LEFT)",count+113))
+        tmp.append((count+113,"(LEFT)",count+114))
+        tmp.append((count+114,(("alfa!=($)","alfa!=($)")),count+115))
+        tmp.append((count+115,"(RIGHT)",count+116))
+        tmp.append((count+116,"(RIGHT)",count+117))
+        tmp.append((count+117,(("$","$")),count+97))
+        tmp.append((count+118,"(LEFT)",count+119))
+        tmp.append((count+119,(("alfa","gamma")),count+120))
+        tmp.append((count+120,"(RIGHT)",count+121))
+        tmp.append((count+121,"(RIGHT)",count+122))
+        tmp.append((count+122,(("$","$")),count+123))
+        tmp.append((count+123,"(LEFT)",count+124))
+        tmp.append((count+124,"(LEFT)",count+125))
+        tmp.append((count+125,"(LEFT)",count+126))
+        tmp.append((count+126,(("alfa!=($)","alfa!=($)")),count+94))
+        tmp.append((count+127,"(LEFT)",count+128))
+        tmp.append((count+128,"(LEFT)",count+129))
+        tmp.append((count+129,"(LEFT)",count+130))
+        tmp.append((count+130,(("alfa!=($)","alfa!=($)")),count+134))
+        tmp.append((count+130,(("$","$")),count+131))
+        tmp.append((count+131,"(RIGHT)",count+132))
+        tmp.append((count+132,(("alfa","gamma")),count+133))
+        tmp.append((count+133,(("alfa!=(p)","alfa!=(p)")),count+92))
+        tmp.append((count+134,"(RIGHT)",count+135))
+        tmp.append((count+135,(("alfa","gamma")),count+136))
+        tmp.append((count+136,"(LEFT)",count+137))
+        tmp.append((count+137,(("alfa!=($)","alfa!=($)")),count+138))
+        tmp.append((count+138,"(RIGHT)",count+139))
+        tmp.append((count+140,"(RIGHT)",count+141))
+        tmp.append((count+139,"(RIGHT)",count+140))
+        tmp.append((count+141,(("alfa!=($)","alfa!=($)")),count+123))
+    elif (tape3_elm == "(RIGHT)"):
+        tmp.append((count+76,("alfa","gamma"),count+98))
+        tmp.append((count+77,"(RIGHT)",count+76))
+        tmp.append((count+78,("$","$"),count+77))
+        tmp.append((count+99,("alfa!=($)","alfa!=($)"),count+77))
+        tmp.append((count+79,"(LEFT)",count+78))
+        tmp.append((count+78,("alfa!=($)","alfa!=($)"),count+79))
+        tmp.append((count+80,("b","$"),count+79))
+        tmp.append((count+81,"(LEFT)",count+80))
+        tmp.append((count+82,("$","b"),count+81))
+        tmp.append((count+83,"(RIGHT)",count+82))
+        tmp.append((count+84,"(RIGHT)",count+83))
+        tmp.append((count+89,("$","$"),count+84))
+        tmp.append((count+85,("b","0"),count+84))
+        tmp.append((count+86,("b","1"),count+84))
+        tmp.append((count+87,"(LEFT)",count+85))
+        tmp.append((count+88,"(LEFT)",count+86))
+        tmp.append((count+82,("0","b"),count+87))
+        tmp.append((count+82,("1","b"),count+88))
+        tmp.append((count+90,"(LEFT)",count+89))
+        tmp.append((count+91,("p","b"),count+90))
+        tmp.append((count+92,("p","p"),count+91))
+        tmp.append((count+93,"(RIGHT)",count+92))
+        tmp.append((count+94,("$","$"),count+93))
+        tmp.append((count+95,"(LEFT)",count+94))
+        tmp.append((count+96,"(LEFT)",count+95))
+        tmp.append((count+97,("alfa!=($)","alfa!=($)"),count+96))
+        tmp.append((count+75,"(RIGHT)",count+97))
+        tmp.append((count+100,"(LEFT)",count+99))
+        tmp.append((count+101,"(LEFT)",count+100))
+        tmp.append((count+127,("alfa!=($)","alfa!=($)"),count+101))
+        tmp.append((count+102,("$","$"),count+101))
+        tmp.append((count+103,"(RIGHT)",count+102))
+        tmp.append((count+118,("alfa!=(b)","alfa!=(b)"),count+103))
+        tmp.append((count+104,("b","b"),count+103))
+        tmp.append((count+105,"(LEFT)",count+104))
+        tmp.append((count+106,("b","$"),count+105))
+        tmp.append((count+107,"(RIGHT)",count+106))
+        tmp.append((count+108,("$","b"),count+107))
+        tmp.append((count+109,"(RIGHT)",count+108))
+        tmp.append((count+110,("gamma","alfa"),count+109))
+        tmp.append((count+111,"(LEFT)",count+110))
+        tmp.append((count+112,("$","$"),count+111))
+        tmp.append((count+113,"(RIGHT)",count+112))
+        tmp.append((count+114,"(RIGHT)",count+113))
+        tmp.append((count+115,("alfa!=($)","alfa!=($)"),count+114))
+        tmp.append((count+116,"(LEFT)",count+115))
+        tmp.append((count+117,"(LEFT)",count+116))
+        tmp.append((count+97,("$","$"),count+117))
+        tmp.append((count+119,"(RIGHT)",count+118))
+        tmp.append((count+120,("gamma","alfa"),count+119))
+        tmp.append((count+121,"(LEFT)",count+120))
+        tmp.append((count+122,"(LEFT)",count+121))
+        tmp.append((count+123,("$","$"),count+122))
+        tmp.append((count+124,"(RIGHT)",count+123))
+        tmp.append((count+125,"(RIGHT)",count+124))
+        tmp.append((count+126,"(RIGHT)",count+125))
+        tmp.append((count+94,("alfa!=($)","alfa!=($)"),count+126))
+        tmp.append((count+128,"(RIGHT)",count+127))
+        tmp.append((count+129,"(RIGHT)",count+128))
+        tmp.append((count+130,"(RIGHT)",count+129))
+        tmp.append((count+134,("alfa!=($)","alfa!=($)"),count+130))
+        tmp.append((count+131,("$","$"),count+130))
+        tmp.append((count+132,"(LEFT)",count+131))
+        tmp.append((count+133,("gamma","alfa"),count+132))
+        tmp.append((count+92,("alfa!=(p)","alfa!=(p)"),count+133))
+        tmp.append((count+135,"(LEFT)",count+134))
+        tmp.append((count+136,("gamma","alfa"),count+135))
+        tmp.append((count+137,"(RIGHT)",count+136))
+        tmp.append((count+138,("alfa!=($)","alfa!=($)"),count+137))
+        tmp.append((count+139,"(LEFT)",count+138))
+        tmp.append((count+141,"(LEFT)",count+140))
+        tmp.append((count+140,"(LEFT)",count+139))
+        tmp.append((count+123,("alfa!=($)","alfa!=($)"),count+141))
+    
     # tmp.append((count+5,tape1_elm,count+6))
     # tmp.append((count+6,("alfa","gamma"),count+7))
     
@@ -451,14 +515,12 @@ def Expand_move(states,count,states_dict):
     # tmp.append((count+11,tape3_elm,count+12))
     # tmp.append((count+12,("alfa","gamma"),count+13))
     
-    # tmp.append((count+13,"(LEFT)",count+14))
-    # tmp.append((count+14,("alfa!=(gamma)","alfa!=(gamma)"),count+13))
     
     final_state = states[0][0][0][0][-1]
     if not(final_state in states_dict.keys()):
-        states_dict[final_state] = count+72
-    tmp.append((count+28,("gamma","gamma"),states_dict[final_state]))
-    count +=73
+        states_dict[final_state] = count+143
+    tmp.append((count+98,("gamma","gamma"),states_dict[final_state]))
+    count +=144
     return Replace_final_state(tmp,count), count, states_dict
 
 
@@ -530,7 +592,8 @@ def tuple_to_string(tuple):
 # name = "apply_symbol.txt"
 # name = "URTM.txt"
 # name = "move_right.txt"
-name = "move_left.txt"
+# name = "move_right_t1_left_t3.txt"
+name = "move_left_t1_right_t3.txt"
 file = open("Expanded_RTM_programs/"+name, 'r')
 lines = file.readlines()
 lines = [line.strip() for line in lines]

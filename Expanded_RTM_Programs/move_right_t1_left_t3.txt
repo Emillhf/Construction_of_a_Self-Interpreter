@@ -1,0 +1,1 @@
+(1,((RIGHT),(STAY),(LEFT)),0)
