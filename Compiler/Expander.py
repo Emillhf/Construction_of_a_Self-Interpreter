@@ -1,9 +1,17 @@
 import re
 
-alfa = ['0', '1', 'b']
-beta = ['0', '1', 'B', '#', 'S', 'M','b']
+beta = ['0', '1', 'B', 'b', '#', 'H', 'S', 's', 'M', 'm']
+alfa = ['0', '1', 'B', 'b', '#', 'H', 'S', 's', 'M', 'm']
+mapping = {'B':'b',
+           'H':'#',
+           's':'S',
+           'm':'M',
+           '0':'0',
+           '1':'1'}
+
 
 def expand_alfa(rule, alfa_current = alfa):
+    
     expanded = []
     if 'alfa' in rule:
         for symbol in alfa_current:
@@ -62,13 +70,38 @@ def remove_equals(rule):
 def expand_rules(rules,alfa,beta):
     expanded_rules = []
     for rule in rules:
-        removed_alfas, removed_beta = restricted_expand(rule,alfa,beta)
-        rule = remove_equals(rule)
-        for betas in expand_alfa(rule,removed_alfas):
-            expanded_rules.append(expand_beta(betas,removed_beta))
-    return [rule for rules in expanded_rules for rule in rules]
+        if "alfa!=(a_enc)" in rule:
+            for elm in mapping.values():
+                for elm1 in mapping.keys():
+                    if mapping[elm1] == elm:
+                        continue
+                
+                    tmp = rule
+                    tmp = tmp.replace("alfa!=(a_enc)", elm)
+                    tmp = tmp.replace("a_enc", elm1)
+                    print(tmp)
+                    expanded_rules.append(tmp)
+        elif "a_enc" in rule:
+            for key,value in mapping.items():
+                    tmp = rule
+                    tmp = tmp.replace("alfa", value)
+                    tmp = tmp.replace("a_enc", key)
+                    print(tmp)
+                    expanded_rules.append(tmp)    
+        else:
+            removed_alfas, removed_beta = restricted_expand(rule,alfa,beta)
+            rule = remove_equals(rule)
+            for betas in expand_alfa(rule,removed_alfas):
+                expanded_rules.append(expand_beta(betas,removed_beta))
+            expanded_rules = [rule for rules in expanded_rules for rule in rules]
+    return expanded_rules        
 
 example_rule_alfa = "(1,((alfa,alfa),(0,1),(0,0)),2)"
 example_rule_beta = "(1,((0,0),(beta,beta),(0,0)),2)"
 example_rule_alfaAndBeta = ["(1,((alfa,alfa),(beta,beta),(0,0)),2)"]
 example_rule_alfaAndBeta = ["(1,((alfa!=(b,1),alfa!=(b,1)),(beta!=(M),beta!=(M)),(0,0)),2)"]
+example_rule_alfa_enc_not_equal = ["(1,((alfa!=(a_enc),alfa!=(a_enc)),(a_enc,a_enc),(0,0)),2)"]
+example_rule_alfa_enc_equal = ["(1,((alfa,alfa),(a_enc,a_enc),(0,0)),2)"]
+
+# (expand_rules(example_rule_alfa_enc_not_equal, alfa, beta))
+(expand_rules(example_rule_alfa_enc_equal, alfa, beta))
