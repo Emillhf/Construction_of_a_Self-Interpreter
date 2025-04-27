@@ -1,6 +1,7 @@
 import re
 import sys
 import Expand_1_tape
+import Inverter
 
 encoded_symbols = {
     'B': 'P',
@@ -100,12 +101,11 @@ def Replace_final_state(rules,updated_value):
             rules[idx] = tuple(rule)
     return rules
 
-def Expand_symbol(states,count,states_dict):
+def Expand_symbol_top_tree(states,count,states_dict,connection_dict):
     tmp = []
     start_state = states[0][0][0][0][0]
     if not(start_state in states_dict.keys()):
         states_dict[start_state] = count
-    
     for tape2 in states:
         tape2_elm = tape2[0][0][0][2]
         count+=1
@@ -132,23 +132,47 @@ def Expand_symbol(states,count,states_dict):
             count += 4
             for tape3 in tape1:
                 tape3_elm = tape3[0][3]
+                connection_dict[tape3[0]] = count
                 tmp.append((count_tape1+3,((encoded_symbols[tape3_elm[1]],encoded_symbols[tape3_elm[3]])),count))  
-            
-                tmp.append((count,"(LEFT)",count+1))
-                tmp.append((count+1,("alfa!=(gamma)","alfa!=(gamma)"),count))
-                
-                tmp.append((count+1,((encoded_symbols[tape2_elm[3]],encoded_symbols[tape2_elm[3]])),count+2))  
-                                
-                final_state = tape3[0][-1]
-                if not(final_state in states_dict.keys()):
-                    tmp.append((count+9,((encoded_symbols[tape2_elm[3]],encoded_symbols[tape2_elm[3]])),count+10))  
-                    states_dict[final_state] = count+10
-                else:
-                    tmp.append((count+9,((encoded_symbols[tape2_elm[3]],encoded_symbols[tape2_elm[3]])),states_dict[final_state]))  
-                count += 11
             # count += 1
         count+=1
-    return tmp, count, states_dict
+    return tmp, count, states_dict, connection_dict
+
+def Expand_symbol_bottom_tree(states,count,states_dict,connection_dict):
+    tmp = []
+    start_state = states[0][0][0][0][0]
+    if not(start_state in states_dict.keys()):
+        states_dict[start_state] = count
+    for tape2 in states:
+        tape2_elm = tape2[0][0][0][2]
+        count+=1
+        tmp.append((states_dict[start_state],((encoded_symbols[tape2_elm[1]],encoded_symbols[tape2_elm[1]])),count))  
+        count_tape2 = count
+        count += 1
+        tmp.append((count_tape2,"(LEFT)",count_tape2+1)) 
+        tmp.append((count_tape2+1,("alfa!=(gamma)","alfa!=(gamma)"),count_tape2))      
+        for tape1 in tape2:
+            count +=1
+            tape1_elm = tape1[0][0][1]
+
+            tmp.append((count_tape2+1,((encoded_symbols[tape1_elm[1]]),encoded_symbols[tape1_elm[1]]),count))    
+            count_tape1 = count
+            
+            tmp.append((count_tape1,"(RIGHT)",count_tape1+1)) 
+            tmp.append((count_tape1+1,("alfa!=(gamma)","alfa!=(gamma)"),count_tape1))  
+
+            tmp.append((count_tape1+1,((encoded_symbols[tape2_elm[1]],encoded_symbols[tape2_elm[1]])),count_tape1+2))  
+
+            tmp.append((count_tape1+2,"(RIGHT)",count_tape1+3)) 
+            tmp.append((count_tape1+3,("alfa!=(gamma)","alfa!=(gamma)"),count_tape1+2))    
+            
+            count += 4
+            for tape3 in tape1:
+                tape3_elm = tape3[0][3]
+                tmp.append((count_tape1+3,((encoded_symbols[tape3_elm[1]],encoded_symbols[tape3_elm[1]])),connection_dict[Inverter.Invert_compiler(tape3)[0]]))  
+            # count += 1
+        count+=1
+    return Inverter.Invert1Tape_compiler(tmp[::-1]), count, states_dict
 
 def Expand_move(states,count,states_dict):
     tmp = []
@@ -524,25 +548,32 @@ def Expand_move(states,count,states_dict):
     return Replace_final_state(tmp,count), count, states_dict
 
 
-
-def Expand(instructions):
+def Expand(instructions_top,instructions_bottom):
+    print("top: ", instructions_top)
     states_dict = {'1': 3}
+    connection_dict = {}
     final = []
     count = 1
     final.append([(count,"(RIGHT)",count+1)])
     final.append([(count+1,("alfa!=(gamma)","alfa!=(gamma)"),count)])
     final.append([(count+1,("gamma","gamma"),count+2)])
-    # final.append([(count+2,"(RIGHT)",count+3)])
-    # final.append([(count+3,("alfa!=(gamma)","alfa!=(gamma)"),count+2)])
-    # final.append([(count+3,("gamma","gamma"),count+4)])
+
     count += 3
-    for states in instructions:
+    for states in instructions_top:
         if (states[0][0][0][0][1] == "(LEFT)" or
             states[0][0][0][0][1] == "(RIGHT)" or
             states[0][0][0][0][1] == "(STAY)"):
             result, count, states_dict = Expand_move(states,count,states_dict)
         else:
-            result, count, states_dict = Expand_symbol(states,count,states_dict)
+            result, count, states_dict, connection_dict = Expand_symbol_top_tree(states,count,states_dict,connection_dict)
+        final.append(result)
+    for states in instructions_bottom:
+        if (states[0][0][0][0][1] == "(LEFT)" or
+            states[0][0][0][0][1] == "(RIGHT)" or
+            states[0][0][0][0][1] == "(STAY)"):
+            continue
+        else:
+            result, count, states_dict = Expand_symbol_bottom_tree(states,count,states_dict,connection_dict)
         final.append(result)
     # final.append([(states_dict['0'],"(LEFT)",count+1)])
     # final.append([(count+1,("alfa!=(gamma)","alfa!=(gamma)"),states_dict['0'])])
@@ -551,8 +582,6 @@ def Expand(instructions):
     print(states_dict, "finalstate :", states_dict['0'])
     return final
     
-# def group(rules):
-#     return groupByTape3(groupByTape2(groupByTape1(groupByStates(rules))))
 def group(rules):
     return groupByTape3(groupByTape1(groupByTape2(groupByStates(rules))))
 
@@ -565,39 +594,40 @@ def tuple_to_string(tuple):
         symbol = tuple[1]
         return "(" + str(tuple[0]) + ",(" + symbol[0] + "," + (symbol[1]) + ")," + str(tuple[2]) + ")"
 # test = ["(1,((0,0),(#,#),(#,b)),2)",
-#         "(1,((b,b),(b,b),(1,1)),2)",
-#         "(1,((b,b),(b,b),(#,b)),2)",
-#         "(2,((STAY),(RIGHT),(RIGHT)),3)",
-#        "(3,((0,0),(0,0),(0,0)),2)"]
+#          "(1,((b,b),(b,b),(1,1)),2)",
+#          "(1,((b,b),(b,b),(#,b)),2)",
+#          "(2,((STAY),(RIGHT),(RIGHT)),3)",
+#         "(3,((0,0),(0,0),(0,0)),2)"]
 
-# test_single = [[[[[(('1','(0,0)','(#,#)','(#,b)','2'))]]]]]
-# state_rules = groupByStates(test)
+test_single = [[[[[('1', '(b,b)', '(b,1)', '(b,1)', '0')]], [[('1', '(1,1)', '(b,1)', '(b,1)', '0')]]]]]
+test_single_rev = [[[[[('0', '(b,b)', '(1,b)', '(1,b)', '1')]], [[('0', '(1,1)', '(1,b)', '(1,b)', '1')]]]]]
 
-# grouped_by_tape_1 = groupByTape1(state_rules)
-#print(grouped_by_tape_1, len(grouped_by_tape_1))
-# grouped_by_tape_2 = groupByTape2(grouped_by_tape_1)
-#print(grouped_by_tape_2, len(grouped_by_tape_2))
-# grouped_by_tape_3 = groupByTape3(grouped_by_tape_2)
-#print(len(grouped_by_tape_3))
-# for elm1 in grouped_by_tape_3:
-#     for elm2 in elm1:
-#         for elm3 in elm2: 
-#             for elm4 in elm3:
-#                 print(elm4)
+# for elm1 in Expand_symbol_top_tree(test_single[0],0,{},{})[0]:
+#      print(elm1)
+# top = Expand_symbol_top_tree(test_single[0],0,{},{})[0]
+# bottom = Expand_symbol_bottom_tree(test_single_rev[0],12,{'1': 0},{('1', '(b,b)', '(b,1)', '(b,1)', '0'): 7, ('1', '(1,1)', '(b,1)', '(b,1)', '0'): 12})[0]
 
+# for elm1 in top + bottom:
+#     print(elm1)
+    
+# result = Expand(test_single,test_single_rev)
+# for elm in result:
+#     for elm1 in elm:
+#         print(elm1)
+# Expand_symbol_bottom_tree(test_single_rev[0],20,{},{})[-1]
 # name = "Move_test.txt"
 # name = "Write_0_or_1.txt"
 # name = "clear_state.txt"
 # name = "write_state.txt"
-# name = "apply_symbol.txt"
+name = "apply_symbol.txt"
 # name = "URTM.txt"
-# name = "move_right.txt"
-# name = "move_right_t1_left_t3.txt"
-name = "move_left_t1_right_t3.txt"
+# name = "Move_test.txt"
 file = open("Expanded_RTM_programs/"+name, 'r')
 lines = file.readlines()
 lines = [line.strip() for line in lines]
-tape1 = (Expand(group(lines)))
+forward_lines = lines.copy()
+Inverted_lines = Inverter.Invert(lines)
+tape1 = (Expand(group(forward_lines),group(Inverted_lines)))
 expanded = []
 for elm in tape1:
     expanded.append(Expand_1_tape.expand(elm))
