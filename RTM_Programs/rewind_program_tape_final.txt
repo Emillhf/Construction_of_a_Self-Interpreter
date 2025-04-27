@@ -1,0 +1,6 @@
+1
+0
+(1,((STAY),(RIGHT),(STAY)),2)
+(2,((b,b),(beta!=(b),beta!=(b)),(b,b)),1)
+(2,((b,b),(b,b),(b,b)),3)
+#load rewind_program_tape_final(3,0)
