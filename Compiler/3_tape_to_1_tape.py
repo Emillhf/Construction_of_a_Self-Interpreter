@@ -526,18 +526,7 @@ def Expand_move(states,count,states_dict):
         tmp.append((count+141,"(LEFT)",count+140))
         tmp.append((count+140,"(LEFT)",count+139))
         tmp.append((count+123,("alfa!=($)","alfa!=($)"),count+141))
-    
-    # tmp.append((count+5,tape1_elm,count+6))
-    # tmp.append((count+6,("alfa","gamma"),count+7))
-    
-    # tmp.append((count+7,"(RIGHT)",count+8))
-    # tmp.append((count+8,("alfa!=(gamma)","alfa!=(gamma)"),count+7))
-    # tmp.append((count+8,("gamma","gamma"),count+9))
-    # tmp.append((count+9,"(RIGHT)",count+10))
-    # tmp.append((count+10,("alfa!=(gamma)","alfa!=(gamma)"),count+9))
-    # tmp.append((count+10,("gamma","alfa"),count+11))
-    # tmp.append((count+11,tape3_elm,count+12))
-    # tmp.append((count+12,("alfa","gamma"),count+13))
+
     
     
     final_state = states[0][0][0][0][-1]

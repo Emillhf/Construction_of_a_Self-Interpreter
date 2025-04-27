@@ -194,7 +194,7 @@ let bin_inc = [|'p';'0';'0';'1';'1';'b';
 //printfn "%A" (RMT (URTM,(1,9240),input_URTM))
 //printfn "%A" (RMT (URTM,(1,9240),bin_inc))
 //printfn "%A" (RMT (rev_URTM,(14544,1),RMT (URTM,(1,14544),input_URTM)))
-printfn "%A" (RMT (rev_URTM,(9240,1),bin_inc))
+printfn "%A" (RMT (rev_URTM,(9240,1),bin_inc, None))
 // printfn "%A" (RMT (rev_URTM_ends_on_one,(14460,1),input_rev_URTM))
 
 // printfn "%A" (RMT (Move,(1,34),input))
