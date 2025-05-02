@@ -334,7 +334,7 @@ def Expand_move(states,count,states_dict):
         tmp.append((count+42,("$","$"),count+41))
         tmp.append((count+43,"(LEFT)",count+42))
         tmp.append((count+44,"(LEFT)",count+43))
-        tmp.append((count+45,("alfa!=($)","alfa!=($)"),count+44))
+        tmp.append((count+45,("alfa","alfa"),count+44))
         tmp.append((count+46,"(RIGHT)",count+45))
         tmp.append((count+47,"(RIGHT)",count+46))
         tmp.append((count+27,("$","$"),count+47))
@@ -366,9 +366,8 @@ def Expand_move(states,count,states_dict):
         tmp.append((count+70,"(RIGHT)",count+69))
         tmp.append((count+71,"(RIGHT)",count+70))
         tmp.append((count+53,("alfa!=($)","alfa!=($)"),count+71))
-
-        
-        
+    elif (tape1_elm == "(STAY)"):
+        tmp.append((count+5,"(STAY)",count+28))       
     
     tmp.append((count+28,"(RIGHT)",count+72))
     tmp.append((count+72,("alfa!=(gamma)","alfa!=(gamma)"),count+28))
@@ -391,11 +390,14 @@ def Expand_move(states,count,states_dict):
         tmp.append((count+82,"(LEFT)",count+83))
         tmp.append((count+83,"(LEFT)",count+84))
         tmp.append((count+84,(("$","$")),count+89))
+        tmp.append((count+84,(("#","b")),count+143))
         tmp.append((count+84,(("0","b")),count+85))
         tmp.append((count+84,(("1","b")),count+86))
         tmp.append((count+85,"(RIGHT)",count+87))
+        tmp.append((count+143,"(RIGHT)",count+144))
         tmp.append((count+86,"(RIGHT)",count+88))
         tmp.append((count+87,(("b","0")),count+82))
+        tmp.append((count+144,(("b","#")),count+82))
         tmp.append((count+88,(("b","1")),count+82))
         tmp.append((count+89,"(RIGHT)",count+90))
         tmp.append((count+90,(("b","p")),count+91))
@@ -423,7 +425,7 @@ def Expand_move(states,count,states_dict):
         tmp.append((count+111,(("$","$")),count+112))
         tmp.append((count+112,"(LEFT)",count+113))
         tmp.append((count+113,"(LEFT)",count+114))
-        tmp.append((count+114,(("alfa!=($)","alfa!=($)")),count+115))
+        tmp.append((count+114,(("alfa","alfa")),count+115))
         tmp.append((count+115,"(RIGHT)",count+116))
         tmp.append((count+116,"(RIGHT)",count+117))
         tmp.append((count+117,(("$","$")),count+97))
@@ -466,10 +468,13 @@ def Expand_move(states,count,states_dict):
         tmp.append((count+84,"(RIGHT)",count+83))
         tmp.append((count+89,("$","$"),count+84))
         tmp.append((count+85,("b","0"),count+84))
+        tmp.append((count+145,("b","#"),count+84))
         tmp.append((count+86,("b","1"),count+84))
         tmp.append((count+87,"(LEFT)",count+85))
         tmp.append((count+88,"(LEFT)",count+86))
+        tmp.append((count+146,"(LEFT)",count+145))
         tmp.append((count+82,("0","b"),count+87))
+        tmp.append((count+82,("#","b"),count+146))
         tmp.append((count+82,("1","b"),count+88))
         tmp.append((count+90,"(LEFT)",count+89))
         tmp.append((count+91,("p","b"),count+90))
@@ -497,7 +502,7 @@ def Expand_move(states,count,states_dict):
         tmp.append((count+112,("$","$"),count+111))
         tmp.append((count+113,"(RIGHT)",count+112))
         tmp.append((count+114,"(RIGHT)",count+113))
-        tmp.append((count+115,("alfa!=($)","alfa!=($)"),count+114))
+        tmp.append((count+115,("alfa","alfa"),count+114))
         tmp.append((count+116,"(LEFT)",count+115))
         tmp.append((count+117,"(LEFT)",count+116))
         tmp.append((count+97,("$","$"),count+117))
@@ -526,14 +531,17 @@ def Expand_move(states,count,states_dict):
         tmp.append((count+141,"(LEFT)",count+140))
         tmp.append((count+140,"(LEFT)",count+139))
         tmp.append((count+123,("alfa!=($)","alfa!=($)"),count+141))
-
+    elif (tape3_elm == "(STAY)"):
+        tmp.append((count+75,"(STAY)",count+98))
     
+    tmp.append((count+98,"(LEFT)",count+142))
+    tmp.append((count+142,("alfa!=(gamma)","alfa!=(gamma)"),count+98))
     
     final_state = states[0][0][0][0][-1]
     if not(final_state in states_dict.keys()):
-        states_dict[final_state] = count+143
-    tmp.append((count+98,("gamma","gamma"),states_dict[final_state]))
-    count +=144
+        states_dict[final_state] = count+147
+    tmp.append((count+142,("gamma","gamma"),states_dict[final_state]))
+    count +=148
     return Replace_final_state(tmp,count), count, states_dict
 
 
@@ -564,9 +572,9 @@ def Expand(instructions_top,instructions_bottom):
         else:
             result, count, states_dict = Expand_symbol_bottom_tree(states,count,states_dict,connection_dict)
         final.append(result)
-    # final.append([(states_dict['0'],"(LEFT)",count+1)])
-    # final.append([(count+1,("alfa!=(gamma)","alfa!=(gamma)"),states_dict['0'])])
-    # final.append([(count+1,("gamma","gamma"),count+2)])
+    final.append([(states_dict['0'],"(LEFT)",count+1)])
+    final.append([(count+1,("alfa!=(gamma)","alfa!=(gamma)"),states_dict['0'])])
+    final.append([(count+1,("gamma","gamma"),count+2)])
 
     print(states_dict, "finalstate :", states_dict['0'])
     return final
@@ -608,9 +616,10 @@ test_single_rev = [[[[[('0', '(b,b)', '(1,b)', '(1,b)', '1')]], [[('0', '(1,1)',
 # name = "Write_0_or_1.txt"
 # name = "clear_state.txt"
 # name = "write_state.txt"
-name = "apply_symbol.txt"
-# name = "URTM.txt"
-# name = "Move_test.txt"
+# name = "apply_symbol.txt"
+name = "URTM.txt"
+# name = "move_left_t1_right_t3.txt"
+# name = "move_right_t1_left_t3.txt"
 file = open("Expanded_RTM_programs/"+name, 'r')
 lines = file.readlines()
 lines = [line.strip() for line in lines]
