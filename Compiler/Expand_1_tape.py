@@ -28,6 +28,9 @@ def expand(rules):
         elif rule[1] == ('gamma','alfa'):
             for alfa_elm, gamma_elm in encoded_symbols.items():
                 expanded_rules.append((start,(gamma_elm,alfa_elm),final))
+        elif rule[1] == ('alfa','alfa'):
+            for alfa_elm in alfa:
+                expanded_rules.append((start,(alfa_elm,alfa_elm),final))
         elif rule[1] == ('gamma','gamma'):
             for gamma_elm in gamma:
                 expanded_rules.append((start,(gamma_elm,gamma_elm),final))

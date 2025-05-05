@@ -13,7 +13,7 @@ def Invert_Move(rule):
 def Invert_1Tape_move(move):
     if move == "RIGHT":
         return ("(LEFT)")
-    elif move == "LEFT":
+    elif move == "(LEFT)":
         return ("(RIGHT)")
     else:
         return ("(STAY)")
@@ -44,7 +44,6 @@ def Invert(rules):
 
 def Invert_compiler(rules):
     for idx, rule in enumerate(rules):
-        print(rule)
         rule = list(rule)
         rule[0], rule[-1] = rule[-1], rule[0]
         if not(',' in rule[1]):
@@ -64,6 +63,7 @@ def Invert1Tape(rules):
             rules[idx] = f"({rule[0]},{move_inverted},{rule[-1]})"
         else:
             rule[1], rule[2] = rule[2], rule[1]
+            rules[idx] = f"({rule[0]},({rule[1]},{rule[2]}),{rule[-1]})".replace("'", '')
             rules[idx] = f"({rule[0]},({rule[1]},{rule[2]}),{rule[-1]})".replace("'", '')
     return rules
 

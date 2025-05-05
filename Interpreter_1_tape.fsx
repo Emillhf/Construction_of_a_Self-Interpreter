@@ -73,6 +73,7 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int,tape:tape, startingId
             
             printfn "%A" rules[current_state]
             printfn "%A" (tape,idx, tape[idx])
+            printfn "%A" (tape,idx, tape[idx])
             failwith "Rules are wrong in the above state"
 
     tape
@@ -125,7 +126,7 @@ let write = read_rules("1_Tape_programs/write_state.txt")
 let apply_symbol = read_rules("1_Tape_programs/apply_symbol.txt")
 let rev_apply_symbol = read_rules("1_Tape_programs/rev_apply_symbol.txt")
 let URTM = read_rules("1_Tape_programs/URTM.txt")
-let rev_URTM = read_rules("1_Tape_programs/rev_URTM.txt")
+// let rev_URTM = read_rules("1_Tape_programs/rev_URTM.txt")
 let URTM_ends_on_one = read_rules("1_Tape_programs/URTM_worktape_ends_on_one.txt")
 //let rev_URTM_ends_on_one = read_rules("1_Tape_programs/rev_URTM_worktape_ends_on_one.txt")
 
@@ -144,12 +145,13 @@ let rev_clear_input = [|'p'; '1'; '!'; '#'; '0'; '1'; 'H'; '0'; '1'; '#'; '$'; '
 let input_apply = [|'O';'b';'!';'H';'0';'1';'#';'0';'1';'#';'0';'1';'#';'$';'H';'0';'1';'#';|]
 let rev_input_apply = [|'I';'b';'!';'H';'0';'1';'#';'0';'1';'#';'0';'1';'#';'$';'H';'0';'1';'#';|]
 
-let input_URTM = [|'b';'b';'b';'b';'$';'p';'1';'$';'p';'M';'#';'1';'#';'0';'1';'#';'0';'1';'#';'M';'S';'#';'1';'0';'#';'1';'B';'#';'0';'#';'S';'b';'$';'p';'$';'b';'b';'b';'b';'b';'b'|]
-let input_rev_URTM = [|'b';'b';'b';'b';'$';'p';'b';'!';'p';'M';'#';'1';'#';'1';'0';'#';'0';'1';'#';'M';'S';'#';'1';'0';'#';'1';'B';'#';'0';'#';'S';'b';'$';'p';'$';'b';'b';'b';'b';'b';'b'|]
+let input_URTM = [|'b';'b';'$';'p';'1';'0';'$';'p';'M';'#';'1';'#';'0';'1';'#';'0';'1';'#';'M';'S';'#';'1';'0';'#';'1';'B';'#';'0';'#';'S';'b';'$';'p';'$';'b';'b';'b';'b';'b'|]
+let input_rev_URTM = [|'p';'b';'!';'p';'M';'#';'1';'#';'1';'0';'#';'0';'1';'#';'M';'S';'#';'1';'0';'#';'1';'B';'#';'0';'#';'S';'b';'$';'b';'b';'p';'b';'b';'b';'b';'b'|]
 
 
+let input_test_infinate_one_long = [|'b';'$';'I';'$';'p';'$';'I';'$';'b'|] //STARTING IDX CHANGED TO 4
 let input_test_infinate_case1 = [|'b';'$';'1';'1';'O';'$';'p';'$';'I';'1';'0';'0';'$';'b'|] //STARTING IDX CHANGED TO 4
-let rev_input_test_infinate_case1 = [|'$';'1';'1';'0';'p';'$';'p';'$';'p';'1';'0';'1';'$'|]
+let rev_input_test_infinate_case1 = [|'$';'1';'1';'0';'p';'$';'p';'$';'p';'1';'1';'0';'0';'$'|]
 let input_test_infinate_case2 = [|'b';'$';'1';'I';'0';'$';'p';'$';'1';'I';'0';'$';'b'|] //STARTING IDX CHANGED TO 3
 let rev_input_test_infinate_case2 =[|'b'; '$'; '1'; '1'; 'O'; '$'; 'p';'$'; 'I'; '1'; '0'; '$';'b'|]
 let input_test_infinate_case3 = [|'b';'$';'p';'0';'1';'$';'p';'$';'1';'0';'p';'$';'b'|] //STARTING IDX CHANGED TO 2
@@ -162,28 +164,29 @@ let test_infinate_case_right = read_rules("1_Tape_programs/move_right_t1_left_t3
 let rev_test_infinate_case_right = read_rules("1_Tape_programs/rev_move_right.txt")
 let test_infinate_case_left = read_rules("1_Tape_programs/move_left_t1_right_t3.txt")
 
-let theOne = read_tape_file("Tapes_RTM/URTM.txt")
-
-// printfn "%A" (RMT (test_infinate_case_right, (1,148), input_test_infinate_case1, Some 4)) 
-// // printfn "%A" (RMT (rev_test_infinate_case_right, (148,1), rev_input_test_infinate_case1, Some 4) = input_test_infinate_case1) 
-// printfn "%A\n" (RMT (test_infinate_case_left, (1,148), rev_input_test_infinate_case1, Some 4)) 
+printfn "%A" (RMT (test_infinate_case_right, (1,293), input_test_infinate_one_long, Some 2)) 
 
 
-// printfn "%A" (RMT (test_infinate_case_right, (1,148), input_test_infinate_case2, Some 4)) 
-// // printfn "%A" (RMT (rev_test_infinate_case_right, (148,1), rev_input_test_infinate_case2, Some 4) = input_test_infinate_case2) 
-// printfn "%A\n" (RMT (test_infinate_case_left, (1,148), rev_input_test_infinate_case2, Some 4)) 
+printfn "%A" (RMT (test_infinate_case_right, (1,293), input_test_infinate_case1, Some 4)) 
+// // printfn "%A" (RMT (rev_test_infinate_case_right, (292,1), rev_input_test_infinate_case1, Some 4) = input_test_infinate_case1) 
+printfn "%A\n" (RMT (test_infinate_case_left, (1,293), rev_input_test_infinate_case1, Some 4))  
 
-// printfn "%A" (RMT (test_infinate_case_right, (1,148), input_test_infinate_case3, Some 3))
-// // printfn "%A" (RMT (rev_test_infinate_case_right, (148,1), rev_input_test_infinate_case3, Some 3)  = input_test_infinate_case3) 
-// printfn "%A\n" (RMT (test_infinate_case_left, (1,148), rev_input_test_infinate_case3, Some 3)) 
 
-// printfn "%A" (RMT (test_infinate_case_right, (1,148), input_test_infinate_case4, Some 3)) 
-// // printfn "%A" (RMT (rev_test_infinate_case_right, (148,1), rev_input_test_infinate_case4, Some 3) = input_test_infinate_case4) 
-// printfn "%A\n" (RMT (test_infinate_case_left, (1,148), rev_input_test_infinate_case4, Some 3)) 
+printfn "%A" (RMT (test_infinate_case_right, (1,293), input_test_infinate_case2, Some 4)) 
+// // printfn "%A" (RMT (rev_test_infinate_case_right, (292,1), rev_input_test_infinate_case2, Some 4) = input_test_infinate_case2) 
+printfn "%A\n" (RMT (test_infinate_case_left, (1,292), rev_input_test_infinate_case2, Some 4)) 
 
-// printfn "%A" (RMT (test_infinate_case_right, (1,148), input_test_infinate_case5, Some 5))
-// // printfn "%A" (RMT (rev_test_infinate_case_right, (148,1), rev_input_test_infinate_case5, Some 5) = input_test_infinate_case5) 
-// printfn "%A" (RMT (test_infinate_case_left, (1,148), rev_input_test_infinate_case5, Some 5)) 
+printfn "%A" (RMT (test_infinate_case_right, (1,292), input_test_infinate_case3, Some 3))
+// // printfn "%A" (RMT (rev_test_infinate_case_right, (292,1), rev_input_test_infinate_case3, Some 3)  = input_test_infinate_case3) 
+printfn "%A\n" (RMT (test_infinate_case_left, (1,292), rev_input_test_infinate_case3, Some 3)) 
+
+printfn "%A" (RMT (test_infinate_case_right, (1,292), input_test_infinate_case4, Some 3)) 
+// // printfn "%A" (RMT (rev_test_infinate_case_right, (292,1), rev_input_test_infinate_case4, Some 3) = input_test_infinate_case4) 
+printfn "%A\n" (RMT (test_infinate_case_left, (1,292), rev_input_test_infinate_case4, Some 3)) 
+
+printfn "%A" (RMT (test_infinate_case_right, (1,292), input_test_infinate_case5, Some 5))
+// // printfn "%A" (RMT (rev_test_infinate_case_right, (292,1), rev_input_test_infinate_case5, Some 5) = input_test_infinate_case5) 
+printfn "%A" (RMT (test_infinate_case_left, (1,292), rev_input_test_infinate_case5, Some 5)) 
 
 let bin_inc = [|'b';'b';'b';'b';'$';'p';'0';'0';'1';'1';
                     '$';
@@ -201,7 +204,7 @@ let bin_inc = [|'b';'b';'b';'b';'$';'p';'0';'0';'1';'1';
 //printfn "%A" (RMT (rev_clear,(311,1),rev_clear_input))
 // printfn "%A" (RMT (write,(1,430), res))
 //printfn "%A" (RMT (apply_symbol,(1,547),input_apply))
-//printfn "%A" (RMT (rev_apply_symbol, (547,1), rev_input_apply))
+// printfn "%A" (RMT (rev_apply_symbol, (547,1), rev_input_apply))
 
 //printfn "%A" (RMT (URTM,(1,9678),input_URTM, None))
 
