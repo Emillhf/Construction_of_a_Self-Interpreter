@@ -43,7 +43,6 @@ while IFS= read -r folder; do
     process_inner_folder "$folder"
 done < <(find "$test_cases_dir" -mindepth 1 -maxdepth 1 -type d)
 
-# Print summary of test results
 echo "------------------------"
 echo "Test Summary:"
 echo "Successful tests: $success_count"

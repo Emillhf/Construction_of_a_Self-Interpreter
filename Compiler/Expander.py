@@ -2,10 +2,9 @@ import re
 
 beta = ['0', '1', 'B', 'b', '#', 'S', 'M']
 alfa = ['0', '1', 'B', 'b', '#', 'S', 'M']
+beta = ['0', '1', 'B', 'b', '#', 'S', 'M']
+alfa = ['0', '1', 'B', 'b', '#', 'S', 'M']
 mapping = {'B':'b',
-           'H':'#',
-           's':'S',
-           'm':'M',
            '0':'0',
            '1':'1'}
 
@@ -79,7 +78,6 @@ def expand_rules(rules,alfa,beta):
                     tmp = rule
                     tmp = tmp.replace("alfa!=(a_enc)", elm)
                     tmp = tmp.replace("a_enc", elm1)
-                    print(tmp)
                     expanded_rules.append(tmp)
         elif "a_enc" in rule:
             for key,value in mapping.items():
@@ -93,7 +91,8 @@ def expand_rules(rules,alfa,beta):
             for betas in expand_alfa(rule,removed_alfas):
                     for elm in expand_beta(betas,removed_beta):
                         expanded_rules.append(elm)
-    return expanded_rules        
+                
+    return expanded_rules          
 
 example_rule_alfa = "(1,((alfa,alfa),(0,1),(0,0)),2)"
 example_rule_beta = "(1,((0,0),(beta,beta),(0,0)),2)"

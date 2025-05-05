@@ -37,9 +37,9 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int,tape:tape, startingId
         // printfn "%A" rule
         // printfn "%A" tape
         // printfn "%A" idx
-        File.AppendAllText("log.txt", System.String(tape) + "\n")
-        File.AppendAllText("log.txt", "idx: " + idx.ToString() + "\n\n")
-        File.AppendAllText("log.txt", rule.ToString() + "\n")
+        // File.AppendAllText("log.txt", System.String(tape) + "\n")
+        // File.AppendAllText("log.txt", "idx: " + idx.ToString() + "\n\n")
+        // File.AppendAllText("log.txt", rule.ToString() + "\n")
         
         match second rule with 
             | Move(t1) -> 
@@ -62,6 +62,7 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int,tape:tape, startingId
                     if check (second rule) then act rule
                     else search_rec rest
                 | _ -> failwith "Shit wrong"
+        //printfn "%A" current_state
         search_rec(rules_list[current_state])
 
     while not(current_state = final) do
@@ -73,11 +74,23 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int,tape:tape, startingId
             
             printfn "%A" rules[current_state]
             printfn "%A" (tape,idx, tape[idx])
+            printfn "%A" (tape,idx, tape[idx])
             failwith "Rules are wrong in the above state"
 
     tape
 
 open System.IO
+
+
+let read_tape_file(filename:string) =
+    let lines = File.ReadAllLines(filename)
+    let exclamationmark = Array.findIndex(fun elm -> elm = "!") lines
+    let dollar = Array.findIndex(fun elm -> elm = "$") lines
+
+    let input = lines[0..exclamationmark-1][0] |> Seq.toArray
+    let rules = lines[exclamationmark+1..dollar-1][0] |> Seq.toArray
+    let states = lines[dollar+1..][0] |> Seq.toArray
+    Array.append (Array.append input rules) states
 
 let String_to_rule(rules:List<string>) =
     let pattern = @"\((\d+),\((.+)\),(\d+)\)"
@@ -196,11 +209,11 @@ let rev_test_infinate_case_left = read_rules("1_Tape_programs/rev_move_left_t1_r
 // printfn "%A" (RMT (rev_test_infinate_case_right, (161,1), rev_input_test_infinate_case5, Some 5) = input_test_infinate_case5) 
 // printfn "%A" (RMT (test_infinate_case_left, (1,161), rev_input_test_infinate_case5, Some 5)) 
 
-let bin_inc = [|'p';'0';'0';'1';'1';'b';
+let bin_inc = [|'b';'b';'b';'b';'$';'p';'0';'0';'1';'1';
                     '$';
                     'p';'S';'#';'1';'#';'B';'B';'#';'0';'1';'#';'S';'M';'#';'1';'0';'#';'0';'1';'#';'1';'1';'#';'M';'S';'#';'1';'1';'#';'0';'1';'#';'0';'0';'1';'#';'S';'S';'#';'1';'1';'#';'1';'0';'#';'0';'1';'#';'S';'S';'#';'1';'1';'#';'B';'B';'#';'0';'0';'1';'#';'S';'M';'#';'1';'0';'0';'#';'1';'0';'#';'1';'0';'1';'#';'M';'S';'#';'1';'0';'1';'#';'0';'0';'#';'0';'0';'1';'#';'S';'S';'#';'1';'0';'1';'#';'B';'B';'#';'0';'#';'S';'b';
                     '$';
-                    'b';'b';'b';'b';'b';'b';'p';'b';'b';'b';'b';'b';'b';'b';'b';'b';
+                    'p';'$';'b';'b';'b';'b';'b';'b';'b';'b';'b';'b';'b';'b';'b';'b';
                 |]
 // printfn "%A" (RMT (Move,(1,42),input))
 // printfn "%A" (RMT (rev_Move,(42,1),rev_input))

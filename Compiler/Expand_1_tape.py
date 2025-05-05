@@ -34,6 +34,9 @@ def expand(rules):
         elif rule[1] == ('gamma','gamma'):
             for gamma_elm in gamma:
                 expanded_rules.append((start,(gamma_elm,gamma_elm),final))
+        elif rule[1] == ('alfa','alfa'):
+            for alfa_elm in alfa:
+                expanded_rules.append((start,(alfa_elm,alfa_elm),final))
         elif rule[1] == ('alfa!=(gamma)','alfa!=(gamma)'):
             for alfa_elm in alfa_gamma_removed:
                 expanded_rules.append((start,(alfa_elm,alfa_elm),final))

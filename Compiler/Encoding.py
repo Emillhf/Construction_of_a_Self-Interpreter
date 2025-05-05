@@ -73,7 +73,7 @@ test2 = ["(1,(b,b),2)",
     "(5,(1,1),4)",
     "(5,(b,b),0)"]
 
-input_filename = "Write_0_or_1.txt"
+input_filename = "URTM.txt"
 file = open("1_Tape_programs/" + input_filename, 'r')
 lines = file.readlines()
 start = lines[0].strip()

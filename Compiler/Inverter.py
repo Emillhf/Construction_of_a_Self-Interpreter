@@ -1,4 +1,4 @@
-import re
+
 def Invert_Move(rule):
     result = []
     for elm in rule:
@@ -11,7 +11,7 @@ def Invert_Move(rule):
     return result
 
 def Invert_1Tape_move(move):
-    if move == "(RIGHT)":
+    if move == "RIGHT":
         return ("(LEFT)")
     elif move == "(LEFT)":
         return ("(RIGHT)")
@@ -55,22 +55,15 @@ def Invert_compiler(rules):
 
 def Invert1Tape(rules):
     for idx, rule in enumerate(rules):
-        if (rule == ""):
-            continue
         rule = rule.split(",")
-        rule[0] = rule[0].replace("(","")
-        rule[-1] = rule[-1].replace(")","")
-        
+        rule = [(elm.replace('(', '')).replace(')','') for elm in rule]
         rule[0], rule[-1] = rule[-1], rule[0]
         if len(rule) == 3:
-            # rule[1] = rule[1][1:-1]
             move_inverted = Invert_1Tape_move(rule[1])
-            rules[idx] = f'({rule[0]},{move_inverted},{rule[-1]})'
+            rules[idx] = f"({rule[0]},{move_inverted},{rule[-1]})"
         else:
-            rule[1] = rule[1][1::]
-            rule[2] = rule[2][:-1]
-
             rule[1], rule[2] = rule[2], rule[1]
+            rules[idx] = f"({rule[0]},({rule[1]},{rule[2]}),{rule[-1]})".replace("'", '')
             rules[idx] = f"({rule[0]},({rule[1]},{rule[2]}),{rule[-1]})".replace("'", '')
     return rules
 
@@ -84,35 +77,3 @@ def Invert1Tape_compiler(rules):
         else:
             rules[idx] = (rule[0],(rule[1][1],rule[1][0]),rule[-1])
     return rules
-
-# print(Invert1Tape_compiler([(6, ("(RIGHT)"), 7)]))
-# print(Invert_compiler([('0', '(RIGHT)', '(RIGHT)', '(RIGHT)', '1')]))
-# name = input()
-# file = open("1_Tape_programs/" + name, 'r')
-# lines = file.readlines()
-# lines = [line.strip() for line in lines]
-# inverted = Invert1Tape(lines)
-# outfile = open("1_Tape_programs/" + "rev_" + name,'w+')
-# for elm in inverted:
-#     outfile.write(elm + "\n")
-
-# name = input()
-# file = open("1_Tape_programs/" + name, 'r')
-# lines = file.readlines()
-# lines = [line.strip() for line in lines]
-# inverted = Invert1Tape(lines)
-# outfile = open("1_Tape_programs/" + "rev_" + name,'w+')
-# for elm in inverted:
-#     outfile.write(elm + "\n")
-    
-# # name = "move_right_file.txt"
-# # file = open(name, 'r')
-# lines = file.readlines()
-# print("LINES",lines)
-# lines = [line.strip().replace("tmp.append","") for line in lines]
-# inverted = Invert1Tape(lines)
-# # updated_states = AddNumToCount(70,inverted)
-# # outfile = open( "rev_" + name,'w+')
-# for elm in inverted:
-#     print(elm )
-    
