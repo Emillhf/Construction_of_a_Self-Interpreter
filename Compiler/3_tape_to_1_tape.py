@@ -375,7 +375,7 @@ def Expand_move(states,count,states_dict):
         tmp.append((count+71,"(RIGHT)",count+70))
         tmp.append((count+53,("alfa!=($)","alfa!=($)"),count+71))
     elif (tape1_elm == "(STAY)"):
-        tmp.append((count+5,("gamma","gamma"),count+28))       
+        tmp.append((count+5,("gamma","gamma"),count+72))       
     
     tmp.append((count+72,"(RIGHT)",count+150))
     tmp.append((count+150,("alfa!=(gamma)","alfa!=(gamma)"),count+72))
