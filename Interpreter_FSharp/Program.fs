@@ -28,7 +28,7 @@ let rev_URTM = read_rules("Expanded_RTM_programs/rev_URTM.txt")
 let move_rule = read_rules("Expanded_RTM_Programs/move_rule.txt")
 let BinINC_tape = read_tape_file("Tapes_RTM/BinInc.txt")
 let flip_tape = read_tape_file("Tapes_RTM/Flip.txt")
-let BinInc_2_tape = read_tape_file("Tapes_RTM/BinInc_2.txt")
+//let BinInc_2_tape = read_tape_file("Tapes_RTM/BinInc_2.txt")
 // printfn "%A" (RMT (apply_symbol,(1,0),apply_symbol_tapes))
 
 // let symbol = read_rules("Expanded_RTM_Programs/symbol_rule.txt")
