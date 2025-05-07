@@ -1,0 +1,8 @@
+1
+0
+(1,((STAY),(RIGHT),(RIGHT)),2)
+(2,((STAY),(RIGHT),(RIGHT)),3)
+(3,((STAY),(RIGHT),(RIGHT)),4)
+(4,((b,1),(#,#),(#,#)),50)
+(5,((b,0),(#,#),(#,#)),20)
+#load rev_compare_state_q(50,20,0)

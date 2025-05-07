@@ -127,8 +127,7 @@ let write = read_rules("1_Tape_programs/write_state.txt")
 let apply_symbol = read_rules("1_Tape_programs/apply_symbol.txt")
 let rev_apply_symbol = read_rules("1_Tape_programs/rev_apply_symbol.txt")
 let URTM = read_rules("1_Tape_programs/URTM.txt")
-let rev_URTM = read_rules("1_Tape_programs/rev_URTM.txt")
-let rev_URTM = read_rules("1_Tape_programs/rev_URTM.txt")
+let rev_URTM: Map<int,Rule list> = read_rules("1_Tape_programs/rev_URTM.txt")
 let URTM_ends_on_one = read_rules("1_Tape_programs/URTM_worktape_ends_on_one.txt")
 //let rev_URTM_ends_on_one = read_rules("1_Tape_programs/rev_URTM_worktape_ends_on_one.txt")
 
@@ -233,7 +232,7 @@ let bin_inc = [|'b';'b';'b';'b';'$';'p';'0';'0';'1';'1';
 //printfn "%A" (RMT (URTM,(1,29518),input_URTM, Some 5))
 //printfn "%A" (RMT (rev_URTM,(14544,1),RMT (URTM,(1,14544),input_URTM)))
 //printfn "%A" (RMT (rev_URTM,(29518,1),bin_inc, Some 5))
-printfn "%A" (RMT (rev_URTM,(29518,1),input_rev_URTM, Some 5))
+printfn "%A" (RMT (rev_URTM,(29518,1),input_rev_URTM, Some 3))
 // printfn "%A" (RMT (rev_URTM_ends_on_one,(14460,1),input_rev_URTM))
 
 // printfn "%A" (RMT (Move,(1,34),input))

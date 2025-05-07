@@ -1,0 +1,4 @@
+1
+0
+#load rev_rewind_program_tape_final(1,20)
+(20,((b,b),(b,#),(b,b)),0)
