@@ -53,6 +53,17 @@ def Invert_compiler(rules):
             rules[idx] = (rule[0],f"({rule[1][-2]},{rule[1][1]})",f"({rule[2][-2]},{rule[2][1]})",f"({rule[3][-2]},{rule[3][1]})",rule[-1])
     return rules
 
+def Invert_macro(rules):
+    for idx, rule in enumerate(rules):
+        rule = list(rule)
+        rule[0], rule[-1] = rule[-1], rule[0]
+        if not(',' in rule[1]):
+            move_inverted = [Invert_1Tape_move_compiler(elm) for elm in rule[1:-1]]
+            rules[idx] = (rule[0],(move_inverted[0],move_inverted[1],move_inverted[2]),rule[-1])
+        else:
+            rules[idx] = f"({rule[0]},({rule[1][-2]},{rule[1][1]}),({rule[2][-2]},{rule[2][1]}),({rule[3][-2]},{rule[3][1]}),{rule[-1]})"
+    return rules
+
 def Invert1Tape(rules):
     for idx, rule in enumerate(rules):
         if (rule == ""):

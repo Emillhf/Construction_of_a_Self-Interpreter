@@ -1,0 +1,4 @@
+(2,((alfa,alfa),(#,#),(#,b)),0)
+(3,((STAY),(LEFT),(RIGHT)),2)
+(1,((alfa,alfa),(#,#),(#,b)),3)
+(2,((alfa,alfa),(beta!=(#),beta!=(#)),(beta!=(#),b)),3)

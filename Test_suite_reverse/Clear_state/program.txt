@@ -1,0 +1,6 @@
+1
+9
+(1,((STAY),(RIGHT),(STAY)),2)
+(2,((STAY),(RIGHT),(STAY)),3)
+(3,((STAY),(RIGHT),(STAY)),5)
+#load rev_clear_state(5,9)

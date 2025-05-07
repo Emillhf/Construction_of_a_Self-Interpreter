@@ -1,0 +1,4 @@
+1
+0
+#load rev_move_program_to_hashtag_left(1,20)
+(20,((b,b),(#,1),(#,#)),0)
