@@ -1,4 +1,5 @@
 import re
+import os
 import sys
 import Expand_1_tape
 import Inverter
@@ -615,25 +616,19 @@ def tuple_to_string(tuple):
 test_single = [[[[[('1', '(b,b)', '(b,1)', '(b,1)', '0')]], [[('1', '(1,1)', '(b,1)', '(b,1)', '0')]]]]]
 test_single_rev = [[[[[('0', '(b,b)', '(1,b)', '(1,b)', '1')]], [[('0', '(1,1)', '(1,b)', '(1,b)', '1')]]]]]
 
-# for elm1 in Expand_symbol_top_tree(test_single[0],0,{},{})[0]:
-#      print(elm1)
-# top = Expand_symbol_top_tree(test_single[0],0,{},{})[0]
-# bottom = Expand_symbol_bottom_tree(test_single_rev[0],12,{'1': 0},{('1', '(b,b)', '(b,1)', '(b,1)', '0'): 7, ('1', '(1,1)', '(b,1)', '(b,1)', '0'): 12})[0]
+if len(sys.argv) < 2:
+    print("Please give a filename as an argument")
+    exit(1)
 
-# for elm1 in top + bottom:
-#     print(elm1)
+name = sys.argv[1]
+
     
-# result = Expand(test_single,test_single_rev)
-# for elm in result:
-#     for elm1 in elm:
-#         print(elm1)
-# Expand_symbol_bottom_tree(test_single_rev[0],20,{},{})[-1]
 # name = "Move_test.txt"
 # name = "Write_0_or_1.txt"
 # name = "clear_state.txt"
 # name = "write_state.txt"
 # name = "apply_symbol.txt"
-name = "URTM.txt"
+# name = "URTM.txt"
 # name = "move_left_t1_right_t3.txt"
 # name = "move_right_t1_left_t3.txt"
 file = open("Expanded_RTM_programs/"+name, 'r')
