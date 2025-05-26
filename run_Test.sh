@@ -24,22 +24,22 @@ process_inner_folder() {
         output_file="${inner_folder}/Expanded_program.txt"
         python3 Compiler/Compile_to_rules.py "$program" "$output_file"
         python_exit_code=$?
+        if [ "$python_exit_code" -ne 0 ]; then
+            echo "An error occoured in python" > "${inner_folder}/result.txt"
+        fi
     fi
 
-    if [ "$python_exit_code" -ne 0 ]; then
-        echo "An error occoured in python" > "${inner_folder}/result.txt"
-    fi
 
     expanded_file=$(find "$inner_folder" -maxdepth 1 -type f -name "Expanded_program.txt")
 
     if [[ -n "$expanded_file" && -n "$tape_file" && "$python_exit_code" -eq 0 ]]; then
         dotnet run --project Interpreter_FSharp "$expanded_file" "$tape_file" "test"
         exit_code=$?
+        if [ "$exit_code" -ne 0 ]; then
+            echo "An error occoured in the interpreter" > "${inner_folder}/result.txt"
+        fi
     fi
     
-    if [ "$exit_code" -ne 0 ]; then
-        echo "An error occoured in the interpreter" > "${inner_folder}/result.txt"
-    fi
     # Find result and expected files in the same folder
     result_file=$(find "$inner_folder" -maxdepth 1 -type f -name "result.txt")
     expected_file=$(find "$inner_folder" -maxdepth 1 -type f -name "expected.txt")

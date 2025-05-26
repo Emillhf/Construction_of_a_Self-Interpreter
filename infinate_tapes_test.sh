@@ -33,6 +33,10 @@ case4=$(find "Tapes_1Tape_RTM" -maxdepth 1 -type f -name "infinite_case4.txt")
 case4_rev=$(find "Tapes_1Tape_RTM" -maxdepth 1 -type f -name "infinite_case4_rev.txt")
 case5=$(find "Tapes_1Tape_RTM" -maxdepth 1 -type f -name "infinite_case5.txt")
 case5_rev=$(find "Tapes_1Tape_RTM" -maxdepth 1 -type f -name "infinite_case5_rev.txt")
+onelong=$(find "Tapes_1Tape_RTM" -maxdepth 1 -type f -name "infinite_one_long.txt")
+oneblanklong=$(find "Tapes_1Tape_RTM" -maxdepth 1 -type f -name "infinite_one_blank_long.txt")
+twolong=$(find "Tapes_1Tape_RTM" -maxdepth 1 -type f -name "infinite_two_long.txt")
+twoblanklong=$(find "Tapes_1Tape_RTM" -maxdepth 1 -type f -name "infinite_two_blank_long.txt")
 
 
 
@@ -114,4 +118,36 @@ if [[ "$case5_rev_out" == "$file_content_case5_rev" ]]; then
     echo "Success: case 5 inversed"
 else
     echo "Failure: case 5 inversed"
+fi
+
+onelong_out=$(dotnet run --project Interpreter_1Tape_FSharp "$left_t1_right_t3" "$onelong" 1 161 3)
+file_content_two_long=$(cat "$twolong")
+if [[ "$onelong_out" == "$file_content_two_long" ]]; then
+    echo "Success: one long"
+else
+    echo "Failure: one long"
+fi
+
+onelong_out=$(dotnet run --project Interpreter_1Tape_FSharp "$right_t1_left_t3" "$twolong" 1 161 2)
+file_content_one_long=$(cat "$onelong")
+if [[ "$onelong_out" == "$file_content_one_long" ]]; then
+    echo "Success: two long"
+else
+    echo "Failure: two long"
+fi
+
+oneblanklong_out=$(dotnet run --project Interpreter_1Tape_FSharp "$right_t1_left_t3" "$oneblanklong" 1 161 3)
+file_content_twoblanklong=$(cat "$twoblanklong")
+if [[ "$oneblanklong_out" == "$file_content_twoblanklong" ]]; then
+    echo "Success: one blank long"
+else
+    echo "Failure: one blank long"
+fi
+
+twoblanklong_out=$(dotnet run --project Interpreter_1Tape_FSharp "$left_t1_right_t3" "$twoblanklong" 1 161 3)
+file_content_oneblanklong=$(cat "$oneblanklong")
+if [[ "$twoblanklong_out" == "$file_content_oneblanklong" ]]; then
+    echo "Success: two blank long"
+else
+    echo "Failure: two blank long"
 fi
