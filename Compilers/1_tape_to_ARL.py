@@ -27,4 +27,4 @@ def Convert_to_ARL(rules):
 file_name = "URTM.txt"
 program = Read_file.read_file("1_Tape_programs/" + file_name)
 ARL = Convert_to_ARL(program)
-Read_file.write_file_newline("ARL-URTM.txt",ARL)
+Read_file.write_to_file("ARL-URTM.txt",ARL)

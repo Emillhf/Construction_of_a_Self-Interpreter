@@ -1,6 +1,5 @@
 import re
 
-
 def Encode(program):
     print(program)
     translatedProgram = ""
@@ -53,25 +52,6 @@ def extract_groups(groups):
         else:
             encoded.append(group.replace(',',''))
     return encoded
-
-test = ["(1,(b,b),2)",
-    "(2,(RIGHT),3)",
-    "(3,(0,1),4)",
-    "(3,(1,0),2)",
-    "(3,(b,b),4)",
-    "(4,(LEFT),5)",
-    "(5,(0,0),4)",
-    "(5,(b,b),6)"]
-
-test2 = ["(1,(b,b),2)",
-    "(2,(RIGHT),3)",
-    "(3,(0,1),2)",
-    "(3,(1,0),2)",
-    "(3,(b,b),4)",
-    "(4,(LEFT),5)",
-    "(5,(0,0),4)",
-    "(5,(1,1),4)",
-    "(5,(b,b),0)"]
 
 input_filename = "URTM.txt"
 file = open("1_Tape_programs/" + input_filename, 'r')
