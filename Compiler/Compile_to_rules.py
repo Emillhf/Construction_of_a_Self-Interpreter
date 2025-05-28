@@ -3,22 +3,9 @@ import os
 import Expander
 import StateTransitioner
 import Macros
+import Read_file
 
-if len(sys.argv) < 2:
-    print("Please give a filename as an argument")
-    exit(1)
-
-input_filename = sys.argv[1]
-
-if not os.path.isfile(input_filename):
-    print(f"File '{input_filename}' not found.")
-    exit(1)
-    
-
-if (len(sys.argv) ==3):
-    output_filename = sys.argv[2]
-else:
-    output_filename = f"Expanded_{input_filename}"
+input_filename, output_filename = Read_file.input_file()
 
 file = open(input_filename, 'r')
 lines = file.readlines()
