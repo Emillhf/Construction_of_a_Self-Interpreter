@@ -4,8 +4,8 @@ This is the repository for all the code used in constructing a RTM Self-Interpre
 
 ## Requirements
 
-Python version 3.11  
-Dotnet version 8.0
+  - Python version 3.11  
+  - Dotnet version 8.0
 
 ## Compiling and interpreting Dünja program
 The prerequisites is:
