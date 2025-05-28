@@ -3,6 +3,7 @@ import os
 import sys
 import Expand_1_tape
 import Inverter
+import Read_file
 
 encoded_symbols = {
     'B': 'P',
@@ -36,19 +37,6 @@ def inner_list(rules,tape):
             tape_dict[tape_elm] = [rule]
     return list(tape_dict.values())
         
-def groupByTape2(state_rules):
-    final = []
-    for rules in state_rules:
-        final.append(inner_list(rules,2))
-            
-    return final
-# def groupByTape1(state_rules:list[list[tuple[str]]]):
-#     final = []
-#     for rules in state_rules:
-#         final.append(inner_list(rules,1))
-            
-#     return final
-
 def groupByTape1(state_rules):
     final = []
     for grouped_rules in state_rules:
@@ -58,14 +46,13 @@ def groupByTape1(state_rules):
         final.append(temp)
 
     return final
-# def groupByTape2(state_rules:list[list[list[tuple[str]]]]):
-#     final = []
-#     for grouped_rules in state_rules:
-#         temp = []
-#         for rules in grouped_rules:
-#             temp.append(inner_list(rules,2))
-#         final.append(temp)
-#     return final
+
+def groupByTape2(state_rules):
+    final = []
+    for rules in state_rules:
+        final.append(inner_list(rules,2))
+            
+    return final
 
 def groupByTape3(state_rules):
     final = []
@@ -78,17 +65,6 @@ def groupByTape3(state_rules):
             temp1.append(temp2)
         final.append(temp1)
     return final
-# def groupByTape3(state_rules):
-#     final = []
-#     for grouped_rules in state_rules:
-#         temp1 = []
-#         for grouped_by_tape_1 in grouped_rules:
-#             temp2 = []
-#             for rules in grouped_by_tape_1:
-#                 temp2.append(inner_list(rules,3))
-#             temp1.append(temp2)
-#         final.append(temp1)
-#     return final
 
 def Replace_final_state(rules,updated_value):
     for idx,rule in enumerate(rules):
@@ -135,7 +111,6 @@ def Expand_symbol_top_tree(states,count,states_dict,connection_dict):
                 tape3_elm = tape3[0][3]
                 connection_dict[tape3[0]] = count
                 tmp.append((count_tape1+3,((encoded_symbols[tape3_elm[1]],encoded_symbols[tape3_elm[3]])),count))  
-            # count += 1
         count+=1
     return tmp, count, states_dict, connection_dict
 
@@ -607,33 +582,10 @@ def tuple_to_string(tuple):
     else:
         symbol = tuple[1]
         return "(" + str(tuple[0]) + ",(" + symbol[0] + "," + (symbol[1]) + ")," + str(tuple[2]) + ")"
-# test = ["(1,((0,0),(#,#),(#,b)),2)",
-#          "(1,((b,b),(b,b),(1,1)),2)",
-#          "(1,((b,b),(b,b),(#,b)),2)",
-#          "(2,((STAY),(RIGHT),(RIGHT)),3)",
-#         "(3,((0,0),(0,0),(0,0)),2)"]
-
-test_single = [[[[[('1', '(b,b)', '(b,1)', '(b,1)', '0')]], [[('1', '(1,1)', '(b,1)', '(b,1)', '0')]]]]]
-test_single_rev = [[[[[('0', '(b,b)', '(1,b)', '(1,b)', '1')]], [[('0', '(1,1)', '(1,b)', '(1,b)', '1')]]]]]
-
-if len(sys.argv) < 2:
-    print("Please give a filename as an argument")
-    exit(1)
-
-name = sys.argv[1]
-
     
-# name = "Move_test.txt"
-# name = "Write_0_or_1.txt"
-# name = "clear_state.txt"
-# name = "write_state.txt"
-# name = "apply_symbol.txt"
-# name = "URTM.txt"
-# name = "move_left_t1_right_t3.txt"
-# name = "move_right_t1_left_t3.txt"
-file = open("Expanded_RTM_programs/"+name, 'r')
-lines = file.readlines()
-lines = [line.strip() for line in lines]
+
+file_name,name = Read_file.input_file()
+lines = Read_file.read_file(file_name)
 forward_lines = lines.copy()
 Inverted_lines = Inverter.Invert(lines)
 tape1 = (Expand(group(forward_lines),group(Inverted_lines)))

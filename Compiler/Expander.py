@@ -1,9 +1,7 @@
 import re
 
+alfa = ['0', '1', 'b']
 beta = ['0', '1', 'B', 'b', '#', 'S', 'M']
-alfa = ['0', '1', 'B', 'b', '#', 'S', 'M']
-beta = ['0', '1', 'B', 'b', '#', 'S', 'M']
-alfa = ['0', '1', 'B', 'b', '#', 'S', 'M']
 mapping = {'B':'b',
            '0':'0',
            '1':'1'}
@@ -93,13 +91,3 @@ def expand_rules(rules,alfa,beta):
                         expanded_rules.append(elm)
                 
     return expanded_rules          
-
-example_rule_alfa = "(1,((alfa,alfa),(0,1),(0,0)),2)"
-example_rule_beta = "(1,((0,0),(beta,beta),(0,0)),2)"
-example_rule_alfaAndBeta = ["(1,((alfa,alfa),(beta,beta),(0,0)),2)"]
-example_rule_alfaAndBeta = ["(1,((alfa!=(b,1),alfa!=(b,1)),(beta!=(M),beta!=(M)),(0,0)),2)"]
-example_rule_alfa_enc_not_equal = ["(1,((alfa!=(a_enc),alfa!=(a_enc)),(a_enc,a_enc),(0,0)),2)"]
-example_rule_alfa_enc_equal = ["(1,((alfa,alfa),(a_enc,a_enc),(0,0)),2)"]
-
-# (expand_rules(example_rule_alfa_enc_not_equal, alfa, beta))
-(expand_rules(example_rule_alfa_enc_equal, alfa, beta))

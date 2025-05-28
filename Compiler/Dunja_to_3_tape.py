@@ -5,7 +5,7 @@ import StateTransitioner
 import Macros
 import Read_file
 
-input_filename, output_filename = Read_file.input_file()
+input_filename,output_filename = Read_file.input_file()
 
 file = open(input_filename, 'r')
 lines = file.readlines()

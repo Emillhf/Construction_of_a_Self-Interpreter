@@ -22,7 +22,7 @@ process_inner_folder() {
     if [[ -n "$program" ]]; then
         folder_name=$"$inner_folder"
         output_file="${inner_folder}/Expanded_program.txt"
-        python3 Compiler/Compile_to_rules.py "$program" "$output_file"
+        python3 Compiler/Dunja_to_3_tape.py "$program" "$output_file"
         python_exit_code=$?
         if [ "$python_exit_code" -ne 0 ]; then
             echo "An error occoured in python" > "${inner_folder}/result.txt"

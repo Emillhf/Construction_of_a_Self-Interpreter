@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Find the required files in the inner folder
-URTM=$(find "Expanded_RTM_programs" -maxdepth 1 -type f -name "URTM.txt")
-rev_URTM=$(find "Expanded_RTM_programs" -maxdepth 1 -type f -name "rev_URTM.txt")
+URTM=$(find "3_Tape_programs" -maxdepth 1 -type f -name "URTM.txt")
+rev_URTM=$(find "3_Tape_programs" -maxdepth 1 -type f -name "rev_URTM.txt")
 tape_BinInc=$(find "Tapes_RTM" -maxdepth 1 -type f -name "BinInc.txt")
 tape_BinDec=$(find "Tapes_RTM" -maxdepth 1 -type f -name "BinDec.txt")
 echo "------- 3 tape interpreter -------"
