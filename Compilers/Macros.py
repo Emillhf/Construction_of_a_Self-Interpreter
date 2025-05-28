@@ -30,7 +30,7 @@ def Expand_macros(rules: str, default_state = 0):
 def generel_expand(filename : str, states : list[int], default_state):
     res = []
     first_state, last_state = states
-    file = open("Compiler/macros/" + filename + ".txt")
+    file = open("Compilers/macros/" + filename + ".txt")
     lines = file.readlines()
     for line in lines:
         if "#load" in line:
@@ -51,7 +51,7 @@ def generel_expand(filename : str, states : list[int], default_state):
 def condititional_expand(filename : str, states : list[int], default_state):
     res = []
     first_state, true_state, false_state = states
-    file = open("Compiler/macros/" + filename + ".txt")
+    file = open("Compilers/macros/" + filename + ".txt")
     lines = file.readlines()
     for line in lines:
         if "#load" in line:
@@ -73,7 +73,7 @@ def condititional_expand(filename : str, states : list[int], default_state):
 def condititional_expand_reverse(filename : str, states : list[int], default_state):
     res = []
     true_state, false_state, end_state = states
-    file = open("Compiler/macros/" + filename + ".txt")
+    file = open("Compilers/macros/" + filename + ".txt")
     lines = file.readlines()
     for line in lines:
         if "#load" in line:

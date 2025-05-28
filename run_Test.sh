@@ -22,7 +22,7 @@ process_inner_folder() {
     if [[ -n "$program" ]]; then
         folder_name=$"$inner_folder"
         output_file="${inner_folder}/Expanded_program.txt"
-        python3 Compiler/Dunja_to_3_tape.py "$program" "$output_file"
+        python3 Compilers/Dunja_to_3_tape.py "$program" "$output_file"
         python_exit_code=$?
         if [ "$python_exit_code" -ne 0 ]; then
             echo "An error occoured in python" > "${inner_folder}/result.txt"
@@ -33,7 +33,7 @@ process_inner_folder() {
     expanded_file=$(find "$inner_folder" -maxdepth 1 -type f -name "Expanded_program.txt")
 
     if [[ -n "$expanded_file" && -n "$tape_file" && "$python_exit_code" -eq 0 ]]; then
-        dotnet run --project Interpreter_FSharp "$expanded_file" "$tape_file" "test"
+        dotnet run --project Interpreter_3_tape "$expanded_file" "$tape_file" "test"
         exit_code=$?
         if [ "$exit_code" -ne 0 ]; then
             echo "An error occoured in the interpreter" > "${inner_folder}/result.txt"

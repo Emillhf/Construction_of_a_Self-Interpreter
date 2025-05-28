@@ -3,20 +3,20 @@
 # Find the required files in the inner folder
 URTM=$(find "3_Tape_programs" -maxdepth 1 -type f -name "URTM.txt")
 rev_URTM=$(find "3_Tape_programs" -maxdepth 1 -type f -name "rev_URTM.txt")
-tape_BinInc=$(find "Tapes_RTM" -maxdepth 1 -type f -name "BinInc.txt")
-tape_BinDec=$(find "Tapes_RTM" -maxdepth 1 -type f -name "BinDec.txt")
+tape_BinInc=$(find "3_Tape_tapes" -maxdepth 1 -type f -name "BinInc.txt")
+tape_BinDec=$(find "3_Tape_tapes" -maxdepth 1 -type f -name "BinDec.txt")
 echo "------- 3 tape interpreter -------"
 echo "running: normal_normal:"
-normal_normal=$(dotnet run --project Interpreter_FSharp "$URTM" "$tape_BinInc" 1 0)
+normal_normal=$(dotnet run --project Interpreter_3_tape "$URTM" "$tape_BinInc" 1 0)
 
 echo "running: normal_rev:"
-normal_rev=$(dotnet run --project Interpreter_FSharp "$URTM" "$tape_BinDec" 1 0)
+normal_rev=$(dotnet run --project Interpreter_3_tape "$URTM" "$tape_BinDec" 1 0)
 
 echo "running: rev_normal:"
-rev_normal=$(dotnet run --project Interpreter_FSharp "$rev_URTM" "$tape_BinInc" 0 1)
+rev_normal=$(dotnet run --project Interpreter_3_tape "$rev_URTM" "$tape_BinInc" 0 1)
 
 echo "running: rev_rev:"
-rev_rev=$(dotnet run --project Interpreter_FSharp "$rev_URTM" "$tape_BinDec" 0 1)
+rev_rev=$(dotnet run --project Interpreter_3_tape "$rev_URTM" "$tape_BinDec" 0 1)
 
 echo ""
 
@@ -39,20 +39,20 @@ echo ""
 # Find the required files in the inner folder
 URTM_1tape=$(find "1_Tape_Programs" -maxdepth 1 -type f -name "URTM.txt")
 rev_URTM_1tape=$(find "1_Tape_Programs" -maxdepth 1 -type f -name "rev_URTM.txt")
-tape_BinInc_1tape=$(find "Tapes_1Tape_RTM" -maxdepth 1 -type f -name "BinInc.txt")
-tape_BinDec_1tape=$(find "Tapes_1Tape_RTM" -maxdepth 1 -type f -name "BinDec.txt")
+tape_BinInc_1tape=$(find "1_Tape_tapes" -maxdepth 1 -type f -name "BinInc.txt")
+tape_BinDec_1tape=$(find "1_Tape_tapes" -maxdepth 1 -type f -name "BinDec.txt")
 
 echo "running: normal_normal_1tape:"
-normal_normal_1tape=$(dotnet run --project Interpreter_1Tape_FSharp "$URTM_1tape" "$tape_BinInc_1tape" 1 21167 1)
+normal_normal_1tape=$(dotnet run --project Interpreter_1_tape "$URTM_1tape" "$tape_BinInc_1tape" 1 21167 1)
 
 echo "running: normal_rev_1tape:"
-normal_rev_1tape=$(dotnet run --project Interpreter_1Tape_FSharp "$URTM_1tape" "$tape_BinDec_1tape" 1 21167 1)
+normal_rev_1tape=$(dotnet run --project Interpreter_1_tape "$URTM_1tape" "$tape_BinDec_1tape" 1 21167 1)
 
 echo "running: rev_normal_1tape:"
-rev_normal_1tape=$(dotnet run --project Interpreter_1Tape_FSharp "$rev_URTM_1tape" "$tape_BinInc_1tape" 21167 1 1)
+rev_normal_1tape=$(dotnet run --project Interpreter_1_tape "$rev_URTM_1tape" "$tape_BinInc_1tape" 21167 1 1)
 
 echo "running: rev_rev_1tape:"
-rev_rev_1tape=$(dotnet run --project Interpreter_1Tape_FSharp "$rev_URTM_1tape" "$tape_BinDec_1tape" 21167 1 1)
+rev_rev_1tape=$(dotnet run --project Interpreter_1_tape "$rev_URTM_1tape" "$tape_BinDec_1tape" 21167 1 1)
 
 echo ""
 
