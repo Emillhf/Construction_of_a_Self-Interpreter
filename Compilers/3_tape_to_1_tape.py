@@ -538,7 +538,6 @@ def Expand_move(states,count,states_dict):
 
 
 def Expand(instructions_top,instructions_bottom):
-    print("top: ", instructions_top)
     states_dict = {'1': 3}
     connection_dict = {}
     final = []
@@ -568,7 +567,7 @@ def Expand(instructions_top,instructions_bottom):
     final.append([(count+1,("alfa!=(gamma)","alfa!=(gamma)"),states_dict['0'])])
     final.append([(count+1,("gamma","gamma"),count+2)])
 
-    print(states_dict, "finalstate :", count+2)
+    print("finalstate :", count+2)
     return final
     
 def group(rules):

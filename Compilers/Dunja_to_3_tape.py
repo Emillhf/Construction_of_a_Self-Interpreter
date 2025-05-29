@@ -15,5 +15,5 @@ lines = [line.strip() for line in lines]
 lines_macroed = Macros.Expand_macros(lines[2:])
 lines_expanded = Expander.expand_rules(lines_macroed, Expander.alfa, Expander.beta)
 lines_stateTransitioned = StateTransitioner.StateTransition(lines_expanded, start, final)
-outfile = open(output_filename, 'w+')
+outfile = open("3_Tape_programs/" + output_filename, 'w+')
 outfile.writelines(lines_stateTransitioned)

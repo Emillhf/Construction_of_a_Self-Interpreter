@@ -17,7 +17,8 @@ let main args =
     else if args.Length = 4 then
         let rules = read_rules(args[0])
         let tapes = read_tape_file(args[1])
-        printfn "%A" (RMT (rules,(int args[2],int args[3]),(tapes)))
+        printfn "Work-tape before : %A" (System.String (first tapes))
+        printfn "Work-tape after : %A" (System.String (first (RMT (rules,(1,0),(tapes)))))
 
     else if args.Length = 2 then
 
