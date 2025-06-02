@@ -4,8 +4,8 @@ open Helper
 open Types
 
 let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int, (input:tape,program:tape,states:tape)) =
-    let start = start1 //Starting state is always 1
-    let final = final1 //Final state is always 0
+    let start = start1 
+    let final = final1 
     let mutable idx1 = 0
     let mutable idx2 = 0
     let mutable idx3 = 4
@@ -28,25 +28,23 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int, (input:tape,program:
             | Symbol(t1,t2,t3) -> fst t1 = input[idx1] && fst t2 = program[idx2] && fst t3 = states[idx3]
 
     let act (rule:Rule) =
-        // printfn "%A" (idx1, idx2, idx3)
-        // printfn "%A" (rule)
         match second rule with 
             | Move(t1,t2,t3) -> 
                 match t1 with
                     | "STAY" -> ()
                     | "RIGHT" -> move1(1)
                     | "LEFT" -> move1(-1)
-                    | _-> failwith "Error when moving "
+                    | _-> failwith "Error when moving on tape 1"
                 match t2 with
                     | "STAY" -> ()
                     | "RIGHT" -> move2(1)
                     | "LEFT" -> move2(-1)
-                    |_-> failwith "Error when moving"
+                    |_-> failwith "Error when moving on tape 2"
                 match t3 with               
                     | "STAY" -> ()
                     | "RIGHT" -> move3(1)
                     | "LEFT" -> move3(-1)
-                    |_-> failwith "Error when moving"
+                    |_-> failwith "Error when moving on tape 3"
             | Symbol(t1,t2,t3) -> 
                 write1(snd t1)
                 write2(snd t2)
@@ -62,7 +60,7 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int, (input:tape,program:
                 | rule :: rest -> 
                     if check (second rule) then act rule
                     else search_rec rest
-                | _ -> failwith "Shit wrong"
+                | [] -> failwith "Empty rule list"
 
         search_rec(rules_list[current_state])
 
@@ -74,5 +72,5 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int, (input:tape,program:
             printfn "%A" rules[current_state]
             printfn "Current state: %A\nInput tape: %A, idx: %A\nProgram tape: %A, idx: %A\nState tape %A, idx: %A" current_state input idx1 program idx2 states idx3
             failwith "Rules are wrong in the above state"
-    // printfn "%A" (idx1, idx2, idx3) 
+
     input, program, states

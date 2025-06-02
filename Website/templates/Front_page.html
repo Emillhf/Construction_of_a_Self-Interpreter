@@ -24,7 +24,7 @@
     }
 
     main {
-      max-width: 1200px;
+      max-width: 1000px;
       margin: 2rem auto;
       padding: 0 1rem;
     }
@@ -38,9 +38,13 @@
       justify-content: center;
     }
 
+    .toolbar form {
+      display: inline;
+    }
+
     .toolbar button,
     .toolbar select {
-      padding: 0.4rem 0.8rem;
+      padding: 1rem 1.5rem;
       border: 1px solid #ccc;
       border-radius: 4px;
       background-color: white;
@@ -55,6 +59,21 @@
     .editor-wrapper {
       border: 1px solid #ccc;
       height: 400px;
+      width: 1000px;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .editor-wrapper textarea {
+      width: 100%;
+      height: 100%;
+      resize: none; 
+      border: none;
+      outline: none;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 1rem;
+      box-sizing: border-box;
     }
 
     .CodeMirror {
@@ -82,35 +101,34 @@
 <body>
   <header>Reversible computing</header>
   <main>
-        <div class="toolbar">
-      
-        <form method="POST">
-            <button type="run">Run</button>
+      <div class="toolbar">
+        <form method="POST" action="/run">
+          <button type="submit" class="run">Run</button>
 
+        <button type="submit" formaction="/invert">Invert</button>
+        
+        <button type="submit" formaction="/BinInc">BinInc</button>
 
-      
-      <button onclick="shareCode()">Share</button>
-      <button onclick="invertCode()">Invert</button>
-      <select id="exampleSelect" onchange="loadExample(this.value)">
-        <option disabled selected>Examples</option>
-        <option value="fibonacci">Fibonacci</option>
-        <option value="factor">Factorization</option>
-        <option value="sqrt">Square root</option>
-        <option value="perm">Perm-to-code</option>
-        <option value="rle">Run-length encoding</option>
-      </select>
-      <button onclick="showAbout()">About</button>
-    </div>
-    <div class="tape-container">
-    {% for cell in tape %}
-      <input class="tape-cell" maxlength="1" name="tape_list" value="{{ cell }}">
-    {% endfor %}
-    </div>
+      </div>
 
-    <div class="editor-wrapper">
-      <textarea id="code" name="code">{{ code }}</textarea>
-    </div>
+      <div class="tape-container">
+        {% for cell in tape %}
+          <input class="tape-cell" maxlength="1" name="tape_list" value="{{ cell }}">
+        {% endfor %}
+      </div>
+
+      <div class="editor-wrapper">
+        <textarea id="code" name="code">{{ code }}</textarea>
+      </div>
+
+      <div class="tape-container">
+        {% for cell in output %}
+          <input class="tape-cell" maxlength="1" name="output_list" value="{{ cell }}">
+        {% endfor %}
+      </div>
     </form>
+
+
   </main>
 </body>
 </html>

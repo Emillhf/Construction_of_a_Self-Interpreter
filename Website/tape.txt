@@ -1,5 +1,5 @@
 b1101bbbbbbbbbbbb
 !
-bS#1#BB#01#SM#10#01#11#MS#11#01#001#SS#11#10#01#SS#11#BB#001#SM#100#10#101#MS#101#00#001#SS#101#BB#0#Sb
+bbbbbbbbbbbbbbb
 $
-bbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbb
