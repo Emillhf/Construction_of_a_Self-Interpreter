@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Program Inversion</title>
+
+  <!-- CodeMirror CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fafafa;
+    }
+
+    header {
+      text-align: center;
+      background: #fff;
+      padding: 1rem;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #204d27;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .toolbar button,
+    .toolbar select {
+      padding: 0.4rem 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .toolbar .run {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .editor-wrapper {
+      border: 1px solid #ccc;
+      height: 400px;
+    }
+
+    .CodeMirror {
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>Program Inversion and Reversible Computation</header>
+  <main>
+    <div class="toolbar">
+      <button class="run" onclick="runCode()">Run</button>
+      <button onclick="shareCode()">Share</button>
+      <button onclick="invertCode()">Invert</button>
+      <select id="exampleSelect" onchange="loadExample(this.value)">
+        <option disabled selected>Examples</option>
+        <option value="fibonacci">Fibonacci</option>
+        <option value="factor">Factorization</option>
+        <option value="sqrt">Square root</option>
+        <option value="perm">Perm-to-code</option>
+        <option value="rle">Run-length encoding</option>
+      </select>
+      <button onclick="showAbout()">About</button>
+    </div>
+    <div class="editor-wrapper">
+      <textarea id="code">// Write your code here...</textarea>
+    </div>
+  </main>
+
+  <!-- CodeMirror JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/javascript/javascript.min.js"></script>
+
+  <script>
+    const editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+      lineNumbers: true,
+      mode: "javascript",
+      theme: "default"
+    });
+
+    function runCode() {
+      const code = editor.getValue();
+      alert("Running this code:\n\n" + code);
+    }
+
+    function shareCode() {
+      const code = editor.getValue();
+      navigator.clipboard.writeText(code)
+        .then(() => alert("Code copied to clipboard!"))
+        .catch(err => alert("Failed to copy code."));
+    }
+
+    function invertCode() {
+      const code = editor.getValue();
+      const reversed = code.split('').reverse().join('');
+      editor.setValue(reversed);
+    }
+
+    function showAbout() {
+      alert("This project demonstrates reversible computation concepts.\nBuilt with CodeMirror.");
+    }
+
+    const examples = {
+      fibonacci: `function fib(n) {
+  if (n <= 1) return n;
+  return fib(n - 1) + fib(n - 2);
+}`,
+      factor: `function factorize(n) {
+  const factors = [];
+  for (let i = 2; i <= n; i++) {
+    while (n % i === 0) {
+      factors.push(i);
+      n /= i;
+    }
+  }
+  return factors;
+}`,
+      sqrt: `function sqrt(x) {
+  return Math.sqrt(x);
+}`,
+      perm: `function permToCode(str) {
+  return str.split('').sort().join('');
+}`,
+      rle: `function runLengthEncode(str) {
+  return str.replace(/(.)\\1*/g, (s, c) => c + s.length);
+}`
+    };
+
+    function loadExample(key) {
+      if (examples[key]) {
+        editor.setValue(examples[key]);
+      }
+    }
+  </script>
+</body>
+</html>
