@@ -1,0 +1,8 @@
+1
+0
+(1,((STAY),(RIGHT),(STAY)),2)
+(2,((b,b),(alfa!=(#),alfa!=(#)),(b,b)),1)
+(2,((b,b),(#,#),(b,b)),3)
+(3,((b,b),(#,b),(b,b)),4)
+#load rewind_program_tape_final(4,20)
+(20,((b,b),(b,#),(b,b)),0)

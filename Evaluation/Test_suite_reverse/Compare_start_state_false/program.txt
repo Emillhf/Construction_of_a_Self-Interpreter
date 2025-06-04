@@ -1,0 +1,5 @@
+1
+0
+(3,((b,1),(b,b),(#,#)),50)
+(1,((b,0),(b,b),(#,#)),20)
+#load rev_compare_start_final_state(50,20,0)

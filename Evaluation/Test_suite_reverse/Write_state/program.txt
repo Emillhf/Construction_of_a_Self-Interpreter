@@ -1,0 +1,9 @@
+1
+0
+(1,((STAY),(RIGHT),(STAY)),2)
+(2,((STAY),(RIGHT),(STAY)),3)
+(3,((STAY),(RIGHT),(STAY)),4)
+(4,((STAY),(RIGHT),(STAY)),5)
+(5,((STAY),(RIGHT),(STAY)),6)
+(6,((STAY),(RIGHT),(STAY)),7)
+#load rev_write_state(7,0)

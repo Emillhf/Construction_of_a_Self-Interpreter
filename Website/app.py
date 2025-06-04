@@ -40,7 +40,9 @@ def Invert(rules):
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    code = "(1,((alfa,1),(b,b),(b,b)),0)"
+    app.config['Start_State'] = '1'
+    app.config['Final_State'] = '0'
+    code = "(1,((b,1),(b,b),(b,b)),0)"
     work = 'b'
     program = 'b'
     state = 'b'
@@ -70,7 +72,7 @@ def run():
             file.write(work + "\n!\n"+ program + "\n$\n" + "bbbb" + state + "b"*10)
             
         with open(app.config['Code_path'], "w") as file:
-            file.write(code)
+            file.write(code.replace("\n", ''))
         
         try:
             result = subprocess.run(
