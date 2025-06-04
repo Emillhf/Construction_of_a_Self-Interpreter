@@ -591,7 +591,10 @@ tape1 = (Expand(group(forward_lines),group(Inverted_lines)))
 expanded = []
 for elm in tape1:
     expanded.append(Expand_1_tape.expand(elm))
-outfile = open("1_Tape_programs/" + name,'w+')
+if name.find("/") == -1:
+    outfile = open("1_Tape_programs/" + name,'w+')
+else:
+    outfile = open(name, 'w+')
 for elm1 in expanded:
     for elm in elm1:
         outfile.write(tuple_to_string(elm) + "\n")
