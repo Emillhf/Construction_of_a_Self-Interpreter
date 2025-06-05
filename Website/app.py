@@ -131,14 +131,15 @@ def Compile():
             result = subprocess.run(
                 #["dotnet", "run", "--project", "../Interpreter_3_tape", "../3_Tape_programs/URTM.txt", app.config['Tape_path']],
                 ["python3", "Compilers/Dunja_to_3_tape.py", app.config['Code_path'], app.config['Code_path']],
+                capture_output=True,
                 timeout=50
             )
             output = result.stdout or result.stderr
             print(output)
-            if (output.decode("utf-8").find("Traceback") != -1):
+            if output.decode("utf-8").find("Traceback") == -1:
+                error = False 
+            else: 
                 error = True
-                
-            error = False
         except Exception as e:
             error = True
 
