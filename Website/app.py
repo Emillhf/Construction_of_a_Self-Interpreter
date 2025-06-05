@@ -130,7 +130,7 @@ def Compile():
         try:
             subprocess.run(
                 #["dotnet", "run", "--project", "../Interpreter_3_tape", "../3_Tape_programs/URTM.txt", app.config['Tape_path']],
-                ["Python3", "Compilers/Dunja_to_3_tape.py", app.config['Code_path'], app.config['Code_path']],
+                ["python3", "Compilers/Dunja_to_3_tape.py", app.config['Code_path'], app.config['Code_path']],
                 timeout=5
             )
             error = False
