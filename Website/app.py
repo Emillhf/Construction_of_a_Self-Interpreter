@@ -124,15 +124,20 @@ def Compile():
         output = request.form['output']
         
         code = request.form['code']
-        with open(app.config['Code_path'], "w") as file:
-            file.write(app.config['Start_state'] + "\n" + app.config['Final_state'] + "\n" + code)
             
         try:
-            subprocess.run(
+            with open(app.config['Code_path'], "w") as file:
+                file.write(app.config['Start_state'] + "\n" + app.config['Final_state'] + "\n" + code)
+            result = subprocess.run(
                 #["dotnet", "run", "--project", "../Interpreter_3_tape", "../3_Tape_programs/URTM.txt", app.config['Tape_path']],
                 ["python3", "Compilers/Dunja_to_3_tape.py", app.config['Code_path'], app.config['Code_path']],
                 timeout=50
             )
+            output = result.stdout or result.stderr
+            print(output)
+            if (output.decode("utf-8").find("Traceback") != -1):
+                error = True
+                
             error = False
         except Exception as e:
             error = True
@@ -161,7 +166,10 @@ def invert():
         output = request.form['output']
         
         code = request.form['code']
-        code = '\n'.join(Invert(code.strip().replace('\r','').split('\n')))
+        try:
+            code = '\n'.join(Invert(code.strip().replace('\r','').split('\n')))
+        except:
+            code = "Unable to Invert"
         app.config["Start_state"], app.config["Final_state"] = app.config["Final_state"], app.config["Start_state"]
         
     return render_template('Front_page.html',
