@@ -80,7 +80,7 @@ def run():
                 ["dotnet", "run", "--project", app.config['Interpreter'], app.config['Code_path'], app.config['Tape_path'], 
                                             app.config["Start_state"], app.config["Final_state"]],
                 capture_output=True,
-                timeout=5
+                timeout=50
             )
             output = result.stdout or result.stderr
             
@@ -131,7 +131,7 @@ def Compile():
             subprocess.run(
                 #["dotnet", "run", "--project", "../Interpreter_3_tape", "../3_Tape_programs/URTM.txt", app.config['Tape_path']],
                 ["python3", "Compilers/Dunja_to_3_tape.py", app.config['Code_path'], app.config['Code_path']],
-                timeout=5
+                timeout=50
             )
             error = False
         except Exception as e:
