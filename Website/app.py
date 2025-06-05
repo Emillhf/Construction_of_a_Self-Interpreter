@@ -83,7 +83,7 @@ def run():
                 timeout=50
             )
             output = result.stdout or result.stderr
-            
+            print(output)
             if (output.decode("utf-8").find("exception") != -1):
                 print("Output")
                 print(output)
