@@ -176,7 +176,10 @@ def load_Example():
         return redirect(url_for('home'))
     
     if request.method == 'POST':
-        example = request.form['Examples']
+        try:
+            example = request.form['Examples']
+        except:
+            return redirect(url_for('home'))
         output = request.form['output']
         app.config["Start_state"], app.config["Final_state"] = "1", "0"
         if example == "Binary Increment":
