@@ -426,10 +426,10 @@ def invert_program():
         code = request.form['code']        
         work = request.form['work']        
         program = request.form['program'].strip()[::-1]
-        idx = program.index('#0#')
-        program = program.replace('#1#','#0#')
-        program = program[:idx] + '#1#' + program[idx + 3:]
-        print(program, idx)    
+        if ('#0#' in program) and ("#1#" in program):
+            idx = program.index('#0#')
+            program = program.replace('#1#','#0#')
+            program = program[:idx] + '#1#' + program[idx + 3:]
         state = request.form['state'] 
         output = request.form['output']
         
