@@ -97,7 +97,7 @@
     }
     .tape-wrapper {
       border: 1px solid #ccc;
-      height: 50px; 
+      height: 100px; 
       width: 1000px;
       box-sizing: border-box;
       overflow: hidden;
@@ -140,12 +140,10 @@
   <header>Reversible computing</header>
   <main>
       <div class="toolbar">
-        <form method="POST" action="/run">
+        <form method="POST" action="/1-tape/run">
           <button type="submit" class="run">Run</button>
 
-        <button type="submit" formaction="/Compile">Compile</button>
-
-        <button type="submit" formaction="/invert">Invert</button>
+        <button type="submit" formaction="/1-tape/invert">Invert</button>
         
         <select name="Examples" method="POST" formaction="/Example">
           <option disabled {% if not selected_example %}selected{% endif %}>Examples</option>
@@ -154,23 +152,14 @@
           {% endfor %}
         </select>
 
-        <button type="submit" formaction="/Example">Load Example</button>
+        <button type="submit" formaction="/1-tape/Example">Load Example</button>
         
+        <button type="submit" formaction="/Swap">Swap Interpreter</button>
       </div>
 
       <div class="tape-wrapper">
         <label for="work"><strong>Work Tape:</strong></label>
         <textarea id="work" name="work">{{ work }}</textarea>
-      </div>
-
-      <div class="tape-wrapper">
-        <label for="program-tape"><strong>Program Tape:</strong></label>
-        <textarea id="program-tape" name="program">{{ program }}</textarea>
-      </div>
-
-      <div class="tape-wrapper">
-        <label for="state-tape"><strong>State Tape (index starting at 4):</strong></label>
-        <textarea id="state-tape" name="state">{{ state }}</textarea>
       </div>
 
       <div class="editor-wrapper">
@@ -180,7 +169,6 @@
 
       <label for="result"><strong>Result:<strong></label>
       <textarea id="result" name="output" readonly>{{ output }}</textarea> 
-      
     </form>
 
 

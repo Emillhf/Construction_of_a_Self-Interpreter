@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Program Inversion</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fafafa;
+    }
+
+    header {
+      text-align: center;
+      background: #fff;
+      padding: 1rem;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #204d27;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    #result {
+        width: 100%;
+        height: 200px;             
+        overflow-y: auto;           
+        white-space: pre-wrap;    
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        resize: none; 
+        padding: 10px;   
+      }
+    #result textarea {
+      width: 100%;
+      height: 100%;
+      resize: none; 
+      border: none;
+      outline: none;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    .toolbar form {
+      display: inline;
+    }
+
+    .toolbar button,
+    .toolbar select {
+      padding: 1rem 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .toolbar .run {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .editor-wrapper {
+      border: 1px solid #ccc;
+      height: 350px;
+      width: 1000px;
+      box-sizing: border-box;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .editor-wrapper textarea {
+      width: 100%;
+      height: 100%;
+      resize: none; 
+      border: none;
+      outline: none;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    .tape-wrapper {
+      border: 1px solid #ccc;
+      height: 50px; 
+      width: 1000px;
+      box-sizing: border-box;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .tape-wrapper textarea {
+      width: 100%;
+      height: 100%;
+      resize: vertical; 
+      border: none;
+      outline: none;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+        .tape-wrapper_2 {
+      border: 1px solid #ccc;
+      height: 50px; 
+      width: 1000px;
+      box-sizing: border-box;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+    .tape-wrapper_2 textarea {
+      width: 100%;
+      height: 100%;
+      resize: vertical; 
+      border: none;
+      outline: none;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    .CodeMirror {
+      height: 100%;
+    }
+
+    .tape-container {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .tape-cell {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      font-size: 1.2rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <header>Reversible computing</header>
+  <main>
+      <div class="toolbar">
+        <form method="POST" action="/run">
+          <button type="submit" class="run">Run</button>
+
+        <button type="submit" formaction="/Compile">Compile</button>
+
+        <button type="submit" formaction="/invert">Invert</button>
+        
+        <select name="Examples" method="POST" formaction="/Example">
+          <option disabled {% if not selected_example %}selected{% endif %}>Examples</option>
+          {% for Example in Examples %}
+            <option value="{{ Example }}" {% if Example == selected_example %}selected{% endif %}>{{ Example }}</option>
+          {% endfor %}
+        </select>
+
+        <button type="submit" formaction="/Example">Load Example</button>
+        
+        <button type="submit" formaction="/Swap">Swap Interpreter</button>
+      </div>
+
+      <div class="tape-wrapper">
+        <label for="work"><strong>Work Tape:</strong></label>
+        <textarea id="work" name="work">{{ work }}</textarea>
+      </div>
+
+      <div class="tape-wrapper_2">
+        <label for="program-tape"><strong>Program Tape:</strong></label>
+        <textarea id="program-tape" name="program">{{ program }}</textarea>
+      </div>
+        <button type="submit" formaction="/invert_program">Invert</button>
+
+      <div class="tape-wrapper">
+        <label for="state-tape"><strong>State Tape (index starting at 4):</strong></label>
+        <textarea id="state-tape" name="state">{{ state }}</textarea>
+      </div>
+
+      <div class="editor-wrapper">
+        <label for="code"><strong>Code (Start = 1 and Final = 0)</strong></label>
+        <textarea id="code" name="code">{{ code }}</textarea>
+      </div>
+
+      <label for="result"><strong>Result:<strong></label>
+      <textarea id="result" name="output" readonly>{{ output }}</textarea> 
+      
+    </form>
+
+
+  </main>
+</body>
+</html>
