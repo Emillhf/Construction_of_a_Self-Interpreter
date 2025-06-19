@@ -66,11 +66,11 @@ def Invert1Tape(rules):
 def home():
     app.config['Start_State'] = '1'
     app.config['Final_State'] = '0'
+    code = "(1,((b,1),(b,1),(b,1)),0)"
     app.config['Is_3_Tape'] = True
-    code = "(1,((b,1),(b,b),(b,b)),0)"
     work = 'b'
     program = 'b'
-    state = 'b'
+    state = 'bbbbb'
     output = ''
     return render_template("3-Tape_page.html", 
                            work=work, program=program, state=state,
@@ -94,7 +94,7 @@ def run():
         error = 0
         
         with open(app.config['Tape_path'], "w") as file:
-            file.write(work + "\n!\n"+ program + "\n$\n" + "bbbb" + state + "b"*10)
+            file.write(work + "\n!\n"+ program + "\n$\n" + state)
             
         with open(app.config['Code_path'], "w") as file:
             file.write(code.replace("\n", ''))
@@ -107,6 +107,7 @@ def run():
                 timeout=50
             )
             output = result.stdout or result.stderr
+
             print(output)
             if (output.decode("utf-8").find("exception") != -1):
                 print("Output")
@@ -123,8 +124,8 @@ def run():
             error = 3
             
         if error == 0:
-            cleaned_output = (output.decode("utf-8").replace('"','').strip() + "\n\n" 
-                            + program + "\n\n" + state)
+            cleaned_output_tmp = (output.decode("utf-8").replace('"','').strip().split("!"))
+            cleaned_output = cleaned_output_tmp[0] + "\n\n" + cleaned_output_tmp[1] + "\n\n" + cleaned_output_tmp[2]
         elif error == 2:
             cleaned_output = output.decode("utf-8")
         else:

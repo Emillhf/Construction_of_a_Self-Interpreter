@@ -190,7 +190,7 @@
         <button type="submit" formaction="/invert_program">Invert</button>
 
       <div class="tape-wrapper">
-        <label for="state-tape"><strong>State Tape:</strong></label>
+        <label for="state-tape"><strong>State Tape (index starting at 4):</strong></label>
         <textarea id="state-tape" name="state">{{ state }}</textarea>
       </div>
 
@@ -201,6 +201,7 @@
 
       <label for="result"><strong>Result:<strong></label>
       <textarea id="result" name="output" readonly>{{ output }}</textarea> 
+      
     </form>
 
 
