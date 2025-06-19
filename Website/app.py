@@ -409,7 +409,7 @@ def Interpreter():
             code = "(1,((b,1),(b,b),(b,b)),0)"
             work = 'b'
             program = 'b'
-            state = 'b'
+            state = 'bbbbb'
             output = ''
             return render_template('3-Tape_page.html',
                                 work=work, program=program, state=state,
