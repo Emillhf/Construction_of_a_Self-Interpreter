@@ -1,12 +1,6 @@
 1
 0
-(1,((b,b),(b,b),(b,#)),2)
-(2,((STAY),(STAY),(RIGHT)),3)
-(3,((b,b),(b,b),(b,1)),4)
-(4,((STAY),(STAY),(RIGHT)),5)
-(5,((b,b),(b,b),(b,#)),6)
-(6,((STAY),(STAY),(LEFT)),7)
-(7,((STAY),(STAY),(LEFT)),8)
+#load write_start_final(1,8)
 (5009,((alfa,alfa),(b,b),(#,#)),5010)
 #load rev_compare_start_final_state(8,250,5009)
 (5010,((STAY),(RIGHT),(STAY)),5011)
