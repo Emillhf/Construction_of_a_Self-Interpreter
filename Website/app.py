@@ -4,7 +4,9 @@ app = Flask(__name__)
 
 app.config['Start_state'] = "1"
 app.config['Final_state'] = "0"
-app.config['Examples'] = ['Binary Increment', 'FLIP','URTM - BinInc', 'URTM - FLIP', 'URTM - Not Compiled', 'Clear State', 'Clear State - Not Compiled']
+app.config['Examples'] = ['Binary Increment', 'FLIP','URTM - BinInc', 'URTM - FLIP', 
+                          'URTM - Not Compiled', 'Clear State', 'Clear State - Not Compiled',
+                          'Clear State - Macro']
 app.config['selected_example'] = None
 app.config['Is_3_Tape'] = True
 app.config['Code_path'] = "Website/CODE.txt"
@@ -62,6 +64,7 @@ def Invert1Tape(rules):
             rule[1], rule[2] = rule[2], rule[1]
             rules[idx] = f"({rule[0]},({rule[1]},{rule[2]}),{rule[-1]})".replace("'", '')
     return rules
+
 @app.route("/", methods=['GET', 'POST'])
 def home():
     app.config['Start_State'] = '1'
@@ -346,6 +349,14 @@ def load_Example():
                 
             with open("Website/3-Tape-examples/" + "Dunja_Clear_state.txt", "r") as file:
                 code = file.read()  
+
+        elif example == "Clear State - Macro":
+            with open("Website/3-Tapes_tapes/" + "Clear_state.txt","r") as file:
+                lines = file.readlines()
+                work,program,state = lines[0], lines[2], lines[4]
+                
+            with open("Website/3-Tape-examples/" + "Macro_Clear_state.txt", "r") as file:
+                code = file.read()  
                 
     return render_template("3-Tape_page.html",
                         work=work, program=program, state=state, 
@@ -421,7 +432,8 @@ def Interpreter():
                                 Examples=app.config['Examples'], 
                                 selected_example=app.config['selected_example']) 
         else:
-            app.config['Examples'] = ['Binary Increment', 'FLIP','URTM - BinInc', 'URTM - FLIP', 'URTM - Not Compiled']
+            app.config['Examples'] = ['Binary Increment', 'FLIP','URTM - BinInc', 'URTM - FLIP', 'URTM - Not Compiled',
+                                      'Clear State', 'Clear State - Not Compiled','Clear State - Macro']
             app.config['Is_3_Tape'] = True
             code = "(1,((b,1),(b,b),(b,b)),0)"
             work = 'b'
