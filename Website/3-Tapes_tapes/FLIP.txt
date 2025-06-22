@@ -2,4 +2,4 @@ b000101111bbbbbbb
 !
 b
 $
-b
+bbbbb

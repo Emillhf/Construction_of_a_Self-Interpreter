@@ -1,7 +1,7 @@
-bbbbbbbbb
+b1101b
 
 !
-#10101#
+b
 
 $
-bbbb#10101#
+bbbbb

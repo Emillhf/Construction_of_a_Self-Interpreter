@@ -335,7 +335,7 @@ def load_Example():
                 code = file.read()  
                 
         elif example == "Clear State":
-            with open("Website/3-Tapes_tapes/" + "Clear_state.txt","r") as file:
+            with open("Website/3-Tapes_tapes/" + "Clear.txt","r") as file:
                 lines = file.readlines()
                 work,program,state = lines[0], lines[2], lines[4]
                 
@@ -343,7 +343,7 @@ def load_Example():
                 code = file.read()  
                 
         elif example == "Clear State - Not Compiled":
-            with open("Website/3-Tapes_tapes/" + "Clear_state.txt","r") as file:
+            with open("Website/3-Tapes_tapes/" + "Clear.txt","r") as file:
                 lines = file.readlines()
                 work,program,state = lines[0], lines[2], lines[4]
                 
@@ -351,7 +351,7 @@ def load_Example():
                 code = file.read()  
 
         elif example == "Clear State - Macro":
-            with open("Website/3-Tapes_tapes/" + "Clear_state.txt","r") as file:
+            with open("Website/3-Tapes_tapes/" + "Clear.txt","r") as file:
                 lines = file.readlines()
                 work,program,state = lines[0], lines[2], lines[4]
                 
