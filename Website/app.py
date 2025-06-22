@@ -4,10 +4,9 @@ app = Flask(__name__)
 
 app.config['Start_state'] = "1"
 app.config['Final_state'] = "0"
-app.config['Examples'] = ['Clear State', 'Binary Increment', 'FLIP','URTM - BinInc', 'URTM - FLIP', 
-                          'URTM - Not Compiled']
-#'Clear State - Not Compiled',
- #                        'Clear State - Macro']
+app.config['Examples'] = ['Binary Increment', 'FLIP','URTM - BinInc', 'URTM - FLIP', 
+                          'URTM - Not Compiled', 'Clear State','Clear State - Not Compiled',
+                         'Clear State - Macro']
 app.config['selected_example'] = None
 app.config['Is_3_Tape'] = True
 app.config['Code_path'] = "Website/CODE.txt"
