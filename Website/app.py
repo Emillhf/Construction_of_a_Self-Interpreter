@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 app.config['Start_state'] = "1"
 app.config['Final_state'] = "0"
-app.config['Examples'] = ['Binary Increment', 'FLIP','URTM - BinInc', 'URTM - FLIP', 'URTM - Not Compiled']
+app.config['Examples'] = ['Binary Increment', 'FLIP','URTM - BinInc', 'URTM - FLIP', 'URTM - Not Compiled', 'Clear State', 'Clear State - Not Compiled']
 app.config['selected_example'] = None
 app.config['Is_3_Tape'] = True
 app.config['Code_path'] = "Website/CODE.txt"
@@ -329,6 +329,22 @@ def load_Example():
                 work,program,state = lines[0], lines[2], lines[4]
                 
             with open("Website/3-Tape-examples/" + "Dunja_URTM.txt", "r") as file:
+                code = file.read()  
+                
+        elif example == "Clear State":
+            with open("Website/3-Tapes_tapes/" + "Clear_state.txt","r") as file:
+                lines = file.readlines()
+                work,program,state = lines[0], lines[2], lines[4]
+                
+            with open("Website/3-Tape-examples/" + "Clear_state.txt", "r") as file:
+                code = file.read()  
+                
+        elif example == "Clear State - Not Compiled":
+            with open("Website/3-Tapes_tapes/" + "Clear_state.txt","r") as file:
+                lines = file.readlines()
+                work,program,state = lines[0], lines[2], lines[4]
+                
+            with open("Website/3-Tape-examples/" + "Dunja_Clear_state.txt", "r") as file:
                 code = file.read()  
                 
     return render_template("3-Tape_page.html",
