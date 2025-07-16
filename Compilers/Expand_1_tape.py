@@ -9,10 +9,10 @@ encoded_symbols = {
     'M': 'W'
 }
 
-alfa = ['0', '1', 'B', '#', 'S', 'M','b','P','p','H','O','I','Z','W','!','$']
-alfa_doller_removed = ['0', '1', 'B', '#', 'S', 'M','b','P','p','H','O','I','Z','W','!']
-alfa_b_removed = ['0', '1', 'B', '#', 'S', 'M','P','p','H','O','I','Z','W','!','$']
-alfa_p_removed = ['0', '1', 'B', '#', 'S', 'M','b','P','H','O','I','Z','W','!','$']
+alfa = ['0', '1', 'B', '#', 'S', 'M','b','P','p','H','O','I','Z','W','$']
+alfa_doller_removed = ['0', '1', 'B', '#', 'S', 'M','b','P','p','H','O','I','Z','W']
+alfa_b_removed = ['0', '1', 'B', '#', 'S', 'M','P','p','H','O','I','Z','W','$']
+alfa_p_removed = ['0', '1', 'B', '#', 'S', 'M','b','P','H','O','I','Z','W','$']
 gamma = ['P','p','H','O','I','Z','W']
 alfa_gamma_removed = [symbol for symbol in alfa if symbol not in gamma]
 example = (1,('b','b'),2)
