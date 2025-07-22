@@ -49,7 +49,7 @@ let RMT(rules:Map<int,list<Rule>>, (start1,final1):int*int,tape:tape, startingId
                     if check (second rule) then act rule
                     else search_rec rest
                 | _ -> failwith "Shit wrong"
-        // printfn "%A" current_state
+        // printfn "%A" (current_state, (tape,idx, tape[idx]))
         search_rec(rules_list[current_state])
 
     while not(current_state = final) do

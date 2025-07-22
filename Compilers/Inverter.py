@@ -36,6 +36,7 @@ def Invert(rules):
             move_inverted = Invert_Move(rule[1:-1])
             rules[idx] = f"({rule[0]},({move_inverted[0]},{move_inverted[1]},{move_inverted[2]}),{rule[-1]})"
         else:
+            print(rule)
             rule[1], rule[2] = rule[2], rule[1]
             rule[3], rule[4] = rule[4], rule[3]
             rule[5], rule[6] = rule[6], rule[5]
