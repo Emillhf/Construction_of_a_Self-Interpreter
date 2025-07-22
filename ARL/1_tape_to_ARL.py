@@ -44,13 +44,13 @@ def Convert_tape(tape):
     return translated_tape
 
 path, file_name = Read_file.input_file()
-output = "ARL/ARL-" + file_name
-start = "Start = '31"
-end = "End = '1"
+output = "ARL/progs/ARL-" + file_name
+start = "Start = '1"
+end = "End = '4773"
 rules = "Rules ='"
 added_space = "\n\n// Tape for full specialization"
 tape_variable = "S_right = '"
-tape = "$I$I$I$"
+tape = "$pb$H10#B1#10#$bbbbH10#bbbbbb$"
 program = Read_file.read_file("1_Tape_programs/" + file_name)
 
 
